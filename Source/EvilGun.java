@@ -3,6 +3,7 @@ package space;
 public class EvilGun extends Sprite {
 
     private final int EVILGUN_SPEED = 9;
+    private final double EVILGUN_SPEED_2 = 2.5;
 
     public EvilGun(int x, int y) {
         super(x, y);
@@ -19,6 +20,26 @@ public class EvilGun extends Sprite {
     public void moveevilmis() {
         
         x -= EVILGUN_SPEED;
+        
+    }
+    
+    public void moveevildiag() {
+        
+    	x -= EVILGUN_SPEED;
+    	y -= EVILGUN_SPEED_2;
+        
+    }
+    
+    public void moveevildiag_down() {
+        
+    	x -= EVILGUN_SPEED;
+    	y += EVILGUN_SPEED_2;
+        
+    }
+    
+    public void moveevil_down() {
+        
+    	y += EVILGUN_SPEED_2;
         
     }
 }

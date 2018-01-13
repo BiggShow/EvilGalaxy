@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Craft extends Sprite {
 
-	    private double dx;
-	    private double dy;
+	    double dx;
+	    double dy;
 	    private ArrayList<Missile> missiles;
 	    private ArrayList<Rocket> rockets;
 	    private ArrayList<CanonBall> canons;
@@ -32,7 +32,7 @@ public class Craft extends Sprite {
 	        
 	    }
 	    
-	    private void initFuel() {
+	    void initFuel() {
 	        
 	        loadImage("newship.png");
 	        getImageDimensions();

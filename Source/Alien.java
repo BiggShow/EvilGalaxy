@@ -59,12 +59,7 @@ public class Alien extends Sprite {
             x = INITIAL_X;
         }
         
-        if (y < 0) {
-            y = INITIAL_Y;
-        }
-        
         x -= 1.2;
-        y -= 1.2;
- 
+        
     }
 }
