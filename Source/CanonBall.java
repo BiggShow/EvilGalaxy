@@ -1,4 +1,6 @@
-package space;
+package items;
+
+import frames.Sprite;
 
 public class CanonBall extends Sprite {
 

@@ -1,4 +1,4 @@
-package space;
+package frames;
 
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;

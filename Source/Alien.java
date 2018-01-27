@@ -1,6 +1,9 @@
-package space;
+package entities;
 
 import java.util.ArrayList;
+
+import frames.Sprite;
+import items.Missile;
 
 public class Alien extends Sprite {
 

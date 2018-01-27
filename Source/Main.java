@@ -1,4 +1,4 @@
-package space;
+package frames;
 
 import java.awt.Container;
 import java.awt.Desktop;
@@ -22,6 +22,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 //import javax.swing.Timer;
+
+import entities.Craft;
+import entities.EnemyShip;
+import multiplayer.JoinGame;
+import sounds.VolButt;
 
 
 @SuppressWarnings("serial")
@@ -113,6 +118,11 @@ public class Main extends JFrame {
 	        setTitle("EvilGalaxy");
 	        setLocationRelativeTo(null);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //setExtendedState((int) JFrame.CENTER_ALIGNMENT);
+	        
+	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
 	        
 	        setIconImage(Toolkit.getDefaultToolkit().getImage("strikehead.gif"));
 	

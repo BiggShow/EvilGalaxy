@@ -1,6 +1,12 @@
-package space;
+package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
+import frames.Sprite;
+import items.CanonBall;
+import items.Missile;
+import items.Rocket;
+import sounds.AePlayWave;
 
 
 public class Craft extends Sprite {
@@ -39,13 +45,13 @@ public class Craft extends Sprite {
 	    }
 	    
 	   
-	    void shakeCraft() {
+	    public void shakeCraft() {
 	        
 	        loadImage("alien.gif");
 	        getImageDimensions();
 	    }
 
-	    void godMode() {
+	    public void godMode() {
 	        
 	        loadImage("alien2.gif");
 	        getImageDimensions();
@@ -58,7 +64,7 @@ public class Craft extends Sprite {
 	        getImageDimensions();
 	    }
 	    
-	    void hitCraft() {
+	    public void hitCraft() {
 	        
 	        loadImage("hitcraft.gif");
 	        getImageDimensions();

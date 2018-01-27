@@ -1,4 +1,7 @@
-package space;
+package items;
+
+import frames.Sprite;
+
 public class Gifts extends Sprite {
 
     private final int INITIAL_Y = 1200;

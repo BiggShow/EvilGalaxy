@@ -1,4 +1,4 @@
-package space;
+package other;
 
 import java.net.URI;
 

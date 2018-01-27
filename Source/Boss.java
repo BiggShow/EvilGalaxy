@@ -1,4 +1,6 @@
-package space;
+package entities;
+
+import frames.Sprite;
 
 public class Boss extends Sprite {
 

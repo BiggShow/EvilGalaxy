@@ -1,4 +1,4 @@
-package space;
+package frames;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,6 +17,20 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import entities.Alien;
+import entities.Boss;
+import entities.Craft;
+import entities.EnemyShip;
+import items.CanonBall;
+import items.EvilGun;
+import items.Gifts;
+import items.Health;
+import items.Missile;
+import items.Rocket;
+import sounds.AePlayWave;
+import sounds.Sound;
+import sounds.VolButt;
 
 
 
@@ -37,7 +51,7 @@ public class Board extends JPanel implements ActionListener {
         private ManualForm readme;
         private String c;
         private String tick;
-        static boolean open_cons = false;
+        public static boolean open_cons = false;
         static boolean open_manual = false;
         static Timer timer;
         static Timer timer_med;

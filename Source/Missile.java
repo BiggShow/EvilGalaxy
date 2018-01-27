@@ -1,4 +1,7 @@
-package space;
+package items;
+
+import frames.Sprite;
+
 public class Missile extends Sprite {
 
     private final int BOARD_WIDTH = 390;

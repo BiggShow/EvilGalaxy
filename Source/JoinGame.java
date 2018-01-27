@@ -1,4 +1,4 @@
-package space;
+package multiplayer;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import frames.Board;
+import frames.Console;
 
 
 @SuppressWarnings("serial")

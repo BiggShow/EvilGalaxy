@@ -1,4 +1,4 @@
-package space;
+package frames;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -21,6 +21,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+
+import entities.Craft;
+import entities.EnemyShip;
+import sounds.VolButt;
 
 @SuppressWarnings("serial")
 public class Console extends JFrame {

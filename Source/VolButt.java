@@ -1,5 +1,7 @@
-package space;
+package sounds;
 import java.awt.event.KeyEvent;
+
+import frames.Sprite;
 
 public class VolButt extends Sprite {
 	

@@ -1,6 +1,11 @@
-package space;
+package entities;
 
 import java.util.ArrayList;
+
+import frames.Sprite;
+import items.CanonBall;
+import items.EvilGun;
+import sounds.AePlayWave;
 
 public class EnemyShip extends Sprite{
 	
