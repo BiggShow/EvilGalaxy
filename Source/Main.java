@@ -1,7 +1,7 @@
 package frames;
 
-import java.awt.Container;
-import java.awt.Desktop;
+//import java.awt.Container;
+//import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -10,8 +10,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
-import java.io.IOException;
-import java.net.URI;
+//import java.io.IOException;
+//import java.net.URI;
 import java.net.URISyntaxException;
 //import java.util.Random;
 import javax.swing.BorderFactory;
@@ -38,69 +38,7 @@ public class Main extends JFrame {
     public static final int UPDATE_TIME = 2;
     public static final int DURATION = 1000;
  
-    //private Point primaryLocation;
-    //private long startTime;
-    //private Timer time;
-    
-    
-    //used on a 'ShakingFrame' object to shake the jframe
-    /*public void startShake()
-    {
-        primaryLocation = getLocation();
-        startTime = System.currentTimeMillis();
-        time= new Timer(UPDATE_TIME,timeListener);
-        time.start();
-    }*/
-     
-    //stops shake/puts back in original place
-   /*public void stopShake()
-    {
-        //code to stop the screen shaking
-        time.stop();
-        setLocation(primaryLocation);
-        setVisible(true);
-        repaint();
-    }*/
-     
-    /*private class ActionTime implements ActionListener
-    {
-         private int xOffset, yOffset;
-         //every interval the timer ticks, this is performed
-        @Override
-         public void actionPerformed(ActionEvent e)
-         {
-             //get elapsed time(running time)
-             long elapsedTime = System.currentTimeMillis() - startTime;
-             Random r = new Random();
-             int op = r.nextInt(5);
-              
-             if ( op > 0)
-             {
-                //change x and y offset then reallocate frame
-                xOffset = primaryLocation.x + (r.nextInt(20));
-                yOffset = primaryLocation.y + (r.nextInt(20));
-                setLocation(xOffset,yOffset);
-                setVisible(false);                
-                repaint();
-             }
-             else
-             {
-                //change x and y offset then reallocate frame
-                xOffset = primaryLocation.x - (r.nextInt(20));
-                yOffset = primaryLocation.y - (r.nextInt(20));
-                setLocation(xOffset,yOffset);
-                setVisible(true);
-                repaint();
-             }
-             //elapsedTime exceed  DURATION, so stop now
-             if(elapsedTime > DURATION)
-             {   
-                stopShake();
-             }
-         }
-    }
-    //listener/instance of ActionTime
-    private ActionTime timeListener = new ActionTime();*/
+   
 
     public Main() {
         
@@ -118,7 +56,6 @@ public class Main extends JFrame {
 	        setTitle("EvilGalaxy");
 	        setLocationRelativeTo(null);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        //setExtendedState((int) JFrame.CENTER_ALIGNMENT);
 	        
 	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -129,7 +66,6 @@ public class Main extends JFrame {
 	        
 	        setShape(new RoundRectangle2D.Double(60, 80, 1200, 1200, 100, 100));
 	        ImageIcon tileIcon = new ImageIcon("shadow1.png"); 
-	        //getRootPane().setBorder(BorderFactory.createMatteBorder(144, 144, 144, 144, Color.BLACK));
 	        getRootPane().setBorder(BorderFactory.createMatteBorder(150, 150, 150, 150, tileIcon ));
 	        
 	        //Game Menu
@@ -183,7 +119,6 @@ public class Main extends JFrame {
 	        		
 	        		Board.god = false;
             	    setFocusable(true);
-	    	        //setBackground(Color.BLACK);
 	    	        Board.img = Toolkit.getDefaultToolkit().createImage("tenor.gif");
 	    	        Board.ingame = true;
 	    	        Board.lifepack_head = 3;
@@ -425,19 +360,19 @@ public class Main extends JFrame {
     public static void main(String[] args) throws URISyntaxException {
     	
     	
-    	final URI uri = new URI("https://github.com/Hunterszone/Java/tree/master/SpaceIntruders");
-	    class OpenUrlAction implements ActionListener {
+    	//final URI uri = new URI("https://github.com/Hunterszone/Java/tree/master/SpaceIntruders");
+	    /*class OpenUrlAction implements ActionListener {
 	      @Override public void actionPerformed(ActionEvent e) {
 	        open(uri);
 	      }
-	    }
+	    }*/
         
 	    //Interactive button - GitHub
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 Main ex = new Main();
-                Container container = ex.getContentPane();
+                /*Container container = ex.getContentPane();
     		    container.setBounds(900, 15, 30, 10);
     		    button.setText("<HTML>"
     		    		+ "<p>Use the arrows to navigate the ship.</p>"
@@ -453,7 +388,7 @@ public class Main extends JFrame {
     	        button.setLayout(null);
     	        button.setBounds(5, 200, 110, 45);
     		    button.setVisible(true);
-    		    button.addActionListener(new OpenUrlAction());
+    		    button.addActionListener(new OpenUrlAction());*/
     		    //ex.add(button);
     		    //ex.startShake();
     		    ex.setVisible(true);
@@ -461,11 +396,11 @@ public class Main extends JFrame {
         });    
     }
 
-    private static void open(URI uri) {
+    /*private static void open(URI uri) {
 	    if (Desktop.isDesktopSupported()) {
 	      try {
 	        Desktop.getDesktop().browse(uri);
-	      } catch (IOException e) { /* TODO: error handling */ }
-	    } else { /* TODO: error handling */ }
-	  }
+	      } catch (IOException e) {  }
+	    } else { }
+	  }*/
 }
