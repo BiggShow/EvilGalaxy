@@ -185,7 +185,7 @@ public class EvilHead extends SpritePattern{
 		    }
 
 
-		    //Simulated Artificial Intelligence on HARD, final boss!!
+		    //Simulated Artificial Intelligence on MEDIUM or HARD, final boss!!
 		    public void AISpecial() {
 		    	
 		    	x += speedX;

@@ -252,8 +252,8 @@ public class Console extends JFrame {
 		            		Board.volButt.isVisible();
 
 		            		Board.initAliens();
-		            		Board.initGifts();
-		            		Board.initBoss();
+		            		Board.initGold();
+		            		Board.initDragons();
 		            		Board.initHealth();
 			    	        
 		            		Board.timerMedium.stop();
@@ -297,8 +297,8 @@ public class Console extends JFrame {
 		            		Board.volButt.isVisible();
 
 		            		Board.initAliens();
-		            		Board.initGifts();
-		            		Board.initBoss();
+		            		Board.initGold();
+		            		Board.initDragons();
 		            		Board.initHealth();
 			    	        
 		            		Board.timerEasy.stop();
@@ -342,8 +342,8 @@ public class Console extends JFrame {
 		            		Board.volButt.isVisible();
 
 		            		Board.initAliens();
-		            		Board.initGifts();
-		            		Board.initBoss();
+		            		Board.initGold();
+		            		Board.initDragons();
 		            		Board.initHealth();
 			    	        
 		            		Board.timerEasy.stop();
@@ -693,8 +693,8 @@ public class Console extends JFrame {
 			    	        Board.volButt.isVisible();
 
 			    	        Board.initAliens();
-			    	        Board.initGifts();
-			    	        Board.initBoss();
+			    	        Board.initGold();
+			    	        Board.initDragons();
 			    	        Board.initHealth();
 			    	        
 			    	        Board.timerHard.stop();

@@ -144,8 +144,8 @@ public class Board extends JPanel implements ActionListener {
 	        volButt.isVisible();
 	        
 	        initAliens();
-	        initGifts();
-        	initBoss();
+	        initGold();
+        	initDragons();
         	initHealth();
             
 	        timerEasy = new Timer(DELAY, this);
@@ -170,7 +170,7 @@ public class Board extends JPanel implements ActionListener {
 	    
 	  
 	    
-	    public static void initGifts() {
+	    public static void initGold() {
 	        goldstack = new ArrayList<>();
 
 	        for (int[] p : posGold) {
@@ -189,7 +189,7 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    public static void initBoss() {
+	    public static void initDragons() {
 	        dragons = new ArrayList<>();
 	        for (int[] p : posDragon) {
 	        	Dragon born = new Dragon(p[0], p[1]);
@@ -199,7 +199,7 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    public void Sounds2On(){
+	    public void bgMusicOn(){
 	    	
 	    	bgMusic.stop();
         	
@@ -231,7 +231,7 @@ public class Board extends JPanel implements ActionListener {
 	        		myShip.dragonShake();	
 	        		
 	        	}
-	        	updateBoss();
+	        	updateDragons();
 	        	roar.loop();
 	        	if(dragons.isEmpty()){
 	        		g.drawString("Dragonized: " + checkMark, 5, 15);
@@ -256,7 +256,7 @@ public class Board extends JPanel implements ActionListener {
 	        		g.drawString("Rockets: Unlocked", 480, 15);
 	        		g.drawString("Difficulty: Easy", 650, 15);
 	        	}
-	        	updateBoss();
+	        	updateDragons();
 	        	roar.loop();
 	        	if(dragons.isEmpty()){
 	        		g.drawString("Dragonized: " + checkMark, 5, 15);
@@ -279,7 +279,7 @@ public class Board extends JPanel implements ActionListener {
 	        		g.drawString("Rockets: Unlocked", 480, 15);
 	        		g.drawString("Difficulty: Medium", 650, 15);
 	        	}
-	        	updateBoss();
+	        	updateDragons();
 	        	roar.loop();
 	        	if(dragons.isEmpty()){
 	        		g.drawString("Dragonized: " + checkMark, 5, 15);
@@ -937,14 +937,14 @@ public class Board extends JPanel implements ActionListener {
 
 	        inGame();
 
-	        updateCraft();
-	        updateMissiles();
-	        updateEvilMissiles();
-	        updateEvilCanons();
+	        updateMyShip();
+	        updateMyShipMissiles();
+	        updateEvilHeadMissiles();
+	        updateEvilHeadCanons();
 	        updateRockets();
 	        updateAliens();
-	        updateEnemy();
-	        updateGifts();
+	        updateEvilHead();
+	        updateGold();
 	        updateHealth();
 	        
 	        checkCollisions();
@@ -962,14 +962,14 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	    }
 
-	    private void updateCraft() {
+	    private void updateMyShip() {
 
 	        if (myShip.isVisible()) {
 	            myShip.move();
 	        }
 	    }
 
-	    private void updateMissiles() {
+	    private void updateMyShipMissiles() {
 
 	        @SuppressWarnings("unchecked")
 			ArrayList<Missile> ms = myShip.getMissiles();
@@ -988,7 +988,7 @@ public class Board extends JPanel implements ActionListener {
 	        
 	    }
 	    
-	    private void updateEvilMissiles(){
+	    private void updateEvilHeadMissiles(){
 	    	
 	        @SuppressWarnings("unchecked")
 			ArrayList<FireBall> fireballs = evilHead.getEvilMissiles();
@@ -1025,7 +1025,7 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	    }
 	    
-	    private void updateEvilCanons(){
+	    private void updateEvilHeadCanons(){
 	    	
 	        @SuppressWarnings("unchecked")
 			ArrayList<CanonBall> canonballs = evilHead.getCanons();
@@ -1082,7 +1082,7 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    private void updateEnemy() {
+	    private void updateEvilHead() {
 
 	    	    if (evilHead.isVisible() && timerEasy.isRunning() == true && (aliens.size() > 0 || dragons.size() > 0)) {
 	                evilHead.AIOnEasy();
@@ -1108,14 +1108,14 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    private void updateBoss() {
+	    private void updateDragons() {
 	    	
 	    
 	        for (int i = 0; i < dragons.size(); i++) {
 
 	            Dragon d = dragons.get(i);
 	            d.setVisible(true);
-	            checkBossCollisions();
+	            checkDragonsCollision();
 	            if (d.isVisible()) {
 	                d.move();
 	            } else {
@@ -1126,7 +1126,7 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    private void updateGifts() {
+	    private void updateGold() {
 	    
 
 	        for (int i = 0; i < goldstack.size(); i++) {
@@ -1164,7 +1164,7 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	    }
 	    
-	    public void checkBossCollisions() {
+	    public void checkDragonsCollision() {
 	    
 	    	Rectangle myship = myShip.getBounds();
 	    	
@@ -1351,6 +1351,9 @@ public class Board extends JPanel implements ActionListener {
 	            		if(timerHard.isRunning() == true && lifeMyShip <= 3){
 	            			evilHead.throwFireballs();
 	            		}
+	            		if(timerEasy.isRunning() == true){
+	            			evilHead.throwCanons();
+	            		}
 		            	evilHead.strikeHead();
 		            	lifeEvilHead++;
 	            	}
@@ -1457,8 +1460,8 @@ public class Board extends JPanel implements ActionListener {
 	    	        Board.volButt.isVisible();
 
 	    	        Board.initAliens();
-	    	        Board.initGifts();
-	    	        Board.initBoss();
+	    	        Board.initGold();
+	    	        Board.initDragons();
 	    	        Board.initHealth();
 	    	        
 	    	        Board.timerHard.stop();
@@ -1502,8 +1505,8 @@ public class Board extends JPanel implements ActionListener {
 		    	        volButt.isVisible();
 
 		    	        initAliens();
-		    	        initGifts();
-		    	        initBoss();
+		    	        initGold();
+		    	        initDragons();
 		    	        initHealth();
 		    	        
 		    	        timerHard.stop();
@@ -1547,8 +1550,8 @@ public class Board extends JPanel implements ActionListener {
 		    	        volButt.isVisible();
 
 		    	        initAliens();
-		    	        initGifts();
-		    	        initBoss();
+		    	        initGold();
+		    	        initDragons();
 		    	        initHealth();
 		    	        
 		    	        timerEasy.stop();
@@ -1593,8 +1596,8 @@ public class Board extends JPanel implements ActionListener {
 		    	        volButt.isVisible();
 
 		    	        initAliens();
-		    	        initGifts();
-		    	        initBoss();
+		    	        initGold();
+		    	        initDragons();
 		    	        initHealth();
 		    	        
 		    	        timerEasy.stop();
