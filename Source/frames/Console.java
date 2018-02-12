@@ -234,7 +234,7 @@ public class Console extends JFrame {
 		            		Board.roar.loop();
 		            	}
 		            	if(Board.ingame == false){
-		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("tenor.gif");
+		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
 		            		Board.lifeMyShip = 3;
@@ -279,7 +279,7 @@ public class Console extends JFrame {
 		            		Board.roar.loop();
 		            	}
 		            	if(Board.ingame == false){
-		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("tenor.gif");
+		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
 		            		Board.lifeMyShip = 3;
@@ -324,7 +324,7 @@ public class Console extends JFrame {
 		            		Board.roar.loop();
 		            	}
 		            	if(Board.ingame == false){
-		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("tenor.gif");
+		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
 		            		Board.lifeMyShip = 3;
@@ -675,7 +675,7 @@ public class Console extends JFrame {
 							textArea.append("********Game was restarted!*********" + "\n");
 							Board.god = false;
 		            	    setFocusable(true);
-			    	        Board.bg1 = Toolkit.getDefaultToolkit().createImage("tenor.gif");
+			    	        Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 			    	        Board.ingame = true;
 			    	        Board.lifeEvilHead = 3;
 			    	        Board.lifeMyShip = 3;
