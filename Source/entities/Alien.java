@@ -31,8 +31,8 @@ public class Alien extends SpritePattern {
             y = INITIAL_Y;
         }
         
-        x -= 2;
-        y += 2;
+        x -= 1.1;
+        y += 1.1;
  
     }
     
@@ -42,7 +42,7 @@ public class Alien extends SpritePattern {
             x = INITIAL_X;
         }
         
-        x -= 1.2;
+        x -= 1;
         
     }
 }

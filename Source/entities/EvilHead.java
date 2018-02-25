@@ -185,60 +185,6 @@ public class EvilHead extends SpritePattern{
 		    }
 
 
-		    //Simulated Artificial Intelligence on MEDIUM or HARD, final boss!!
-		    public void AISpecial() {
-		    	
-		    	x += speedX;
-		        y += speedY;
-
-		        if (x < 1) {
-		            x = 1;
-		            
-		        }
-		        
-		        if (y < 1) {
-		            y = 1;
-		        }
-		        
-		        x -= 1;
-		        if(x == 600 || x == 575 || x == 550 || x == 525 || x == 500){
-		        	throwFireballs();
-		        	strikeHead();
-		        }
-		        
-		        if(y == 400 || y == 375 || y == 350 || y == 325 || y == 300){
-		        	throwFireballs();
-		        	strikeHead();
-		        }
-		        
-		        
-		        if(x < 500){
-		        	speedX += 1.2;
-		        	initEnemy();
-		        	
-		        }
-		        
-		        y-= 1;
-		        if(y == 0){
-		        	x += 1.2;
-		        	initEnemy();
-	        		
-	        	}
-		        
-		        if(x > 800){
-		        	
-		        	speedX-= 1.2;
-		        	speedY+= 1.2;   
-		        	initEnemy();
-		        	
-		        }
-		        
-		        if(y > 500){
-		        	speedY-=1;
-		        	initEnemy();
-	        	}
-		        
-		    }
 
 		    @SuppressWarnings("rawtypes")
 			public ArrayList getEvilMissiles() {

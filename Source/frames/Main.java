@@ -16,8 +16,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import entities.MyShip;
+import entities.Bunker;
 import entities.EvilHead;
-import items.VolButt;
+import items.VolBtn;
 import multiplayer_tbd.JoinGame;
 
 
@@ -115,6 +116,7 @@ public class Main extends JFrame {
 	    	        Board.ingame = true;
 	    	        Board.lifeEvilHead = 3;
 	    	        Board.lifeMyShip = 3;
+	    	        Board.lifeBunker = 3;
 	    	        
 	    	        setPreferredSize(new Dimension(1310, 1040));
 
@@ -125,14 +127,17 @@ public class Main extends JFrame {
 	    	        Board.evilHead.isVisible();
 	    	        Board.evilHead.AIOnEasy();
 	    	        
-	    	        Board.volButt = new VolButt(940, 15);
-	    	        Board.volButt.isVisible();
-
-	    	        Board.initAliens();
-	    	        Board.initGold();
-	    	        Board.initDragons();
-	    	        Board.initHealth();
+	    	        Board.bunkerObj = new Bunker(450, 650);
+	    	        Board.bunkerObj.isVisible();
 	    	        
+	    	        Board.volButt = new VolBtn(940, 15);
+            		Board.volButt.isVisible();
+
+            		Board.initAliens();
+            		Board.initGold();
+            		Board.initDragons();
+            		Board.initHealth();
+            		
 	    	        Board.timerHard.stop();
 	    	        Board.timerMedium.stop();
 	    	        Board.timerEasy.restart();
@@ -188,6 +193,7 @@ public class Main extends JFrame {
 	            		Board.ingame = true;
 	            		Board.lifeEvilHead = 3;
 	            		Board.lifeMyShip = 3;
+	            		Board.lifeBunker = 3;
 		    	        
 	            		setPreferredSize(new Dimension(1310, 1040));
 
@@ -197,15 +203,18 @@ public class Main extends JFrame {
 	            		Board.evilHead = new EvilHead(640, 180);
 	            		Board.evilHead.isVisible();
 	            		Board.evilHead.AIOnMedium();
+	            		
+	            		Board.bunkerObj = new Bunker(450, 650);
+		    	        Board.bunkerObj.isVisible();
 		    	        
-	            		Board.volButt = new VolButt(940, 15);
+	            		Board.volButt = new VolBtn(940, 15);
 	            		Board.volButt.isVisible();
 
 	            		Board.initAliens();
 	            		Board.initGold();
 	            		Board.initDragons();
 	            		Board.initHealth();
-		    	        
+	            		
 	            		Board.timerMedium.stop();
 	            		Board.timerHard.stop();;
 	            		Board.timerEasy.restart();
@@ -235,6 +244,7 @@ public class Main extends JFrame {
 	            		Board.ingame = true;
 	            		Board.lifeEvilHead = 3;
 	            		Board.lifeMyShip = 3;
+	            		Board.lifeBunker = 3;
 		    	        
 	            		setPreferredSize(new Dimension(1310, 1040));
 
@@ -244,15 +254,18 @@ public class Main extends JFrame {
 	            		Board.evilHead = new EvilHead(640, 180);
 	            		Board.evilHead.isVisible();
 	            		Board.evilHead.AIOnMedium();
+	            		
+	            		Board.bunkerObj = new Bunker(450, 650);
+		    	        Board.bunkerObj.isVisible();
 		    	        
-	            		Board.volButt = new VolButt(940, 15);
+	            		Board.volButt = new VolBtn(940, 15);
 	            		Board.volButt.isVisible();
 
 	            		Board.initAliens();
 	            		Board.initGold();
 	            		Board.initDragons();
 	            		Board.initHealth();
-		    	        
+	            		
 	            		Board.timerEasy.stop();
 	            		Board.timerHard.stop();;
 	            		Board.timerMedium.restart();
@@ -281,7 +294,8 @@ public class Main extends JFrame {
 	            		Board.ingame = true;
 	            		Board.lifeEvilHead = 3;
 	            		Board.lifeMyShip = 3;
-		    	        
+	            		Board.lifeBunker = 3;
+	            		
 	            		setPreferredSize(new Dimension(1310, 1040));
 
 	            		Board.myShip = new MyShip(40, 180);
@@ -290,8 +304,11 @@ public class Main extends JFrame {
 	            		Board.evilHead = new EvilHead(640, 180);
 	            		Board.evilHead.isVisible();
 	            		Board.evilHead.AIOnMedium();
+	            		
+	            		Board.bunkerObj = new Bunker(450, 650);
+		    	        Board.bunkerObj.isVisible();
 		    	        
-	            		Board.volButt = new VolButt(940, 15);
+	            		Board.volButt = new VolBtn(940, 15);
 	            		Board.volButt.isVisible();
 
 	            		Board.initAliens();

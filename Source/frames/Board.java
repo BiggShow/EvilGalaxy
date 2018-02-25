@@ -16,16 +16,18 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import entities.Alien;
+import entities.Bunker;
 import entities.Dragon;
 import entities.MyShip;
 import entities.EvilHead;
+import items.BunkerBullet;
 import items.CanonBall;
 import items.FireBall;
 import items.Gold;
 import items.HealthPack;
-import items.Missile;
-import items.Rocket;
-import items.VolButt;
+import items.ShipMissile;
+import items.ShipRocket;
+import items.VolBtn;
 import sound_engine.PlayWave2nd;
 import sound_engine.PlayWave1st;
 
@@ -41,6 +43,7 @@ public class Board extends JPanel implements ActionListener {
         static PlayWave2nd gameLost = new PlayWave2nd("sounds/fin.wav");
         static PlayWave2nd gameWon = new PlayWave2nd("sounds/highsc.wav");
         static PlayWave2nd gotHealthPack = new PlayWave2nd("sounds/magic.wav");
+        static PlayWave2nd fuse = new PlayWave2nd("sounds/fuse.wav");
         private Console console;
         private Manual manual;
         private String unicode;
@@ -50,9 +53,10 @@ public class Board extends JPanel implements ActionListener {
         static Timer timerEasy;
         static Timer timerMedium;
         static Timer timerHard;
+        static Bunker bunkerObj;
 	    static MyShip myShip;
 	    static EvilHead evilHead;
-	    static VolButt volButt;
+	    static VolBtn volButt;
 	    static ArrayList<Alien> aliens;
 	    private static ArrayList<Gold> goldstack;
 	    static ArrayList<HealthPack> healthpack;
@@ -65,11 +69,14 @@ public class Board extends JPanel implements ActionListener {
 	    private final int ECRAFT_Y = 180;
 	    private final int VOLBUT_X = 940;
 	    private final int VOLBUT_Y = 15;
+	    private final int STATIC_GUN_X = 450;
+		private final int STATIC_GUN_Y = 650;
 	    private final int B_WIDTH = 1310;
 	    private final int B_HEIGHT = 1040;
 	    private final int DELAY = 15;
 	    static int lifeEvilHead = 3;
 	    static int lifeMyShip = 3;
+	    static int lifeBunker = 3;
 	    
 
 	    private final static int[][] posAlien = {
@@ -135,13 +142,16 @@ public class Board extends JPanel implements ActionListener {
 
 	        myShip = new MyShip(ICRAFT_X, ICRAFT_Y);
 	        myShip.isVisible();
-	        
+	        	        
 	        evilHead = new EvilHead(ECRAFT_X, ECRAFT_Y);
 	        evilHead.isVisible();
 	        evilHead.AIOnEasy();
-	        	        
-	        volButt = new VolButt(VOLBUT_X, VOLBUT_Y);
+	        
+	        volButt = new VolBtn(VOLBUT_X, VOLBUT_Y);
 	        volButt.isVisible();
+	        
+	        bunkerObj = new Bunker(STATIC_GUN_X, STATIC_GUN_Y);
+			bunkerObj.isVisible();
 	        
 	        initAliens();
 	        initGold();
@@ -163,11 +173,23 @@ public class Board extends JPanel implements ActionListener {
 	        aliens = new ArrayList<>();
 
 	        for (int[] p : posAlien) {
-	            aliens.add(new Alien(p[0], p[1]));
-	            aliens.add(new Alien(p[0], p[1]));
+	        	Alien born = new Alien(p[0], p[1]);
+	        	aliens.add(born);
+	            aliens.add(born);
+	            //born.setVisible(false);
 	        }
 	    }
 	    
+
+	    
+	    public static void initDragons() {
+	        dragons = new ArrayList<>();
+	        for (int[] p : posDragon) {
+	        	Dragon born = new Dragon(p[0], p[1]);
+	        	dragons.add(born);
+	        	born.setVisible(false); 
+	        }
+	    }
 	  
 	    
 	    public static void initGold() {
@@ -189,15 +211,6 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    public static void initDragons() {
-	        dragons = new ArrayList<>();
-	        for (int[] p : posDragon) {
-	        	Dragon born = new Dragon(p[0], p[1]);
-	        	dragons.add(born);
-	        	born.setVisible(false); 
-	        }
-	    }
-	    
 	    
 	    public void bgMusicOn(){
 	    	
@@ -214,6 +227,7 @@ public class Board extends JPanel implements ActionListener {
 	        if (ingame && aliens.size() > 0) {
 
 	        	drawObjects(g);
+	        	
 	            
 	        }
 	        
@@ -222,20 +236,29 @@ public class Board extends JPanel implements ActionListener {
 	        	drawObjects2(g);
 	        	
 	        	if(dragons.size() > 0){
-	        		g.drawString("Dragonized: " + dragons.size(), 5, 15);
+	        		g.drawString("Dragonzz: " + dragons.size(), 5, 15);
 	        		g.drawString("Level: " + 2, 230, 15);
 	        		g.drawString("Missiles: Locked", 320, 15);
 	        		g.drawString("Rockets: Unlocked", 480, 15);
 	        		g.drawString("Difficulty: Hard", 650, 15);
 	        		drawOuttaControl(g);
-	        		myShip.dragonShake();	
+	        		myShip.dragonShake();
+	        		
 	        		
 	        	}
 	        	updateDragons();
 	        	roar.loop();
-	        	if(dragons.isEmpty()){
-	        		g.drawString("Dragonized: " + checkMark, 5, 15);
+	        	if(dragons.isEmpty() && lifeBunker < 50){
+	        		g.drawString("Dragonzz: " + checkMark, 5, 15);
 	        		g.drawString("Level: " + 3, 230, 15);
+	        		g.drawString("Missiles: Unlocked", 320, 15);
+	        		g.drawString("Rockets: Unlocked", 490, 15);
+	        		g.drawString("Difficulty: Hard", 670, 15);
+	        	}
+	        	
+	        	if(lifeBunker == 50){
+	        		g.drawString("Dragonzz: " + checkMark, 5, 15);
+	        		g.drawString("Level: " + 4, 230, 15);
 	        		g.drawString("Missiles: Unlocked", 320, 15);
 	        		g.drawString("Rockets: Unlocked", 490, 15);
 	        		g.drawString("Difficulty: Hard", 670, 15);
@@ -250,7 +273,7 @@ public class Board extends JPanel implements ActionListener {
 	        	drawObjects2(g);
 	        	
 	        	if(dragons.size() > 0){
-	        		g.drawString("Dragonized: " + dragons.size(), 5, 15);
+	        		g.drawString("Dragonzz: " + dragons.size(), 5, 15);
 	        		g.drawString("Level: " + 2, 230, 15);
 	        		g.drawString("Missiles: Locked", 320, 15);
 	        		g.drawString("Rockets: Unlocked", 480, 15);
@@ -258,12 +281,20 @@ public class Board extends JPanel implements ActionListener {
 	        	}
 	        	updateDragons();
 	        	roar.loop();
-	        	if(dragons.isEmpty()){
-	        		g.drawString("Dragonized: " + checkMark, 5, 15);
+	        	if(dragons.isEmpty() && lifeBunker < 50){
+	        		g.drawString("Dragonzz: " + checkMark, 5, 15);
 	        		g.drawString("Level: " + 3, 230, 15);
 	        		g.drawString("Missiles: Unlocked", 320, 15);
 	        		g.drawString("Rockets: Unlocked", 490, 15);
 	        		g.drawString("Difficulty: Easy", 670, 15);
+	        	}
+	        	
+	        	if(lifeBunker == 50){
+	        		g.drawString("Dragonzz: " + checkMark, 5, 15);
+	        		g.drawString("Level: " + 4, 230, 15);
+	        		g.drawString("Missiles: Unlocked", 320, 15);
+	        		g.drawString("Rockets: Unlocked", 490, 15);
+	        		g.drawString("Difficulty: Hard", 670, 15);
 	        	}
 	        	
 	        }
@@ -273,7 +304,7 @@ public class Board extends JPanel implements ActionListener {
 	        	drawObjects2(g);
 	        	
 	        	if(dragons.size() > 0){
-	        		g.drawString("Dragonized: " + dragons.size(), 5, 15);
+	        		g.drawString("Dragonzz: " + dragons.size(), 5, 15);
 	        		g.drawString("Level: " + 2, 230, 15);
 	        		g.drawString("Missiles: Locked", 320, 15);
 	        		g.drawString("Rockets: Unlocked", 480, 15);
@@ -281,12 +312,20 @@ public class Board extends JPanel implements ActionListener {
 	        	}
 	        	updateDragons();
 	        	roar.loop();
-	        	if(dragons.isEmpty()){
-	        		g.drawString("Dragonized: " + checkMark, 5, 15);
+	        	if(dragons.isEmpty() && lifeBunker < 50){
+	        		g.drawString("Dragonzz: " + checkMark, 5, 15);
 	        		g.drawString("Level: " + 3, 230, 15);
 	        		g.drawString("Missiles: Unlocked", 320, 15);
 	        		g.drawString("Rockets: Unlocked", 490, 15);
 	        		g.drawString("Difficulty: Medium", 670, 15);
+	        	}
+	        	
+	        	if(lifeBunker == 50){
+	        		g.drawString("Dragonzz: " + checkMark, 5, 15);
+	        		g.drawString("Level: " + 4, 230, 15);
+	        		g.drawString("Missiles: Unlocked", 320, 15);
+	        		g.drawString("Rockets: Unlocked", 490, 15);
+	        		g.drawString("Difficulty: Hard", 670, 15);
 	        	}
 	        	
 	        }
@@ -336,7 +375,7 @@ public class Board extends JPanel implements ActionListener {
 	        	roar.stop();
 	        }
 	        
-	        if(dragons.isEmpty() && goldstack.size() > 0 && timerHard.isRunning() == true){
+	        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && timerHard.isRunning() == true){
 	        	
 	        	drawCollect(g);
 	        	g.drawString("Missiles: Locked", 320, 15);
@@ -345,7 +384,7 @@ public class Board extends JPanel implements ActionListener {
 	        	
 	        }
 	        
-	        if(dragons.isEmpty() && goldstack.size() > 0 && timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && timerHard.isRunning() == false && timerMedium.isRunning() == true){
 	        	
 	        	drawCollect(g);
 	        	g.drawString("Missiles: Locked", 320, 15);
@@ -353,25 +392,10 @@ public class Board extends JPanel implements ActionListener {
         		g.drawString("Difficulty: Medium", 640, 15);
 	        	
 	        }
-	    
+
 	        
-	        if(dragons.isEmpty() && goldstack.isEmpty() && timerHard.isRunning() == true){
-	        	
-	        	drawKillTheHead(g);
-	        	g.drawString("Missiles: Unlocked", 320, 15);
-	        	g.drawString("Rockets: Unlocked", 490, 15);	
-	        	g.drawString("Difficulty: Hard", 670, 15);
-	        }
-	        
-	        if(dragons.isEmpty() && goldstack.isEmpty() && timerHard.isRunning() == false && timerMedium.isRunning() == true){
-	        	
-	        	drawKillTheHead(g);
-	        	g.drawString("Missiles: Unlocked", 320, 15);
-	        	g.drawString("Rockets: Unlocked", 490, 15);	
-	        	g.drawString("Difficulty: Medium", 670, 15);
-	        }
-	        
-	        if(dragons.isEmpty() && goldstack.size() > 0 && timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && 
+	        		timerHard.isRunning() == false && timerMedium.isRunning() == false){
 	        	
 	        	drawCollect(g);
 	        	g.drawString("Missiles: Locked", 320, 15);
@@ -380,7 +404,58 @@ public class Board extends JPanel implements ActionListener {
 	        	
 	        }
 	        
-	        if(dragons.isEmpty() && goldstack.isEmpty() && timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        
+	        if(dragons.isEmpty() && lifeBunker < 50 &&
+	        		timerHard.isRunning() == true){
+	        	
+	        	drawKillTheBunker(g);
+	        	g.drawString("Missiles: Unlocked", 320, 15);
+	        	g.drawString("Rockets: Unlocked", 490, 15);	
+	        	g.drawString("Difficulty: Hard", 670, 15);
+	        }
+	        
+	        if(dragons.isEmpty() && lifeBunker < 50 &&
+	        		timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        	
+	        	drawKillTheBunker(g);
+	        	g.drawString("Missiles: Unlocked", 320, 15);
+	        	g.drawString("Rockets: Unlocked", 490, 15);	
+	        	g.drawString("Difficulty: Medium", 670, 15);
+	        }
+	        
+	        
+	        
+	        if(dragons.isEmpty() && lifeBunker < 50 &&
+	        		timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        	
+	        	drawKillTheBunker(g);
+	        	g.drawString("Missiles: Unlocked", 320, 15);
+	        	g.drawString("Rockets: Unlocked", 490, 15);	
+	        	g.drawString("Difficulty: Easy", 670, 15);
+	        }
+	        
+	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
+	        		timerHard.isRunning() == true){
+	        	
+	        	drawKillTheHead(g);
+	        	g.drawString("Missiles: Unlocked", 320, 15);
+	        	g.drawString("Rockets: Unlocked", 490, 15);	
+	        	g.drawString("Difficulty: Hard", 670, 15);
+	        }
+	        
+	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
+	        		timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        	
+	        	drawKillTheHead(g);
+	        	g.drawString("Missiles: Unlocked", 320, 15);
+	        	g.drawString("Rockets: Unlocked", 490, 15);	
+	        	g.drawString("Difficulty: Medium", 670, 15);
+	        }
+	        
+	        
+	        
+	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
+	        		timerHard.isRunning() == false && timerMedium.isRunning() == false){
 	        	
 	        	drawKillTheHead(g);
 	        	g.drawString("Missiles: Unlocked", 320, 15);
@@ -389,29 +464,83 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	        
 	        
-	        if(dragons.isEmpty() && goldstack.isEmpty() && evilHead.x - myShip.x == 400 && timerEasy.isRunning() == true){
+	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && evilHead.x - myShip.x == 400 && timerEasy.isRunning() == true){
 	        	evilHead.throwCanons();
 	        	evilHead.strikeHead();
 	        }
 	        
 	        	        	        
-	        if(dragons.isEmpty() && goldstack.isEmpty() && evilHead.x - myShip.x == 400 && timerMedium.isRunning() == true){
+	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && evilHead.x - myShip.x == 400 && timerMedium.isRunning() == true){
 	        	evilHead.throwFireballs();
 	        	evilHead.strikeHead();
 	        }
 	        
-	        if(dragons.isEmpty() && goldstack.size() >= 0 && evilHead.x - myShip.x == 400 && timerHard.isRunning() == true){
+	        if(dragons.isEmpty() && goldstack.size() >= 0 && lifeBunker == 50 && evilHead.x - myShip.x == 400 && timerHard.isRunning() == true){
 	        	evilHead.throwFireballs();
 	        	evilHead.strikeHead();
 	        }
 	        
-	        if(evilHead.x - myShip.x > 800 && dragons.isEmpty() && goldstack.isEmpty()){
+	        if(evilHead.x - myShip.x > 800 && dragons.isEmpty() && goldstack.isEmpty()
+	        		&& lifeBunker == 50){
         		myShip.dragonShake();
         		myShip.y = evilHead.y + 70;
         	}
 	        
 	        
-	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeEvilHead < 10){
+	        if(dragons.isEmpty() && lifeBunker < 10 && goldstack.size() > 0){
+	        	g.drawString("EvilHead is waiting...", evilHead.x, evilHead.y);
+	        	g.drawString("Health: 100%", bunkerObj.x, bunkerObj.y);
+	        }
+	        
+	        
+	        if(lifeBunker >= 10 && lifeBunker < 20 && goldstack.size() > 0){
+	        	g.drawString("EvilHead is waiting...", evilHead.x, evilHead.y);
+	        	g.drawString("Health: 80%", bunkerObj.x, bunkerObj.y);
+	        	
+	        }
+	        
+	        
+	        if(lifeBunker >= 20 && lifeBunker < 30 && goldstack.size() > 0){
+	        	g.drawString("EvilHead is waiting...", evilHead.x, evilHead.y);
+	        	g.drawString("Health: 60%", bunkerObj.x, bunkerObj.y);
+	        }
+	        
+	        if(lifeBunker >= 30 && lifeBunker < 35){
+	        	roar.loop();
+	        }
+	        
+	        if(lifeBunker >= 35){
+	        	roar.stop();
+	        }
+	        
+	        if(lifeBunker >= 30 && lifeBunker < 40 && goldstack.size() > 0){
+	        	g.drawString("EvilHead is waiting...", evilHead.x, evilHead.y);
+	        	g.drawString("Health: 40%", bunkerObj.x, bunkerObj.y);
+	        }
+	        
+	        if(lifeBunker >= 40 && lifeBunker < 45){
+	        	roar.loop();
+	        }
+	        
+	        if(lifeBunker >= 45){
+	        	roar.stop();
+	        }
+	        
+	        if(lifeBunker >= 40 && lifeBunker < 50 && goldstack.size() > 0){
+	        	g.drawString("EvilHead is waiting...", evilHead.x, evilHead.y);
+	        	g.drawString("Health: 20%", bunkerObj.x, bunkerObj.y);
+	        }
+	       	
+	        if(lifeBunker == 50){
+	        	if(goldstack.size() > 0){
+	        		g.drawString("EvilHead is waiting...", evilHead.x, evilHead.y);
+	        	}
+	        	g.drawString("Bunker destroyed!", bunkerObj.x, bunkerObj.y);
+	        	bunkerObj.initBunkerHit();
+	        }
+	        
+	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50
+	        		&& lifeEvilHead < 10){
 	        	g.drawString("Health: 100%", evilHead.x, evilHead.y);
 	        }
 	        
@@ -477,6 +606,7 @@ public class Board extends JPanel implements ActionListener {
 		        timerEasy.stop();
 		        timerMedium.stop();
 		        timerHard.stop();
+		        fuse.stop();
 		        return;
 	            
 	        }
@@ -485,25 +615,26 @@ public class Board extends JPanel implements ActionListener {
 	    }
 	    
 	    
-	    	    
 
-	    private void drawObjects(Graphics g) {
 
-	        if (evilHead.isVisible() && myShip.isVisible() && volButt.isVisible() && g.drawImage(bg1, 0, 0, null)) {
+		private void drawObjects(Graphics g) {
+
+	        if (evilHead.isVisible() && myShip.isVisible() && volButt.isVisible() && bunkerObj.isVisible() && g.drawImage(bg1, 0, 0, null)) {
 	            g.drawImage(myShip.getImage(), myShip.getX(), myShip.getY(),
 	                    this);
 	            g.drawImage(evilHead.getImage(), evilHead.getX(), evilHead.getY(),
 	                    this);
 	            g.drawImage(volButt.getImage(), volButt.getX(), volButt.getY(),
 	                    this);
+	            g.drawImage(bunkerObj.getImage(), bunkerObj.getX(), bunkerObj.getY(), this);
 	        }
 	        
 	        
 
 	        @SuppressWarnings("unchecked")
-			ArrayList<Missile> ms = myShip.getMissiles();
+			ArrayList<ShipMissile> ms = myShip.getMissiles();
 	     
-	        for (Missile m : ms) {
+	        for (ShipMissile m : ms) {
 	        	
 	            if (m.isVisible()) {
 	                g.drawImage(m.getImage(), m.getX(), m.getY(), this);
@@ -511,9 +642,9 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	        
 	        @SuppressWarnings("unchecked")
-	        ArrayList<Rocket> rs = myShip.getRockets();
+	        ArrayList<ShipRocket> rs = myShip.getRockets();
 
-	        for (Rocket r : rs) {
+	        for (ShipRocket r : rs) {
 	            if (r.isVisible()) {
 	                g.drawImage(r.getImage(), r.getX(), r.getY(), this);
 	            }
@@ -541,6 +672,27 @@ public class Board extends JPanel implements ActionListener {
 	            }
 	        }
 	        
+	        
+	        @SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bull = bunkerObj.getBullets();
+
+			for (BunkerBullet n : bull) {
+
+				if (n.isVisible()) {
+					g.drawImage(n.getImage(), n.getX(), n.getY(), this);
+				}
+			}
+	        
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bull2 = bunkerObj.getBullets2();
+
+			for (BunkerBullet n : bull2) {
+
+				if (n.isVisible()) {
+					g.drawImage(n.getImage(), n.getX(), n.getY(), this);
+				}
+			}
 
 
 	        for (Alien alien : aliens) {
@@ -618,21 +770,22 @@ public class Board extends JPanel implements ActionListener {
 	    
 	    private void drawObjects3(Graphics g) {
 
-	        if (evilHead.isVisible() && myShip.isVisible() && volButt.isVisible() && g.drawImage(bg3, 0, 0, null)) {
+	        if (evilHead.isVisible() && myShip.isVisible() && volButt.isVisible() && bunkerObj.isVisible() && g.drawImage(bg3, 0, 0, null)) {
 	            g.drawImage(myShip.getImage(), myShip.getX(), myShip.getY(),
 	                    this);
 	            g.drawImage(evilHead.getImage(), evilHead.getX(), evilHead.getY(),
 	                    this);
 	            g.drawImage(volButt.getImage(), volButt.getX(), volButt.getY(),
 	                    this);
+	            g.drawImage(bunkerObj.getImage(), bunkerObj.getX(), bunkerObj.getY(), this);
 	        }
 	        
 	        
 
 	        @SuppressWarnings("unchecked")
-			ArrayList<Missile> ms = myShip.getMissiles();
+			ArrayList<ShipMissile> ms = myShip.getMissiles();
 	     
-	        for (Missile m : ms) {
+	        for (ShipMissile m : ms) {
 	        	
 	            if (m.isVisible()) {
 	                g.drawImage(m.getImage(), m.getX(), m.getY(), this);
@@ -640,9 +793,9 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	        
 	        @SuppressWarnings("unchecked")
-	        ArrayList<Rocket> rs = myShip.getRockets();
+	        ArrayList<ShipRocket> rs = myShip.getRockets();
 
-	        for (Rocket r : rs) {
+	        for (ShipRocket r : rs) {
 	            if (r.isVisible()) {
 	                g.drawImage(r.getImage(), r.getX(), r.getY(), this);
 	            }
@@ -671,7 +824,25 @@ public class Board extends JPanel implements ActionListener {
 	            }
 	        }
 	        
+	        @SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bull = bunkerObj.getBullets();
 
+			for (BunkerBullet n : bull) {
+
+				if (n.isVisible()) {
+					g.drawImage(n.getImage(), n.getX(), n.getY(), this);
+				}
+			}
+	        
+			@SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bull2 = bunkerObj.getBullets2();
+
+			for (BunkerBullet n : bull2) {
+
+				if (n.isVisible()) {
+					g.drawImage(n.getImage(), n.getX(), n.getY(), this);
+				}
+			}
 
 	        for (Alien a : aliens) {
 	            if (a.isVisible()) {
@@ -713,9 +884,14 @@ public class Board extends JPanel implements ActionListener {
 		        
 	        }
 	        
-	        if(dragons.isEmpty()){
-        		g.drawString("Dragonized: " + checkMark, 5, 15);
+	        if(dragons.isEmpty() && lifeBunker < 50){
+        		g.drawString("Dragonzz: " + checkMark, 5, 15);
         		g.drawString("Level: " + 3, 230, 15);
+        	}
+	        
+	        if(lifeBunker == 50){
+        		g.drawString("Dragonzz: " + checkMark, 5, 15);
+        		g.drawString("Level: " + 4, 230, 15);
         	}
 	       
 	        if(goldstack.size() > 0){
@@ -768,21 +944,22 @@ public class Board extends JPanel implements ActionListener {
 	    
 	    private void drawObjects2(Graphics g) {
 
-	        if (evilHead.isVisible() && myShip.isVisible() && volButt.isVisible() && g.drawImage(bg2, 0, 0, null)) {
+	        if (evilHead.isVisible() && myShip.isVisible() && volButt.isVisible() && bunkerObj.isVisible() && g.drawImage(bg2, 0, 0, null)) {
 	            g.drawImage(myShip.getImage(), myShip.getX(), myShip.getY(),
 	                    this);
 	            g.drawImage(evilHead.getImage(), evilHead.getX(), evilHead.getY(),
 	                    this);
 	            g.drawImage(volButt.getImage(), volButt.getX(), volButt.getY(),
 	                    this);
+	            g.drawImage(bunkerObj.getImage(), bunkerObj.getX(), bunkerObj.getY(), this);
 	        }
 	        
 	        
 
 	        @SuppressWarnings("unchecked")
-			ArrayList<Missile> ms = myShip.getMissiles();
+			ArrayList<ShipMissile> ms = myShip.getMissiles();
 	     
-	        for (Missile m : ms) {
+	        for (ShipMissile m : ms) {
 	        	
 	            if (m.isVisible()) {
 	                g.drawImage(m.getImage(), m.getX(), m.getY(), this);
@@ -790,9 +967,9 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	        
 	        @SuppressWarnings("unchecked")
-	        ArrayList<Rocket> rs = myShip.getRockets();
+	        ArrayList<ShipRocket> rs = myShip.getRockets();
 
-	        for (Rocket r : rs) {
+	        for (ShipRocket r : rs) {
 	            if (r.isVisible()) {
 	                g.drawImage(r.getImage(), r.getX(), r.getY(), this);
 	            }
@@ -809,6 +986,26 @@ public class Board extends JPanel implements ActionListener {
 	                g.drawImage(n.getImage(), n.getX(), n.getY(), this);
 	            }
 	        }
+	        
+	        @SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bull = bunkerObj.getBullets();
+
+			for (BunkerBullet n : bull) {
+
+				if (n.isVisible()) {
+					g.drawImage(n.getImage(), n.getX(), n.getY(), this);
+				}
+			}
+			
+			 @SuppressWarnings("unchecked")
+				ArrayList<BunkerBullet> bull2 = bunkerObj.getBullets2();
+
+				for (BunkerBullet n : bull2) {
+
+					if (n.isVisible()) {
+						g.drawImage(n.getImage(), n.getX(), n.getY(), this);
+					}
+				}
 	        
 	        @SuppressWarnings("unchecked")
 			ArrayList<CanonBall> canonballs = evilHead.getCanons();
@@ -893,10 +1090,24 @@ public class Board extends JPanel implements ActionListener {
 	        g.drawString(msg, (B_WIDTH - 286 - fm.stringWidth(msg)) / 2,
 	                (B_HEIGHT - 272) / 2);
 	    }
+	    	    
+
+		private void drawKillTheBunker(Graphics g) {
+			
+			String msg = "Destroy the bunker!";
+	        Font small = new Font("Helvetica", Font.BOLD, 17);
+	        FontMetrics fm = getFontMetrics(small);
+	        
+	        g.setColor(Color.white);
+	        g.setFont(small);
+	        g.drawString(msg, (B_WIDTH - 286 - fm.stringWidth(msg)) / 2,
+	                (B_HEIGHT - 272) / 2);
+			
+		}
 	    
 	    private void drawKillTheHead(Graphics g) {
 
-	        String msg = "Now kill the evil head!";
+	        String msg = "Finally..Kill the evil head!";
 	        Font small = new Font("Helvetica", Font.BOLD, 17);
 	        FontMetrics fm = getFontMetrics(small);
 	        
@@ -946,6 +1157,7 @@ public class Board extends JPanel implements ActionListener {
 	        updateEvilHead();
 	        updateGold();
 	        updateHealth();
+	        updateBullets();
 	        
 	        checkCollisions();
 
@@ -972,12 +1184,12 @@ public class Board extends JPanel implements ActionListener {
 	    private void updateMyShipMissiles() {
 
 	        @SuppressWarnings("unchecked")
-			ArrayList<Missile> ms = myShip.getMissiles();
+			ArrayList<ShipMissile> ms = myShip.getMissiles();
 	        
 	        
 	        for (int i = 0; i < ms.size(); i++) {
 
-	            Missile m = ms.get(i);
+	            ShipMissile m = ms.get(i);
 	            	            
 	            if (m.isVisible()) {
 	                m.move();
@@ -988,69 +1200,133 @@ public class Board extends JPanel implements ActionListener {
 	        
 	    }
 	    
+	    
+	    private void updateBullets() {
+
+			@SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bullets = bunkerObj.getBullets();
+			@SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bullets2 = bunkerObj.getBullets2();  
+ 
+			for (int i = 0; i < bullets.size(); i++) {
+
+				BunkerBullet b = bullets.get(i);
+
+				if (b.isVisible()) {
+					b.moveDiagLeft();
+					if(myShip.x > 200){
+						b.moveDiagRight();
+						b.moveRight();
+					}
+					
+					
+					else if(myShip.y > 300){
+						b.moveDown();
+						b.moveLeft();
+					}
+				}
+				
+				
+				else {
+					fuse.stop();
+					bullets.remove(i);
+				}
+			}
+
+			
+			for (int i2 = 0; i2 < bullets2.size(); i2++) {
+
+				BunkerBullet b2 = bullets2.get(i2);
+				
+				if (b2.isVisible()) {
+					b2.moveDiagRight();
+					if(myShip.x > 200){
+						b2.moveDiagLeft();
+						b2.moveLeft();
+					}
+					
+					else if(myShip.y > 300){
+						b2.moveDown();
+						b2.moveLeft();
+					}
+				
+				}
+				
+				
+				else {
+					fuse.stop();
+					bullets2.remove(i2);
+				}
+			}
+
+		
+		}
+	    
 	    private void updateEvilHeadMissiles(){
 	    	
-	        @SuppressWarnings("unchecked")
-			ArrayList<FireBall> fireballs = evilHead.getEvilMissiles();
-	        
-	        
-	        for (int i = 0; i < fireballs.size(); i++) {
+	    		@SuppressWarnings("unchecked")
+				ArrayList<FireBall> fireballs = evilHead.getEvilMissiles();
+		        
+		        
+		        for (int i = 0; i < fireballs.size(); i++) {
 
-	        	FireBall n = fireballs.get(i);
-	            
-	        	
-	        	if (n.isVisible() && dragons.isEmpty() && timerHard.isRunning() == true) {
-	                if(goldstack.isEmpty() && lifeMyShip <= 3){
-	                	n.evilShotDiagUp();
-	                	if(n.y < 0){
-	                		n.y = 0;
-	                		n.evilShot();
-	                	}
-	                }
-	                if(goldstack.size() > 0 && lifeMyShip <= 3){
-	                	n.evilShotDiagDown();
-	                	if(n.y > 768){
-	                		n.y = 768;
-	                		n.evilShot();
-	                	}
-	                }
-	                
-	            }
-	        	
-	            if (n.isVisible()) {
-	                n.evilShot();
-	            } else {
-	            	fireballs.remove(i);
-	            }
-	        }
+		        	FireBall n = fireballs.get(i);
+		            
+		        	
+		        	if (n.isVisible() && dragons.isEmpty() && timerHard.isRunning() == true) {
+		                if(goldstack.isEmpty() && lifeMyShip <= 3){
+		                	n.evilShotDiagUp();
+		                	if(n.y < 0){
+		                		n.y = 0;
+		                		n.evilShot();
+		                	}
+		                }
+		                if(goldstack.size() > 0 && lifeMyShip <= 3){
+		                	n.evilShotDiagDown();
+		                	if(n.y > 768){
+		                		n.y = 768;
+		                		n.evilShot();
+		                	}
+		                }
+		                
+		            }
+		        	
+		            if (n.isVisible()) {
+		                n.evilShot();
+		            } else {
+		            	fireballs.remove(i);
+		            }
+		        }
+	        
 	    }
 	    
 	    private void updateEvilHeadCanons(){
 	    	
-	        @SuppressWarnings("unchecked")
-			ArrayList<CanonBall> canonballs = evilHead.getCanons();
-	        
-	        
-	        for (int i = 0; i < canonballs.size(); i++) {
+	        	
+	        	@SuppressWarnings("unchecked")
+				ArrayList<CanonBall> canonballs = evilHead.getCanons();
+		        
+		        
+		        for (int i = 0; i < canonballs.size(); i++) {
 
-	        	CanonBall n = canonballs.get(i);
-	            	            
-	            if (n.isVisible()) {
-	                n.moveCanon();
-	            } else {
-	            	canonballs.remove(i);
-	            }
-	        }
+		        	CanonBall n = canonballs.get(i);
+		            	            
+		            if (n.isVisible()) {
+		                n.moveCanon();
+		            } else {
+		            	canonballs.remove(i);
+		            }
+		        }
 	    }
 	    
 	    private void updateRockets() {
 
 	        @SuppressWarnings("unchecked")
-			ArrayList<Rocket> rocketstack = myShip.getRockets();
+			ArrayList<ShipRocket> rocketstack = myShip.getRockets();
 
 	        for (int i = 0; i < rocketstack.size(); i++) {
 
-	            Rocket r = rocketstack.get(i);
+	            ShipRocket r = rocketstack.get(i);
 
 	            if (r.isVisible()) {
 	                r.move();
@@ -1063,46 +1339,59 @@ public class Board extends JPanel implements ActionListener {
 	  
 	    private void updateAliens() {
 
-	    	for (int i = 0; i < aliens.size(); i++) {
+	    		
+		    	for (int i = 0; i < aliens.size(); i++) {
 
-	            Alien a = aliens.get(i);
-	            if (a.isVisible() && timerHard.isRunning() == true && timerEasy.isRunning() == false && timerMedium.isRunning() == false){
-	            	a.moveFaster();
-	            }
-	            
-	            if (a.isVisible()) {
-	                a.move();
-	            }
-	            	
-	            	else {
-	                aliens.remove(i);
-	                new PlayWave1st("sounds/bloop.wav").start();
-	            }
-	        }
+		            Alien a = aliens.get(i);
+
+		            if (a.isVisible() && timerHard.isRunning() == true && timerEasy.isRunning() == false && timerMedium.isRunning() == false){
+		            	a.moveFaster();
+		            }
+		            
+		            if (a.isVisible()) {
+		                a.move();
+		            }
+		            	
+		            	else {
+		                aliens.remove(i);
+		                new PlayWave1st("sounds/bloop.wav").start();
+		            }
+		        }
 	    }
 	    
 	    
 	    private void updateEvilHead() {
 
-	    	    if (evilHead.isVisible() && timerEasy.isRunning() == true && (aliens.size() > 0 || dragons.size() > 0)) {
+	    		
+	    	    if (evilHead.isVisible() && timerEasy.isRunning() == true && 
+	    	    		(aliens.size() > 0 || dragons.size() > 0)) {
 	                evilHead.AIOnEasy();
 	            }
 	    	    
-	    	    if(evilHead.isVisible() && dragons.isEmpty() && goldstack.size() >= 0 && timerEasy.isRunning() == true){
+	    	    if (evilHead.isVisible() && timerEasy.isRunning() == true && 
+	    	    		dragons.isEmpty() && goldstack.size() >= 0) {
+	                evilHead.AIOnEasy();
+	            }
+	    	    
+	    	    if(evilHead.isVisible() && timerMedium.isRunning() == true && 
+	    	    		dragons.isEmpty() && goldstack.size() >= 0){
 	    	    	evilHead.AIOnMedium();
 	    	    }
 	    	    
 	    	    
-	    	    if (evilHead.isVisible() && timerMedium.isRunning() == true && (aliens.size() > 0 || dragons.size() > 0)) {
+	    	    if (evilHead.isVisible() && timerMedium.isRunning() == true && 
+	    	    		(aliens.size() > 0 || dragons.size() > 0)) {
 	                evilHead.AIOnMedium();
 	            } 
 	    	    
-	    	    if (evilHead.isVisible() && timerHard.isRunning() == true && (aliens.size() > 0 || dragons.size() > 0)) {
+	    	    if (evilHead.isVisible() && timerHard.isRunning() == true && 
+	    	    		(aliens.size() > 0 || dragons.size() > 0)) {
 	                evilHead.AIOnHard();
 	            }
 	    	    
-	    	    if(evilHead.isVisible() && dragons.isEmpty() && timerEasy.isRunning() == false){
-	    	    	evilHead.AISpecial();
+	    	    if(evilHead.isVisible() && timerHard.isRunning() == true && 
+	    	    		dragons.isEmpty() && goldstack.size() >= 0){
+	    	    	evilHead.AIOnHard();
 	    	    }
 	    	    
 	    }
@@ -1110,19 +1399,20 @@ public class Board extends JPanel implements ActionListener {
 	    
 	    private void updateDragons() {
 	    	
-	    
-	        for (int i = 0; i < dragons.size(); i++) {
+	    		
+		        for (int i = 0; i < dragons.size(); i++) {
 
-	            Dragon d = dragons.get(i);
-	            d.setVisible(true);
-	            checkDragonsCollision();
-	            if (d.isVisible()) {
-	                d.move();
-	            } else {
-	                dragons.remove(i);
-	                new PlayWave1st("sounds/bloop.wav").start();
-	            }
-	        }
+		            Dragon d = dragons.get(i);
+		            d.setVisible(true);
+		            checkDragonsCollision();
+		            if (d.isVisible()) {
+		                d.move();
+		            } else {
+		                dragons.remove(i);
+		                new PlayWave1st("sounds/bloop.wav").start();
+		            }
+		        }
+
 	    }
 	    
 	    
@@ -1181,9 +1471,9 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	    	
 	    	@SuppressWarnings("unchecked")
-	        ArrayList<Rocket> rocketstack = myShip.getRockets();
+	        ArrayList<ShipRocket> rocketstack = myShip.getRockets();
 	        
-	        for (Rocket r : rocketstack) {
+	        for (ShipRocket r : rocketstack) {
 
 	            Rectangle rocketUnit = r.getBounds();
 	            
@@ -1209,8 +1499,9 @@ public class Board extends JPanel implements ActionListener {
 
 	        Rectangle myship = myShip.getBounds();
 	        
-
 	        Rectangle evilhead = evilHead.getBounds();
+	        
+	        Rectangle bunker = bunkerObj.getBounds();
 	        
 	        if(myship.intersects(evilhead)){
 	        	
@@ -1220,8 +1511,21 @@ public class Board extends JPanel implements ActionListener {
     		        ingame = false;
 			        return;
 	        	}
-
-        
+	        
+        if(aliens.isEmpty() && dragons.isEmpty() && lifeBunker < 50){
+        	
+        	if(myship.intersects(bunker)){
+	        	
+    			new PlayWave1st("sounds/scream.wav").start();
+    			new PlayWave1st("sounds/explosion.wav").start();
+    			myShip.setVisible(false);
+		        bunkerObj.setVisible(false);
+		        ingame = false;
+		        return;
+        	}
+        }
+	        
+	        
 	        for (Alien alien : aliens) {
 	        	
 		        	        	
@@ -1257,9 +1561,9 @@ public class Board extends JPanel implements ActionListener {
 	        }
 
 	        @SuppressWarnings("unchecked")
-			ArrayList<Missile> missiles = myShip.getMissiles();
+			ArrayList<ShipMissile> missiles = myShip.getMissiles();
 	       
-	        for (Missile m : missiles) {
+	        for (ShipMissile m : missiles) {
 
 	            Rectangle missileUnit = m.getBounds();
 	            
@@ -1274,19 +1578,41 @@ public class Board extends JPanel implements ActionListener {
 	                }
 	            }
 
-
+	            if(aliens.isEmpty() && dragons.isEmpty() && lifeBunker < 50){
+	            	if(missileUnit.intersects(bunker)){
+	            		bunkerObj.initBunkerHit();
+	            		bunkerObj.loadBullet();
+	    				bunkerObj.loadBullet2();
+	            		m.setVisible(false);
+	    				fuse.play();
+	            		lifeBunker++;
+	            	}
+	            	
+	            else{
+            			
+            			bunkerObj.initBunker();
+            		}
+	            	
+	            }
+	            	
 	            
-	            if(dragons.isEmpty() && goldstack.isEmpty()){
+	            if(aliens.isEmpty() && 
+	            		dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50){
 	            	if(missileUnit.intersects(evilhead)){
 	            		m.setVisible(false);
-	            		if(timerHard.isRunning() == true && lifeMyShip <= 3){
+	            		if(timerHard.isRunning() == true){
 	            			evilHead.throwFireballs();
+	            		}
+	            		else{
+	            			evilHead.throwCanons();
 	            		}
 		            	evilHead.strikeHead();
 		            	lifeEvilHead++;
 	            	}
 	            	
 	            }
+	            
+	            	            	            
 	        }
 	        
 	        
@@ -1297,9 +1623,9 @@ public class Board extends JPanel implements ActionListener {
 
 	            	Rectangle fireballUnit = n.getBounds();
 	            	            
-	                Rectangle r101 = myShip.getBounds();
+	                Rectangle ship = myShip.getBounds();
 
-	                if (fireballUnit.intersects(r101)) {
+	                if (fireballUnit.intersects(ship)) {
 		        		lifeMyShip++;
 		        		n.setVisible(false);
 		        		new PlayWave1st("sounds/scream.wav").start();
@@ -1308,6 +1634,48 @@ public class Board extends JPanel implements ActionListener {
 	            	}	
 	        }
 	        
+	        @SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bullets = bunkerObj.getBullets();
+	        
+	       
+	        for (BunkerBullet n : bullets) {
+
+	            	Rectangle bulletUnit = n.getBounds();
+	            	            
+	                Rectangle ship = myShip.getBounds();
+	                
+	                if (bulletUnit.intersects(ship)) {
+		        		lifeMyShip++;
+		        		n.setVisible(false);
+		        		new PlayWave1st("sounds/scream.wav").start();
+		        		new PlayWave1st("sounds/explosion.wav").start();
+		        		myShip.hitCraft();
+		        		myShip.shakeCraft();
+	            	}
+	                
+	        }
+
+	        @SuppressWarnings("unchecked")
+			ArrayList<BunkerBullet> bullets2 = bunkerObj.getBullets2();
+	      
+	        
+	        for (BunkerBullet n : bullets2) {
+	        
+	            	Rectangle bulletUnit2 = n.getBounds();
+	            	            
+	                Rectangle ship = myShip.getBounds();
+
+	                if (bulletUnit2.intersects(ship)) {
+		        		lifeMyShip++;
+		        		n.setVisible(false);
+		        		new PlayWave1st("sounds/scream.wav").start();
+		        		new PlayWave1st("sounds/explosion.wav").start();
+		        		myShip.hitCraft();
+		        		myShip.shakeCraft();
+	            	}
+	                	
+	        }
+
 	        @SuppressWarnings("unchecked")
 			ArrayList<CanonBall> can = evilHead.getCanons();
 	       
@@ -1325,10 +1693,12 @@ public class Board extends JPanel implements ActionListener {
 	            	}	
 	        }
 	        
-	        @SuppressWarnings("unchecked")
-	        ArrayList<Rocket> rs = myShip.getRockets();
+
 	        
-	        for (Rocket r : rs) {
+	        @SuppressWarnings("unchecked")
+	        ArrayList<ShipRocket> rs = myShip.getRockets();
+	        
+	        for (ShipRocket r : rs) {
 
 	            Rectangle rocketUnit = r.getBounds();
 
@@ -1344,21 +1714,39 @@ public class Board extends JPanel implements ActionListener {
 	            }
 	            
 	            
-	         	            
-	            if(dragons.isEmpty() && goldstack.isEmpty()){
+	            if(aliens.isEmpty() && 
+	            		dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50){
 	            	if(rocketUnit.intersects(evilhead)){
 	            		r.setVisible(false);
-	            		if(timerHard.isRunning() == true && lifeMyShip <= 3){
+	            		if(timerHard.isRunning() == true){
 	            			evilHead.throwFireballs();
 	            		}
-	            		if(timerEasy.isRunning() == true){
+	            		else{
 	            			evilHead.throwCanons();
 	            		}
 		            	evilHead.strikeHead();
 		            	lifeEvilHead++;
 	            	}
-	            	
 	            }
+	            
+	            if(aliens.isEmpty() && dragons.isEmpty() && lifeBunker < 50){
+	            		if(rocketUnit.intersects(bunker)){
+		            		bunkerObj.initBunkerHit();
+		            		bunkerObj.loadBullet();
+		    				bunkerObj.loadBullet2();
+		    				r.setVisible(false);
+		    				fuse.play();
+		            		lifeBunker++;
+		            	}
+	            		
+	            		
+	            	else{
+	            			
+	            			bunkerObj.initBunker();
+	            		}
+	            		
+	            	}
+	            	
 	            
 	        }
 	        
@@ -1399,27 +1787,35 @@ public class Board extends JPanel implements ActionListener {
 		        }
 				
 				
-				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && key == KeyEvent.VK_CONTROL && (aliens.size() == 0 && (dragons.size() > 0 || goldstack.isEmpty()))) {
-		            myShip.spechit();
+				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && 
+						key == KeyEvent.VK_CONTROL && 
+						(aliens.isEmpty() && (dragons.size() > 0 || lifeBunker < 50 || goldstack.isEmpty()))) {
+		            myShip.loadRockets();
 		        }
-				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && key == KeyEvent.VK_CONTROL && (aliens.size() > 0 || (dragons.isEmpty() && goldstack.size() > 0))) {
+
+
+				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && 
+						key == KeyEvent.VK_CONTROL && 
+						(aliens.size() > 0 || (dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0))) {
 					myShip.gunempty();
 				}
 				
-				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && key == KeyEvent.VK_SPACE && (aliens.size() > 0 || (goldstack.isEmpty() && dragons.isEmpty()))) {
-		            myShip.fire();
+				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && 
+						key == KeyEvent.VK_SPACE && 
+						(aliens.size() > 0 || (dragons.isEmpty() && lifeBunker < 50) || 
+								(lifeBunker == 50 && goldstack.isEmpty()))) {
+		            myShip.loadMissiles();
 		        }
 				
-				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && key == KeyEvent.VK_SPACE && (dragons.size() > 0 && (aliens.isEmpty() && goldstack.size() >= 0))){
+				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && 
+						key == KeyEvent.VK_SPACE && 
+						(aliens.isEmpty() && dragons.size() > 0 || (dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0))){
 					myShip.gunempty();
 				}
 				
 				
-				if (ingame == true && (timerEasy.isRunning() == true || timerMedium.isRunning() == true || timerHard.isRunning() == true) && key == KeyEvent.VK_SPACE && (dragons.isEmpty() && goldstack.size() > 0)){
-					myShip.gunempty();
-				}
 				
-				
+								
 				if (key == KeyEvent.VK_2){
 					
 					if (Board.aliens.size() > 0) {
@@ -1438,6 +1834,17 @@ public class Board extends JPanel implements ActionListener {
 					}
 				}
 				
+				if (key == KeyEvent.VK_4){
+					
+					if(Board.ingame == true && (Board.aliens.size() > 0 || Board.dragons.size() > 0 
+							|| lifeBunker < 50)){
+						Board.aliens.clear();
+						Board.dragons.clear();
+						lifeBunker = 50;
+						return;
+					}
+				}
+				
 				if (key == KeyEvent.VK_R){
 					
 		            Board.god = false;
@@ -1446,6 +1853,7 @@ public class Board extends JPanel implements ActionListener {
 	    	        Board.ingame = true;
 	    	        Board.lifeEvilHead = 3;
 	    	        Board.lifeMyShip = 3;
+	    	        Board.lifeBunker = 3;
 	    	        
 	    	        setPreferredSize(new Dimension(1310, 1040));
 
@@ -1456,8 +1864,11 @@ public class Board extends JPanel implements ActionListener {
 	    	        Board.evilHead.isVisible();
 	    	        Board.evilHead.AIOnEasy();
 	    	        
-	    	        Board.volButt = new VolButt(940, 15);
+	    	        Board.volButt = new VolBtn(940, 15);
 	    	        Board.volButt.isVisible();
+	    	        
+	    	        Board.bunkerObj = new Bunker(450, 650);
+	    	        Board.bunkerObj.isVisible();
 
 	    	        Board.initAliens();
 	    	        Board.initGold();
@@ -1491,6 +1902,7 @@ public class Board extends JPanel implements ActionListener {
 		    	        ingame = true;
 		    	        lifeEvilHead = 3;
 		    	        lifeMyShip = 3;
+		    	        lifeBunker = 3;
 		    	        
 		    	        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
@@ -1501,8 +1913,11 @@ public class Board extends JPanel implements ActionListener {
 		    	        evilHead.isVisible();
 		    	        evilHead.AIOnEasy();
 		    	        
-		    	        volButt = new VolButt(VOLBUT_X, VOLBUT_Y);
+		    	        volButt = new VolBtn(VOLBUT_X, VOLBUT_Y);
 		    	        volButt.isVisible();
+		    	        
+		    	        bunkerObj = new Bunker(STATIC_GUN_X, STATIC_GUN_Y);
+		    			bunkerObj.isVisible();
 
 		    	        initAliens();
 		    	        initGold();
@@ -1536,6 +1951,7 @@ public class Board extends JPanel implements ActionListener {
 		    	        ingame = true;
 		    	        lifeEvilHead = 3;
 		    	        lifeMyShip = 3;
+		    	        lifeBunker = 3;
 		    	        
 		    	        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
@@ -1546,8 +1962,11 @@ public class Board extends JPanel implements ActionListener {
 		    	        evilHead.isVisible();
 		    	        evilHead.AIOnMedium();
 		    	        
-		    	        volButt = new VolButt(VOLBUT_X, VOLBUT_Y);
+		    	        volButt = new VolBtn(VOLBUT_X, VOLBUT_Y);
 		    	        volButt.isVisible();
+
+		    	        bunkerObj = new Bunker(STATIC_GUN_X, STATIC_GUN_Y);
+		    			bunkerObj.isVisible();
 
 		    	        initAliens();
 		    	        initGold();
@@ -1582,6 +2001,7 @@ public class Board extends JPanel implements ActionListener {
 		    	        ingame = true;
 		    	        lifeEvilHead = 3;
 		    	        lifeMyShip = 3;
+		    	        lifeBunker = 3;
 		    	        
 		    	        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
@@ -1592,8 +2012,11 @@ public class Board extends JPanel implements ActionListener {
 		    	        evilHead.isVisible();
 		    	        evilHead.AIOnHard();
 		    	        
-		    	        volButt = new VolButt(VOLBUT_X, VOLBUT_Y);
+		    	        volButt = new VolBtn(VOLBUT_X, VOLBUT_Y);
 		    	        volButt.isVisible();
+
+		    	        bunkerObj = new Bunker(STATIC_GUN_X, STATIC_GUN_Y);
+		    			bunkerObj.isVisible();
 
 		    	        initAliens();
 		    	        initGold();

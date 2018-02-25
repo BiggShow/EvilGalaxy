@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import frames.SpritePattern;
 import items.CanonBall;
-import items.Missile;
-import items.Rocket;
+import items.ShipMissile;
+import items.ShipRocket;
 import sound_engine.PlayWave1st;
 
 
@@ -13,8 +13,8 @@ public class MyShip extends SpritePattern {
 
 	    double speedX;
 	    double speedY;
-	    private ArrayList<Missile> missiles;
-	    private ArrayList<Rocket> rockets;
+	    private ArrayList<ShipMissile> missiles;
+	    private ArrayList<ShipRocket> rockets;
 	    private ArrayList<CanonBall> canons;
 
 	    public MyShip(int x, int y) {
@@ -154,13 +154,13 @@ public class MyShip extends SpritePattern {
 	    }
 	    
 	    
-	    public void fire() {
-	        missiles.add(new Missile(x + width, y + height / 2));
+	    public void loadMissiles() {
+	        missiles.add(new ShipMissile(x + width, y + height / 2));
 	        new PlayWave1st("sounds/laser.wav").start();
 	    }
 	    
-	    public void spechit() {
-	    	rockets.add(new Rocket(x + width, y + height / 2));
+	    public void loadRockets() {
+	    	rockets.add(new ShipRocket(x + width, y + height / 2));
 	        new PlayWave1st("sounds/rocket.wav").start();
 	    }
 	    

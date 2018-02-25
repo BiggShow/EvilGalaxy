@@ -24,7 +24,8 @@ import javax.swing.border.EmptyBorder;
 
 import entities.MyShip;
 import entities.EvilHead;
-import items.VolButt;
+import entities.Bunker;
+import items.VolBtn;
 
 @SuppressWarnings("serial")
 public class Console extends JFrame {
@@ -225,11 +226,11 @@ public class Console extends JFrame {
 					
 					
 					if (commands[4].trim().equalsIgnoreCase(textArea.getText().trim())){
+						textArea.append("********Game switched to easy!*********" + "\n");
 						Board.timerMedium.stop();
 		        		Board.timerHard.stop();
 		        		Board.timerEasy.start();
 		        		Board.bgMusic.loop();
-		        		textArea.append("********Game difficulty: EASY!*********" + "\n");
 		            	if(Board.aliens.isEmpty()){
 		            		Board.roar.loop();
 		            	}
@@ -238,6 +239,7 @@ public class Console extends JFrame {
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
 		            		Board.lifeMyShip = 3;
+		            		Board.lifeBunker = 3;
 			    	        
 		            		setPreferredSize(new Dimension(1310, 1040));
 
@@ -247,22 +249,25 @@ public class Console extends JFrame {
 		            		Board.evilHead = new EvilHead(640, 180);
 		            		Board.evilHead.isVisible();
 		            		Board.evilHead.AIOnMedium();
+		            		
+		            		Board.bunkerObj = new Bunker(450, 650);
+			    	        Board.bunkerObj.isVisible();
 			    	        
-		            		Board.volButt = new VolButt(940, 15);
+		            		Board.volButt = new VolBtn(940, 15);
 		            		Board.volButt.isVisible();
 
 		            		Board.initAliens();
 		            		Board.initGold();
 		            		Board.initDragons();
 		            		Board.initHealth();
-			    	        
+		            		
 		            		Board.timerMedium.stop();
 		            		Board.timerHard.stop();;
 		            		Board.timerEasy.restart();
 		            		Board.gameWon.play();
 		            		Board.gameLost.stop();
 		            		Board.bgMusic.loop();
-		            		Board.roar.stop();
+			    	        Board.roar.stop();
 		            		return;
 					}
 		            	
@@ -270,11 +275,11 @@ public class Console extends JFrame {
 				}
 					
 					if (commands[5].trim().equalsIgnoreCase(textArea.getText().trim())){
+						textArea.append("********Game switched to medium!*********" + "\n");
 						Board.timerEasy.stop();
 		        		Board.timerHard.stop();
 		        		Board.timerMedium.start();
 		        		Board.bgMusic.loop();
-		        		textArea.append("********Game difficulty: MEDIUM!*********" + "\n");
 		            	if(Board.aliens.isEmpty()){
 		            		Board.roar.loop();
 		            	}
@@ -283,6 +288,7 @@ public class Console extends JFrame {
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
 		            		Board.lifeMyShip = 3;
+		            		Board.lifeBunker = 3;
 			    	        
 		            		setPreferredSize(new Dimension(1310, 1040));
 
@@ -292,35 +298,38 @@ public class Console extends JFrame {
 		            		Board.evilHead = new EvilHead(640, 180);
 		            		Board.evilHead.isVisible();
 		            		Board.evilHead.AIOnMedium();
+		            		
+		            		Board.bunkerObj = new Bunker(450, 650);
+			    	        Board.bunkerObj.isVisible();
 			    	        
-		            		Board.volButt = new VolButt(940, 15);
+		            		Board.volButt = new VolBtn(940, 15);
 		            		Board.volButt.isVisible();
 
 		            		Board.initAliens();
 		            		Board.initGold();
 		            		Board.initDragons();
 		            		Board.initHealth();
-			    	        
+		            		
 		            		Board.timerEasy.stop();
 		            		Board.timerHard.stop();;
 		            		Board.timerMedium.restart();
 		            		Board.gameWon.play();
 		            		Board.gameLost.stop();
 		            		Board.bgMusic.loop();
-		            		Board.roar.stop();
+			    	        Board.roar.stop();
 		            		return;
+
 		            	}
 		            	return;
 					}
 					
 					if (commands[6].trim().equalsIgnoreCase(textArea.getText().trim())){
-						Board.timerMedium.stop();
-		        		Board.timerEasy.stop();
+						textArea.append("********Game switched to hard!*********" + "\n");
+						Board.timerEasy.stop();
+		        		Board.timerMedium.stop();
 		        		Board.timerHard.start();
 		        		Board.bgMusic.loop();
-		        		textArea.append("********Game difficulty: HARD!*********" + "\n");
 		            	if(Board.aliens.isEmpty()){
-		            		//Attack.loop();
 		            		Board.roar.loop();
 		            	}
 		            	if(Board.ingame == false){
@@ -328,7 +337,8 @@ public class Console extends JFrame {
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
 		            		Board.lifeMyShip = 3;
-			    	        
+		            		Board.lifeBunker = 3;
+		            		
 		            		setPreferredSize(new Dimension(1310, 1040));
 
 		            		Board.myShip = new MyShip(40, 180);
@@ -337,8 +347,11 @@ public class Console extends JFrame {
 		            		Board.evilHead = new EvilHead(640, 180);
 		            		Board.evilHead.isVisible();
 		            		Board.evilHead.AIOnMedium();
+		            		
+		            		Board.bunkerObj = new Bunker(450, 650);
+			    	        Board.bunkerObj.isVisible();
 			    	        
-		            		Board.volButt = new VolButt(940, 15);
+		            		Board.volButt = new VolBtn(940, 15);
 		            		Board.volButt.isVisible();
 
 		            		Board.initAliens();
@@ -352,9 +365,9 @@ public class Console extends JFrame {
 		            		Board.gameWon.play();
 		            		Board.gameLost.stop();
 		            		Board.bgMusic.loop();
-			    	        //Attack.stop();
-		            		Board.roar.stop();
+			    	        Board.roar.stop();
 		            		return;
+
 		            	}
 		            	return;
 					}
@@ -679,6 +692,7 @@ public class Console extends JFrame {
 			    	        Board.ingame = true;
 			    	        Board.lifeEvilHead = 3;
 			    	        Board.lifeMyShip = 3;
+			    	        Board.lifeBunker = 3;
 			    	        
 			    	        setPreferredSize(new Dimension(1310, 1040));
 
@@ -689,14 +703,17 @@ public class Console extends JFrame {
 			    	        Board.evilHead.isVisible();
 			    	        Board.evilHead.AIOnEasy();
 			    	        
-			    	        Board.volButt = new VolButt(940, 15);
-			    	        Board.volButt.isVisible();
-
-			    	        Board.initAliens();
-			    	        Board.initGold();
-			    	        Board.initDragons();
-			    	        Board.initHealth();
+			    	        Board.bunkerObj = new Bunker(450, 650);
+			    	        Board.bunkerObj.isVisible();
 			    	        
+			    	        Board.volButt = new VolBtn(940, 15);
+		            		Board.volButt.isVisible();
+
+		            		Board.initAliens();
+		            		Board.initGold();
+		            		Board.initDragons();
+		            		Board.initHealth();
+		            		
 			    	        Board.timerHard.stop();
 			    	        Board.timerMedium.stop();
 			    	        Board.timerEasy.restart();
@@ -704,8 +721,7 @@ public class Console extends JFrame {
 			    	        Board.gameLost.stop();
 			    	        Board.bgMusic.loop();
 			    	        Board.roar.stop();
-		            		return;
-		            	
+		            		return;		            	
 					}
 					
 								
