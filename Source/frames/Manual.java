@@ -95,7 +95,7 @@ public class Manual extends JFrame {
 				+ "\n"
 				+ "Use 'C' to invoke the game C O N S O L E."
 				+ "\n"
-				+ "Use '2' and '3' to switch the level."
+				+ "Use '2', '3' and '4' to switch the level."
 				+ "\n"
 				+ "Use 'ESC' to quit the game."
 				+ "\n"

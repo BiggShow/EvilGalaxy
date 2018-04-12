@@ -75,7 +75,7 @@ public class Console extends JFrame {
 		getTextField().setFont(getTextField().getFont().deriveFont(14f));
 		
 		
-		String[] commands = new String[17];
+		String[] commands = new String[18];
 		commands[0] = "help";
 		commands[1] = "cls";
 		commands[2] = "refresh";
@@ -93,6 +93,7 @@ public class Console extends JFrame {
 		commands[14] = "level2";
 		commands[15] = "level3";
 		commands[16] = "manual";
+		commands[17] = "level4";
 
 
 		getTextField().addKeyListener(new KeyAdapter() {
@@ -119,6 +120,7 @@ public class Console extends JFrame {
 							textArea.append("DOG - disable Godmode" + "\n");
 							textArea.append("LEVEL2 - skip to Level 2" + "\n");
 							textArea.append("LEVEL3 - skip to Level 3" + "\n");
+							textArea.append("LEVEL4 - skip to Level 4" + "\n");
 							textArea.append("VOLOFF - stop game music" + "\n");
 							textArea.append("VOLON - play game music" + "\n");
 							textArea.append("STATS - show multiple game stats" + "\n");
@@ -773,12 +775,17 @@ public class Console extends JFrame {
 							return;
 						}
 						
-						if (Board.dragons.size() == 0 && Board.ingame == true) {
+						if (Board.dragons.size() == 0 && Board.lifeBunker < 50 && Board.ingame == true) {
 							
 							textArea.append("***********Already in Level 3!*********" + "\n");
 							return;
 						}
 					
+						if (Board.lifeBunker == 50 && Board.ingame == true) {
+							
+							textArea.append("***********Level change not allowed!*********" + "\n");
+							return;
+						}
 						
 						if(Board.ingame == false){
 							
@@ -801,6 +808,34 @@ public class Console extends JFrame {
 	                    		
 	                    }			    			
 		    			
+					}
+					
+					
+					if (commands[17].trim().equalsIgnoreCase(textArea.getText().trim())){
+						
+						
+						if(Board.ingame == true && (Board.aliens.size() > 0 || Board.dragons.size() > 0 || Board.lifeBunker < 50)){
+						
+							Board.aliens.clear();
+							Board.dragons.clear();
+							Board.lifeBunker = 50;
+							textArea.append("********Level 4 was loaded!*********" + "\n");							
+							return;
+						}
+						
+						if (Board.lifeBunker == 50 && Board.ingame == true) {
+							
+							textArea.append("***********Already in Level 4!*********" + "\n");
+							return;
+						}
+					
+						
+						if(Board.ingame == false){
+							
+							textArea.append("***********WARNING: Not in a game!*********");
+						}
+						
+						return;
 					}
 					
 										
