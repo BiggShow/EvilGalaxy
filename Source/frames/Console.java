@@ -795,19 +795,24 @@ public class Console extends JFrame {
 						return;
 					}
 					
-					if (commands[16].trim().equalsIgnoreCase(textArea.getText().trim())){
+					
+					if (commands[16].trim().equalsIgnoreCase(textArea.getText().trim()) && !Board.manualON){
 						
 						Manual readme = new Manual(); 
 	    				
 						readme.setVisible(true);
 						Board.manualON = true;
 	                    
-	                    	if(Board.manualON == true){
+						if(Board.manualON == true){
+
+	                    		Board.manualON = true;
 	                    		
-	                    		Board.manualON = false;
-	                    		
-	                    }			    			
-		    			
+	                    }
+
+
+						textArea.append("********Manual dialog is open!*********" + "\n");
+
+
 					}
 					
 					

@@ -2077,7 +2077,7 @@ public class Board extends JPanel implements ActionListener {
                     
                     	if(manualON == true){
                     		
-                    		manualON = false;
+                    		manualON = true;
                     		
                     }
                     
