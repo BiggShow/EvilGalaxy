@@ -29,9 +29,9 @@ NB: Switching to a previous level is not allowed!
 
 
 
-AUTHOR: 
+## AUTHOR: 
 
 Konstantin Drenski
 
 
-ENJOY RESPONSIBLY! :)
+*ENJOY RESPONSIBLY! :)*
