@@ -1848,6 +1848,7 @@ public class Board extends JPanel implements ActionListener {
 				if (key == KeyEvent.VK_R){
 					
 		            Board.god = false;
+		            Board.manualON = false;
             	    setFocusable(true);
 	    	        Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 	    	        Board.ingame = true;
@@ -1889,6 +1890,7 @@ public class Board extends JPanel implements ActionListener {
 				
 				if (key == KeyEvent.VK_E){
 					
+					Board.manualON = false;
 					timerHard.stop();
 					timerMedium.stop();
 					timerEasy.start();
@@ -1938,7 +1940,7 @@ public class Board extends JPanel implements ActionListener {
 				
 			if (key == KeyEvent.VK_M){
 					
-					
+					Board.manualON = false;
 					timerEasy.stop();
 					timerHard.stop();
 					timerMedium.start();
@@ -1988,7 +1990,7 @@ public class Board extends JPanel implements ActionListener {
 				
 				if (key == KeyEvent.VK_H){
 					
-					
+					Board.manualON = false;
 					timerEasy.stop();
 					timerMedium.stop();
 					timerHard.start();
@@ -2070,17 +2072,13 @@ public class Board extends JPanel implements ActionListener {
 				
 				if (key == KeyEvent.VK_O && !manualON){	
 					
-					manual = new Manual();
-											
+					manual = new Manual();						
 					manual.setVisible(true);
-					manualON = true;
-                    
-                    	if(manualON == true){
-                    		
-                    		manualON = true;
-                    		
+					
+					if(!manualON == true){
+                    	
+						manualON = true;
                     }
-                    
                     
 				}
 

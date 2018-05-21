@@ -176,6 +176,21 @@ public class Main extends JFrame {
 	        	}
         	}
 	        
+
+        	class Manuaal implements ActionListener {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e){
+	        		Manual manual = new Manual(); 
+	    				
+	        		if(!Board.manualON){
+	        			manual.setVisible(true);
+	        			if(!Board.manualON == true){
+	                    	Board.manualON = true;
+	                    }
+	        		}
+	    			
+	        	}
+        	}
 	        
 	        class Easy implements ActionListener {
 	        	@Override
@@ -329,24 +344,8 @@ public class Main extends JFrame {
         	}
 
 	        
-	        	class AboutAction implements ActionListener {
-		        	@Override
-		        	public void actionPerformed(ActionEvent e){
-		        		Manual manual = new Manual(); 
-		    				
-							manual.setVisible(true);
-							Board.manualON = true;
-		                    
-		                    	if(Board.manualON == true){
-		                    		
-		                    		Board.manualON = false;
-		                    		
-		                    }	        		
-		    			
-		        	}
-	        	}
 	        	exit.addActionListener (new ExitAction());
-	        	manual.addActionListener(new AboutAction());
+	        	manual.addActionListener(new Manuaal());
 	        	newgame.addActionListener(new NewGameAction());
 	        	join.addActionListener(new Join());
 	        	console.addActionListener(new Consolee());

@@ -75,7 +75,7 @@ public class Console extends JFrame {
 		getTextField().setFont(getTextField().getFont().deriveFont(14f));
 		
 		
-		String[] commands = new String[18];
+		String[] commands = new String[17];
 		commands[0] = "help";
 		commands[1] = "cls";
 		commands[2] = "refresh";
@@ -92,8 +92,7 @@ public class Console extends JFrame {
 		commands[13] = "restart";
 		commands[14] = "level2";
 		commands[15] = "level3";
-		commands[16] = "manual";
-		commands[17] = "level4";
+		commands[16] = "level4";
 
 
 		getTextField().addKeyListener(new KeyAdapter() {
@@ -795,28 +794,9 @@ public class Console extends JFrame {
 						return;
 					}
 					
+										
 					
-					if (commands[16].trim().equalsIgnoreCase(textArea.getText().trim()) && !Board.manualON){
-						
-						Manual readme = new Manual(); 
-	    				
-						readme.setVisible(true);
-						Board.manualON = true;
-	                    
-						if(Board.manualON == true){
-
-	                    		Board.manualON = true;
-	                    		
-	                    }
-
-
-						textArea.append("********Manual dialog is open!*********" + "\n");
-
-
-					}
-					
-					
-					if (commands[17].trim().equalsIgnoreCase(textArea.getText().trim())){
+					if (commands[16].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
 						
 						if(Board.ingame == true && (Board.aliens.size() > 0 || Board.dragons.size() > 0 || Board.lifeBunker < 50)){
