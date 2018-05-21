@@ -25,7 +25,7 @@ Use 'C' to invoke the game C O N S O L E.
 Use '2', '3' and '4' to switch the level.  
 Use 'ESC' to quit the game.  
 
-NB: Switching to a previous level is not allowed!
+### *NB: Switching to a previous level is not allowed!*
 
 
 
