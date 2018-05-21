@@ -2,20 +2,13 @@
 
 HOW TO LAUNCH:
 
-
-
 For WINDOWS users: Run the setup.exe file, choose installation folder and install the game. Launch the game from the EvilGalaxy.exe or from the shortcut on your desktop.
-
-
 
 For NON-WINDOWS users: Run the EvilGalaxy.jar file WITHIN its folder. If you remove the .jar file outside the folder, the game resources won't be found, which will result in a failure to load the game.
 
 
 
-
-MANUAL:
-
-
+MANUAL: 
 
 Use the ARROWS to navigate your ship. 
 Use 'SPACE' and 'CTRL' to fire, 
@@ -41,6 +34,4 @@ AUTHOR:
 Konstantin Drenski
 
 
-
-
-ENJOY!    		
+ENJOY RESPONSIBLY! :)
