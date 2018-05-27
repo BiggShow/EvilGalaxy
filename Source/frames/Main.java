@@ -203,7 +203,7 @@ public class Main extends JFrame {
 	            	if(Board.aliens.isEmpty()){
 	            		Board.roar.loop();
 	            	}
-	            	if(Board.ingame == false){
+	            	if(!Board.ingame){
 	            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 	            		Board.ingame = true;
 	            		Board.lifeEvilHead = 3;
@@ -254,7 +254,7 @@ public class Main extends JFrame {
 	            	if(Board.aliens.isEmpty()){
 	            		Board.roar.loop();
 	            	}
-	            	if(Board.ingame == false){
+	            	if(!Board.ingame){
 	            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 	            		Board.ingame = true;
 	            		Board.lifeEvilHead = 3;
@@ -304,7 +304,7 @@ public class Main extends JFrame {
 	            	if(Board.aliens.isEmpty()){
 	            		Board.roar.loop();
 	            	}
-	            	if(Board.ingame == false){
+	            	if(!Board.ingame){
 	            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 	            		Board.ingame = true;
 	            		Board.lifeEvilHead = 3;

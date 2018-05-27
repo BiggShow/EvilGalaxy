@@ -231,7 +231,7 @@ public class Board extends JPanel implements ActionListener {
 	            
 	        }
 	        
-	        if(aliens.isEmpty() && timerMedium.isRunning() == false && timerHard.isRunning() == true){
+	        if(aliens.isEmpty() && !timerMedium.isRunning() && timerHard.isRunning() == true){
 	        	
 	        	drawObjects2(g);
 	        	
@@ -268,7 +268,7 @@ public class Board extends JPanel implements ActionListener {
 
 	        
 	        
-	        if(aliens.isEmpty() && timerMedium.isRunning() == false && timerHard.isRunning() == false){
+	        if(aliens.isEmpty() && !timerMedium.isRunning() && !timerHard.isRunning()){
 	        	
 	        	drawObjects2(g);
 	        	
@@ -299,7 +299,7 @@ public class Board extends JPanel implements ActionListener {
 	        	
 	        }
 	        
-	        if(aliens.isEmpty() && timerMedium.isRunning() == true && timerHard.isRunning() == false){
+	        if(aliens.isEmpty() && timerMedium.isRunning() == true && !timerHard.isRunning()){
 	        	
 	        	drawObjects2(g);
 	        	
@@ -384,7 +384,7 @@ public class Board extends JPanel implements ActionListener {
 	        	
 	        }
 	        
-	        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
 	        	
 	        	drawCollect(g);
 	        	g.drawString("Missiles: Locked", 320, 15);
@@ -395,7 +395,7 @@ public class Board extends JPanel implements ActionListener {
 
 	        
 	        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && 
-	        		timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        		!timerHard.isRunning() && !timerMedium.isRunning()){
 	        	
 	        	drawCollect(g);
 	        	g.drawString("Missiles: Locked", 320, 15);
@@ -415,7 +415,7 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	        
 	        if(dragons.isEmpty() && lifeBunker < 50 &&
-	        		timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        		!timerHard.isRunning() && timerMedium.isRunning() == true){
 	        	
 	        	drawKillTheBunker(g);
 	        	g.drawString("Missiles: Unlocked", 320, 15);
@@ -426,7 +426,7 @@ public class Board extends JPanel implements ActionListener {
 	        
 	        
 	        if(dragons.isEmpty() && lifeBunker < 50 &&
-	        		timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        		!timerHard.isRunning() && !timerMedium.isRunning()){
 	        	
 	        	drawKillTheBunker(g);
 	        	g.drawString("Missiles: Unlocked", 320, 15);
@@ -444,7 +444,7 @@ public class Board extends JPanel implements ActionListener {
 	        }
 	        
 	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
-	        		timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        		!timerHard.isRunning() && timerMedium.isRunning() == true){
 	        	
 	        	drawKillTheHead(g);
 	        	g.drawString("Missiles: Unlocked", 320, 15);
@@ -455,7 +455,7 @@ public class Board extends JPanel implements ActionListener {
 	        
 	        
 	        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
-	        		timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        		!timerHard.isRunning() && !timerMedium.isRunning()){
 	        	
 	        	drawKillTheHead(g);
 	        	g.drawString("Missiles: Unlocked", 320, 15);
@@ -738,7 +738,7 @@ public class Board extends JPanel implements ActionListener {
 	        	
 	        }
 	        
-	        if(aliens.size() > 0 && timerHard.isRunning() == false && timerMedium.isRunning() == true){
+	        if(aliens.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
 	        	
 	        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
 	        	g.drawString("Level: " + 1, 230, 15);
@@ -748,7 +748,7 @@ public class Board extends JPanel implements ActionListener {
 	        	
 	        }
 
-	        if(aliens.size() > 0 && timerHard.isRunning() == false && timerMedium.isRunning() == false){
+	        if(aliens.size() > 0 && !timerHard.isRunning() && !timerMedium.isRunning()){
 	        	
 	        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
 	        	g.drawString("Level: " + 1, 230, 15);
@@ -1344,7 +1344,7 @@ public class Board extends JPanel implements ActionListener {
 
 		            Alien a = aliens.get(i);
 
-		            if (a.isVisible() && timerHard.isRunning() == true && timerEasy.isRunning() == false && timerMedium.isRunning() == false){
+		            if (a.isVisible() && timerHard.isRunning() == true && !timerEasy.isRunning() && !timerMedium.isRunning()){
 		            	a.moveFaster();
 		            }
 		            
@@ -1773,7 +1773,7 @@ public class Board extends JPanel implements ActionListener {
 				
 				if (key == KeyEvent.VK_A) {
 					bgMusic.loop();
-					if(!ingame || (timerEasy.isRunning() == false && timerHard.isRunning() == false && timerMedium.isRunning() == false)){
+					if(!ingame || (!timerEasy.isRunning() && !timerHard.isRunning() && !timerMedium.isRunning())){
 						bgMusic.stop();
 					}
 		        }
@@ -1898,7 +1898,7 @@ public class Board extends JPanel implements ActionListener {
 	            	if(aliens.isEmpty()){
 	            		roar.loop();
 	            	}
-	            	if(ingame == false){
+	            	if(!ingame){
 		    	        setFocusable(true);
 		    	        bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		    	        ingame = true;
@@ -1948,7 +1948,7 @@ public class Board extends JPanel implements ActionListener {
 	            	if(aliens.isEmpty()){
 	            		roar.loop();
 	            	}
-	            	if(ingame == false){
+	            	if(!ingame){
 	 	    	        bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		    	        ingame = true;
 		    	        lifeEvilHead = 3;
@@ -1998,7 +1998,7 @@ public class Board extends JPanel implements ActionListener {
 	            	if(aliens.isEmpty()){
 	            		roar.loop();
 	            	}
-	            	if(ingame == false){
+	            	if(!ingame){
 	 	    	        bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		    	        ingame = true;
 		    	        lifeEvilHead = 3;

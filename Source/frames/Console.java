@@ -218,7 +218,7 @@ public class Console extends JFrame {
 							Board.roar.stop();
 							textArea.append("********Game was paused!*********" + "\n");
 						}
-						if(Board.ingame == false){
+						if(!Board.ingame){
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
 						return;
@@ -226,7 +226,7 @@ public class Console extends JFrame {
 					
 					
 					if (commands[4].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true && Board.timerEasy.isRunning() == false){
+						if(Board.ingame == true && !Board.timerEasy.isRunning()){
 							textArea.append("********Game switched to easy!*********" + "\n");
 							Board.timerMedium.stop();
 			        		Board.timerHard.stop();
@@ -238,7 +238,7 @@ public class Console extends JFrame {
 							textArea.append("********Already on E A S Y!*********" + "\n");
 							return;
 						}
-		            	if(Board.ingame == false){
+		            	if(!Board.ingame){
 		            		textArea.append("********Game initialized!*********" + "\n");
 		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
@@ -280,7 +280,7 @@ public class Console extends JFrame {
 				}
 					
 					if (commands[5].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true && Board.timerMedium.isRunning() == false){
+						if(Board.ingame == true && !Board.timerMedium.isRunning()){
 							textArea.append("********Game switched to medium!*********" + "\n");
 							Board.timerEasy.stop();
 			        		Board.timerHard.stop();
@@ -292,7 +292,7 @@ public class Console extends JFrame {
 							textArea.append("********Already on M E D I U M!*********" + "\n");
 							return;
 						}
-		            	if(Board.ingame == false){
+		            	if(!Board.ingame){
 		            		textArea.append("********Game initialized!*********" + "\n");
 		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
@@ -334,7 +334,7 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[6].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true && Board.timerHard.isRunning() == false){
+						if(Board.ingame == true && !Board.timerHard.isRunning()){
 							textArea.append("********Game switched to hard!*********" + "\n");
 							Board.timerEasy.stop();
 			        		Board.timerMedium.stop();
@@ -346,7 +346,7 @@ public class Console extends JFrame {
 							textArea.append("********Already on H A R D!*********" + "\n");
 							return;
 						}
-						if(Board.ingame == false){
+						if(!Board.ingame){
 							textArea.append("********Game initialized!*********" + "\n");
 		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
@@ -402,9 +402,9 @@ public class Console extends JFrame {
 							textArea.append("********MUSIC IS OFF*********" + "\n");
 							return;
 						}
-						if(Board.ingame == false || (Board.timerEasy.isRunning() == false && 
-								Board.timerMedium.isRunning() == false &&
-								Board.timerHard.isRunning() == false)){
+						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
+								!Board.timerMedium.isRunning() &&
+								!Board.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -420,9 +420,9 @@ public class Console extends JFrame {
 							textArea.append("********MUSIC IS ON*********" + "\n");
 							return;
 						}
-						if(Board.ingame == false || (Board.timerEasy.isRunning() == false && 
-								Board.timerMedium.isRunning() == false &&
-								Board.timerHard.isRunning() == false)){
+						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
+								!Board.timerMedium.isRunning() &&
+								!Board.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -442,9 +442,9 @@ public class Console extends JFrame {
 							textArea.append("***********Already in GODMODE!*********" + "\n");
 							return;
 						}
-						if(Board.ingame == false || (Board.timerEasy.isRunning() == false && 
-								Board.timerMedium.isRunning() == false &&
-								Board.timerHard.isRunning() == false)){
+						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
+								!Board.timerMedium.isRunning() &&
+								!Board.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -464,9 +464,9 @@ public class Console extends JFrame {
 							textArea.append("***********Not in a GODMODE!*********" + "\n");
 							return;
 						}
-						if(Board.ingame == false || (Board.timerEasy.isRunning() == false && 
-								Board.timerMedium.isRunning() == false &&
-								Board.timerHard.isRunning() == false)){
+						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
+								!Board.timerMedium.isRunning() &&
+								!Board.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -689,9 +689,9 @@ public class Console extends JFrame {
 								
 						}
 					 
-					 	if(Board.ingame == false || (Board.timerEasy.isRunning() == false && 
-					 			Board.timerMedium.isRunning() == false && 
-					 			Board.timerHard.isRunning() == false)){
+					 	if(!Board.ingame || (!Board.timerEasy.isRunning() && 
+					 			!Board.timerMedium.isRunning() && 
+					 			!Board.timerHard.isRunning())){
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
 					 	return;
@@ -769,7 +769,7 @@ public class Console extends JFrame {
 							return;
 						}
 						
-						if(Board.ingame == false){
+						if(!Board.ingame){
 							
 							textArea.append("***********WARNING: Not in a game!*********");
 							return;
@@ -802,7 +802,7 @@ public class Console extends JFrame {
 							return;
 						}
 						
-						if(Board.ingame == false){
+						if(!Board.ingame){
 							
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
@@ -832,7 +832,7 @@ public class Console extends JFrame {
 						}
 					
 						
-						if(Board.ingame == false){
+						if(!Board.ingame){
 							
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
