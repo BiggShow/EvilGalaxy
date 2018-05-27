@@ -123,7 +123,6 @@ public class Console extends JFrame {
 							textArea.append("VOLOFF - stop game music" + "\n");
 							textArea.append("VOLON - play game music" + "\n");
 							textArea.append("STATS - show multiple game stats" + "\n");
-							textArea.append("MANUAL - show the manual" + "\n");
 							textArea.append("CLS - close console" + "\n");
 							textArea.append("EXIT - exit game" + "\n");
 							return;
@@ -227,15 +226,20 @@ public class Console extends JFrame {
 					
 					
 					if (commands[4].trim().equalsIgnoreCase(textArea.getText().trim())){
-						textArea.append("********Game switched to easy!*********" + "\n");
-						Board.timerMedium.stop();
-		        		Board.timerHard.stop();
-		        		Board.timerEasy.start();
-		        		Board.bgMusic.loop();
-		            	if(Board.aliens.isEmpty()){
-		            		Board.roar.loop();
-		            	}
+						if(Board.ingame == true && Board.timerEasy.isRunning() == false){
+							textArea.append("********Game switched to easy!*********" + "\n");
+							Board.timerMedium.stop();
+			        		Board.timerHard.stop();
+			        		Board.timerEasy.start();
+			        		Board.bgMusic.loop();
+			        		return;
+						}
+						if(Board.ingame == true && Board.timerEasy.isRunning() == true){
+							textArea.append("********Already on E A S Y!*********" + "\n");
+							return;
+						}
 		            	if(Board.ingame == false){
+		            		textArea.append("********Game initialized!*********" + "\n");
 		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
@@ -276,15 +280,20 @@ public class Console extends JFrame {
 				}
 					
 					if (commands[5].trim().equalsIgnoreCase(textArea.getText().trim())){
-						textArea.append("********Game switched to medium!*********" + "\n");
-						Board.timerEasy.stop();
-		        		Board.timerHard.stop();
-		        		Board.timerMedium.start();
-		        		Board.bgMusic.loop();
-		            	if(Board.aliens.isEmpty()){
-		            		Board.roar.loop();
-		            	}
+						if(Board.ingame == true && Board.timerMedium.isRunning() == false){
+							textArea.append("********Game switched to medium!*********" + "\n");
+							Board.timerEasy.stop();
+			        		Board.timerHard.stop();
+			        		Board.timerMedium.start();
+			        		Board.bgMusic.loop();
+			        		return;
+						}
+						if(Board.ingame == true && Board.timerMedium.isRunning() == true){
+							textArea.append("********Already on M E D I U M!*********" + "\n");
+							return;
+						}
 		            	if(Board.ingame == false){
+		            		textArea.append("********Game initialized!*********" + "\n");
 		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
@@ -325,15 +334,20 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[6].trim().equalsIgnoreCase(textArea.getText().trim())){
-						textArea.append("********Game switched to hard!*********" + "\n");
-						Board.timerEasy.stop();
-		        		Board.timerMedium.stop();
-		        		Board.timerHard.start();
-		        		Board.bgMusic.loop();
-		            	if(Board.aliens.isEmpty()){
-		            		Board.roar.loop();
-		            	}
-		            	if(Board.ingame == false){
+						if(Board.ingame == true && Board.timerHard.isRunning() == false){
+							textArea.append("********Game switched to hard!*********" + "\n");
+							Board.timerEasy.stop();
+			        		Board.timerMedium.stop();
+			        		Board.timerHard.start();
+			        		Board.bgMusic.loop();
+			        		return;
+						}
+						if(Board.ingame == true && Board.timerHard.isRunning() == true){
+							textArea.append("********Already on H A R D!*********" + "\n");
+							return;
+						}
+						if(Board.ingame == false){
+							textArea.append("********Game initialized!*********" + "\n");
 		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
 		            		Board.ingame = true;
 		            		Board.lifeEvilHead = 3;
@@ -686,7 +700,7 @@ public class Console extends JFrame {
 					
 					if (commands[13].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
-							textArea.append("********Game was restarted!*********" + "\n");
+							textArea.append("********Game initialized!*********" + "\n");
 							Board.god = false;
 		            	    setFocusable(true);
 			    	        Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
@@ -736,6 +750,7 @@ public class Console extends JFrame {
 							
 							if (Board.aliens.size() > 0) {
 								Board.aliens.clear();
+								Board.roar.loop();
 							}
 							
 							
@@ -770,6 +785,7 @@ public class Console extends JFrame {
 						
 							Board.aliens.clear();
 							Board.dragons.clear();
+							Board.roar.stop();
 							textArea.append("********Level 3 was loaded!*********" + "\n");							
 							return;
 						}
@@ -803,6 +819,7 @@ public class Console extends JFrame {
 						
 							Board.aliens.clear();
 							Board.dragons.clear();
+							Board.roar.stop();
 							Board.lifeBunker = 50;
 							textArea.append("********Level 4 was loaded!*********" + "\n");							
 							return;
