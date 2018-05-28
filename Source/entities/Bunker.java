@@ -11,7 +11,7 @@ public class Bunker extends SpritePattern {
 	public static ArrayList<BunkerBullet> bullets;
 	public static ArrayList<BunkerBullet> bullets2;
 	
-
+	public static Bunker bunkerObj;
 
 	public Bunker(int x, int y) {
 		super(x, y);

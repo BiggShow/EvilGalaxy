@@ -1,9 +1,10 @@
 package frames;
+
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
-public class SpritePattern {
+public abstract class SpritePattern {
 	
 	 	protected int x;
 	    protected int y;

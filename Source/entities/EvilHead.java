@@ -9,7 +9,7 @@ import sound_engine.PlayWave1st;
 
 public class EvilHead extends SpritePattern{
 	
-
+			public static EvilHead evilHead;
 		    private double speedX;
 		    private double speedY;
 		    private ArrayList<FireBall> fireballs;

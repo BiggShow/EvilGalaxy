@@ -5,6 +5,8 @@ import frames.SpritePattern;
 
 public class VolBtn extends SpritePattern {
 	
+    public static VolBtn volButt;
+	
 	public VolBtn(int x, int y) {
         super(x, y);
 
@@ -31,7 +33,8 @@ public class VolBtn extends SpritePattern {
 			initMute();
         }
 		
-		if (key == KeyEvent.VK_A) {
+		if (key == KeyEvent.VK_A || key == KeyEvent.VK_E
+				|| key == KeyEvent.VK_M || key == KeyEvent.VK_H) {
 			initVol();
         }
 			

@@ -11,7 +11,8 @@ import sound_engine.PlayWave1st;
 
 public class MyShip extends SpritePattern {
 
-	    double speedX;
+	    public static MyShip myShip;
+		double speedX;
 	    double speedY;
 	    private ArrayList<ShipMissile> missiles;
 	    private ArrayList<ShipRocket> rockets;

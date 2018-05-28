@@ -26,6 +26,7 @@ import entities.MyShip;
 import entities.EvilHead;
 import entities.Bunker;
 import items.VolBtn;
+import sound_engine.SoundResources;
 
 @SuppressWarnings("serial")
 public class Console extends JFrame {
@@ -214,8 +215,8 @@ public class Console extends JFrame {
 							Board.timerEasy.stop();
 							Board.timerMedium.stop();
 							Board.timerHard.stop();
-							Board.bgMusic.stop();
-							Board.roar.stop();
+							SoundResources.bgMusic.stop();
+							SoundResources.roar.stop();
 							textArea.append("********Game was paused!*********" + "\n");
 						}
 						if(!Board.ingame){
@@ -231,7 +232,7 @@ public class Console extends JFrame {
 							Board.timerMedium.stop();
 			        		Board.timerHard.stop();
 			        		Board.timerEasy.start();
-			        		Board.bgMusic.loop();
+			        		SoundResources.bgMusic.loop();
 			        		return;
 						}
 						if(Board.ingame == true && Board.timerEasy.isRunning() == true){
@@ -248,18 +249,18 @@ public class Console extends JFrame {
 			    	        
 		            		setPreferredSize(new Dimension(1310, 1040));
 
-		            		Board.myShip = new MyShip(40, 180);
-		            		Board.myShip.isVisible();
+		            		MyShip.myShip = new MyShip(40, 180);
+		            		MyShip.myShip.isVisible();
 			    	        
-		            		Board.evilHead = new EvilHead(640, 180);
-		            		Board.evilHead.isVisible();
-		            		Board.evilHead.AIOnMedium();
+		            		EvilHead.evilHead = new EvilHead(640, 180);
+		            		EvilHead.evilHead.isVisible();
+		            		EvilHead.evilHead.AIOnMedium();
 		            		
-		            		Board.bunkerObj = new Bunker(450, 650);
-			    	        Board.bunkerObj.isVisible();
+		            		Bunker.bunkerObj = new Bunker(450, 650);
+		            		Bunker.bunkerObj.isVisible();
 			    	        
-		            		Board.volButt = new VolBtn(940, 15);
-		            		Board.volButt.isVisible();
+		            		VolBtn.volButt = new VolBtn(940, 15);
+		            		VolBtn.volButt.isVisible();
 
 		            		Board.initAliens();
 		            		Board.initGold();
@@ -269,10 +270,10 @@ public class Console extends JFrame {
 		            		Board.timerMedium.stop();
 		            		Board.timerHard.stop();;
 		            		Board.timerEasy.restart();
-		            		Board.gameWon.play();
-		            		Board.gameLost.stop();
-		            		Board.bgMusic.loop();
-			    	        Board.roar.stop();
+		            		SoundResources.gameWon.play();
+		            		SoundResources.gameLost.stop();
+		            		SoundResources.bgMusic.loop();
+		            		SoundResources.roar.stop();
 		            		return;
 					}
 		            	
@@ -285,7 +286,7 @@ public class Console extends JFrame {
 							Board.timerEasy.stop();
 			        		Board.timerHard.stop();
 			        		Board.timerMedium.start();
-			        		Board.bgMusic.loop();
+			        		SoundResources.bgMusic.loop();
 			        		return;
 						}
 						if(Board.ingame == true && Board.timerMedium.isRunning() == true){
@@ -302,18 +303,18 @@ public class Console extends JFrame {
 			    	        
 		            		setPreferredSize(new Dimension(1310, 1040));
 
-		            		Board.myShip = new MyShip(40, 180);
-		            		Board.myShip.isVisible();
+		            		MyShip.myShip = new MyShip(40, 180);
+		            		MyShip.myShip.isVisible();
 			    	        
-		            		Board.evilHead = new EvilHead(640, 180);
-		            		Board.evilHead.isVisible();
-		            		Board.evilHead.AIOnMedium();
+		            		EvilHead.evilHead = new EvilHead(640, 180);
+		            		EvilHead.evilHead.isVisible();
+		            		EvilHead.evilHead.AIOnMedium();
 		            		
-		            		Board.bunkerObj = new Bunker(450, 650);
-			    	        Board.bunkerObj.isVisible();
+		            		Bunker.bunkerObj = new Bunker(450, 650);
+		            		Bunker.bunkerObj.isVisible();
 			    	        
-		            		Board.volButt = new VolBtn(940, 15);
-		            		Board.volButt.isVisible();
+		            		VolBtn.volButt = new VolBtn(940, 15);
+		            		VolBtn.volButt.isVisible();
 
 		            		Board.initAliens();
 		            		Board.initGold();
@@ -323,10 +324,12 @@ public class Console extends JFrame {
 		            		Board.timerEasy.stop();
 		            		Board.timerHard.stop();;
 		            		Board.timerMedium.restart();
-		            		Board.gameWon.play();
-		            		Board.gameLost.stop();
-		            		Board.bgMusic.loop();
-			    	        Board.roar.stop();
+		            		
+		            		SoundResources.gameWon.play();
+		            		SoundResources.gameLost.stop();
+		            		SoundResources.bgMusic.loop();
+		            		SoundResources.roar.stop();
+		            		
 		            		return;
 
 		            	}
@@ -339,7 +342,7 @@ public class Console extends JFrame {
 							Board.timerEasy.stop();
 			        		Board.timerMedium.stop();
 			        		Board.timerHard.start();
-			        		Board.bgMusic.loop();
+			        		SoundResources.bgMusic.loop();
 			        		return;
 						}
 						if(Board.ingame == true && Board.timerHard.isRunning() == true){
@@ -356,18 +359,18 @@ public class Console extends JFrame {
 		            		
 		            		setPreferredSize(new Dimension(1310, 1040));
 
-		            		Board.myShip = new MyShip(40, 180);
-		            		Board.myShip.isVisible();
+		            		MyShip.myShip = new MyShip(40, 180);
+		            		MyShip.myShip.isVisible();
 			    	        
-		            		Board.evilHead = new EvilHead(640, 180);
-		            		Board.evilHead.isVisible();
-		            		Board.evilHead.AIOnMedium();
+		            		EvilHead.evilHead = new EvilHead(640, 180);
+		            		EvilHead.evilHead.isVisible();
+		            		EvilHead.evilHead.AIOnMedium();
 		            		
-		            		Board.bunkerObj = new Bunker(450, 650);
-			    	        Board.bunkerObj.isVisible();
+		            		Bunker.bunkerObj = new Bunker(450, 650);
+		            		Bunker.bunkerObj.isVisible();
 			    	        
-		            		Board.volButt = new VolBtn(940, 15);
-		            		Board.volButt.isVisible();
+		            		VolBtn.volButt = new VolBtn(940, 15);
+		            		VolBtn.volButt.isVisible();
 
 		            		Board.initAliens();
 		            		Board.initGold();
@@ -377,12 +380,11 @@ public class Console extends JFrame {
 		            		Board.timerEasy.stop();
 		            		Board.timerMedium.stop();;
 		            		Board.timerHard.restart();
-		            		Board.gameWon.play();
-		            		Board.gameLost.stop();
-		            		Board.bgMusic.loop();
-			    	        Board.roar.stop();
+		            		SoundResources.gameWon.play();
+		            		SoundResources.gameLost.stop();
+		            		SoundResources.bgMusic.loop();
+		            		SoundResources.roar.stop();
 		            		return;
-
 		            	}
 		            	return;
 					}
@@ -398,7 +400,7 @@ public class Console extends JFrame {
 						if(Board.timerEasy.isRunning() == true || 
 								Board.timerMedium.isRunning() == true ||
 								Board.timerHard.isRunning() == true){
-							Board.bgMusic.stop();
+							SoundResources.bgMusic.stop();
 							textArea.append("********MUSIC IS OFF*********" + "\n");
 							return;
 						}
@@ -416,7 +418,7 @@ public class Console extends JFrame {
 						if(Board.timerEasy.isRunning() == true || 
 								Board.timerMedium.isRunning() == true ||
 								Board.timerHard.isRunning() == true){
-							Board.bgMusic.loop();
+							SoundResources.bgMusic.loop();
 							textArea.append("********MUSIC IS ON*********" + "\n");
 							return;
 						}
@@ -711,18 +713,18 @@ public class Console extends JFrame {
 			    	        
 			    	        setPreferredSize(new Dimension(1310, 1040));
 
-			    	        Board.myShip = new MyShip(40, 180);
-			    	        Board.myShip.isVisible();
+			    	        MyShip.myShip = new MyShip(40, 180);
+			    	        MyShip.myShip.isVisible();
 			    	        
-			    	        Board.evilHead = new EvilHead(640, 180);
-			    	        Board.evilHead.isVisible();
-			    	        Board.evilHead.AIOnEasy();
+			    	        EvilHead.evilHead = new EvilHead(640, 180);
+			    	        EvilHead.evilHead.isVisible();
+			    	        EvilHead.evilHead.AIOnEasy();
 			    	        
-			    	        Board.bunkerObj = new Bunker(450, 650);
-			    	        Board.bunkerObj.isVisible();
+			    	        Bunker.bunkerObj = new Bunker(450, 650);
+			    	        Bunker.bunkerObj.isVisible();
 			    	        
-			    	        Board.volButt = new VolBtn(940, 15);
-		            		Board.volButt.isVisible();
+			    	        VolBtn.volButt = new VolBtn(940, 15);
+			    	        VolBtn.volButt.isVisible();
 
 		            		Board.initAliens();
 		            		Board.initGold();
@@ -732,10 +734,10 @@ public class Console extends JFrame {
 			    	        Board.timerHard.stop();
 			    	        Board.timerMedium.stop();
 			    	        Board.timerEasy.restart();
-			    	        Board.gameWon.play();
-			    	        Board.gameLost.stop();
-			    	        Board.bgMusic.loop();
-			    	        Board.roar.stop();
+			    	        SoundResources.gameWon.play();
+			    	        SoundResources.gameLost.stop();
+			    	        SoundResources.bgMusic.loop();
+			    	        SoundResources.roar.stop();
 		            		return;		            	
 					}
 					
@@ -750,9 +752,8 @@ public class Console extends JFrame {
 							
 							if (Board.aliens.size() > 0) {
 								Board.aliens.clear();
-								Board.roar.loop();
+								SoundResources.roar.loop();
 							}
-							
 							
 							return;
 						}
@@ -785,7 +786,7 @@ public class Console extends JFrame {
 						
 							Board.aliens.clear();
 							Board.dragons.clear();
-							Board.roar.stop();
+							SoundResources.roar.stop();
 							textArea.append("********Level 3 was loaded!*********" + "\n");							
 							return;
 						}
@@ -819,7 +820,7 @@ public class Console extends JFrame {
 						
 							Board.aliens.clear();
 							Board.dragons.clear();
-							Board.roar.stop();
+							SoundResources.roar.stop();
 							Board.lifeBunker = 50;
 							textArea.append("********Level 4 was loaded!*********" + "\n");							
 							return;

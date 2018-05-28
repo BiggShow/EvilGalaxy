@@ -1,4 +1,5 @@
 package sound_engine;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -10,7 +11,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 public class PlayWave2nd {
+	
     private Clip clip;
+    
     public PlayWave2nd(String fileName) {
         // specify the sound to play
         // (assuming the sound can be played by the audio system)
