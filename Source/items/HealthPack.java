@@ -1,10 +1,13 @@
 package items;
 
-import frames.SpritePattern;
+import java.util.ArrayList;
+
+import game_engine.SpritePattern;
 
 public class HealthPack extends SpritePattern {
 
-    private final int INITIAL_Y = 0;
+	public static ArrayList<HealthPack> healthpack;
+	private final int INITIAL_Y = 0;
 
     public HealthPack(int x, int y) {
         super(x, y);

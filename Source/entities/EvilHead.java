@@ -2,7 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
-import frames.SpritePattern;
+import game_engine.SpritePattern;
 import items.CanonBall;
 import items.FireBall;
 import sound_engine.PlayWave1st;

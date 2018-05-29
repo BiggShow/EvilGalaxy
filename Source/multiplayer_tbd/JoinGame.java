@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import frames.Board;
 import frames.Console;
+import game_engine.InitObjects;
 
 
 @SuppressWarnings("serial")
@@ -77,8 +77,8 @@ public class JoinGame extends JFrame {
 				
 				
 					csl.setVisible(true);		
-					if(!Board.consoleON == true){
-                    	Board.consoleON = true;
+					if(!InitObjects.consoleON == true){
+                    	InitObjects.consoleON = true;
                     }
 					csl.getTextField().setText("refresh");
 				

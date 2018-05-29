@@ -2,7 +2,7 @@ package entities;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import frames.SpritePattern;
+import game_engine.SpritePattern;
 import items.CanonBall;
 import items.ShipMissile;
 import items.ShipRocket;

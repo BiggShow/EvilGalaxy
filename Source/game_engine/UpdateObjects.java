@@ -1,4 +1,4 @@
-package frames;
+package game_engine;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -17,11 +17,15 @@ import items.HealthPack;
 import items.ShipMissile;
 import items.ShipRocket;
 import sound_engine.PlayWave1st;
-import sound_engine.SoundResources;
+import sound_engine.LoadSounds;
 
-public abstract class StateUpdate extends Board {
+public abstract class UpdateObjects extends InitObjects {
 	
 	private static final long serialVersionUID = 1L;
+    static int lifeEvilHead = 3;
+    public static int lifeMyShip = 3;
+    public static int lifeBunker = 3;
+
 
 	@Override
     public void actionPerformed(ActionEvent e) {
@@ -108,7 +112,7 @@ public abstract class StateUpdate extends Board {
 			
 			
 			else {
-				SoundResources.fuse.stop();
+				LoadSounds.fuse.stop();
 				bullets.remove(i);
 			}
 		}
@@ -134,7 +138,7 @@ public abstract class StateUpdate extends Board {
 			
 			
 			else {
-				SoundResources.fuse.stop();
+				LoadSounds.fuse.stop();
 				bullets2.remove(i2);
 			}
 		}
@@ -153,15 +157,15 @@ public abstract class StateUpdate extends Board {
 	        	FireBall n = fireballs.get(i);
 	            
 	        	
-	        	if (n.isVisible() && dragons.isEmpty() && timerHard.isRunning() == true) {
-	                if(goldstack.isEmpty() && lifeMyShip <= 3){
+	        	if (n.isVisible() && Dragon.dragons.isEmpty() && timerHard.isRunning() == true) {
+	                if(Gold.goldstack.isEmpty() && lifeMyShip <= 3){
 	                	n.evilShotDiagUp();
 	                	if(n.y < 0){
 	                		n.y = 0;
 	                		n.evilShot();
 	                	}
 	                }
-	                if(goldstack.size() > 0 && lifeMyShip <= 3){
+	                if(Gold.goldstack.size() > 0 && lifeMyShip <= 3){
 	                	n.evilShotDiagDown();
 	                	if(n.y > 768){
 	                		n.y = 768;
@@ -220,9 +224,9 @@ public abstract class StateUpdate extends Board {
     private void updateAliens() {
 
     		
-	    	for (int i = 0; i < aliens.size(); i++) {
+	    	for (int i = 0; i < Alien.aliens.size(); i++) {
 
-	            Alien a = aliens.get(i);
+	            Alien a = Alien.aliens.get(i);
 
 	            if (a.isVisible() && timerHard.isRunning() == true && !timerEasy.isRunning() && !timerMedium.isRunning()){
 	            	a.moveFaster();
@@ -233,7 +237,7 @@ public abstract class StateUpdate extends Board {
 	            }
 	            	
 	            	else {
-	                aliens.remove(i);
+	                Alien.aliens.remove(i);
 	                new PlayWave1st("sounds/bloop.wav").start();
 	            }
 	        }
@@ -244,33 +248,33 @@ public abstract class StateUpdate extends Board {
 
     		
     	    if (EvilHead.evilHead.isVisible() && timerEasy.isRunning() == true && 
-    	    		(aliens.size() > 0 || dragons.size() > 0)) {
+    	    		(Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)) {
                 EvilHead.evilHead.AIOnEasy();
             }
     	    
     	    if (EvilHead.evilHead.isVisible() && timerEasy.isRunning() == true && 
-    	    		dragons.isEmpty() && goldstack.size() >= 0) {
+    	    		Dragon.dragons.isEmpty() && Gold.goldstack.size() >= 0) {
                 EvilHead.evilHead.AIOnEasy();
             }
     	    
     	    if(EvilHead.evilHead.isVisible() && timerMedium.isRunning() == true && 
-    	    		dragons.isEmpty() && goldstack.size() >= 0){
+    	    		Dragon.dragons.isEmpty() && Gold.goldstack.size() >= 0){
     	    	EvilHead.evilHead.AIOnMedium();
     	    }
     	    
     	    
     	    if (EvilHead.evilHead.isVisible() && timerMedium.isRunning() == true && 
-    	    		(aliens.size() > 0 || dragons.size() > 0)) {
+    	    		(Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)) {
                 EvilHead.evilHead.AIOnMedium();
             } 
     	    
     	    if (EvilHead.evilHead.isVisible() && timerHard.isRunning() == true && 
-    	    		(aliens.size() > 0 || dragons.size() > 0)) {
+    	    		(Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)) {
                 EvilHead.evilHead.AIOnHard();
             }
     	    
     	    if(EvilHead.evilHead.isVisible() && timerHard.isRunning() == true && 
-    	    		dragons.isEmpty() && goldstack.size() >= 0){
+    	    		Dragon.dragons.isEmpty() && Gold.goldstack.size() >= 0){
     	    	EvilHead.evilHead.AIOnHard();
     	    }
     	    
@@ -280,15 +284,15 @@ public abstract class StateUpdate extends Board {
     protected static void updateDragons() {
     	
     		
-	        for (int i = 0; i < dragons.size(); i++) {
+	        for (int i = 0; i < Dragon.dragons.size(); i++) {
 
-	            Dragon d = dragons.get(i);
+	            Dragon d = Dragon.dragons.get(i);
 	            d.setVisible(true);
 	            checkDragonsCollision();
 	            if (d.isVisible()) {
 	                d.move();
 	            } else {
-	                dragons.remove(i);
+	                Dragon.dragons.remove(i);
 	                new PlayWave1st("sounds/bloop.wav").start();
 	            }
 	        }
@@ -299,13 +303,13 @@ public abstract class StateUpdate extends Board {
     private void updateGold() {
     
 
-        for (int i = 0; i < goldstack.size(); i++) {
+        for (int i = 0; i < Gold.goldstack.size(); i++) {
 
-            Gold b = goldstack.get(i);
+            Gold b = Gold.goldstack.get(i);
             if (b.isVisible()) {
                 b.move();
             } else {
-            	goldstack.remove(i);
+            	Gold.goldstack.remove(i);
             }
         }
     }
@@ -314,18 +318,18 @@ public abstract class StateUpdate extends Board {
     private void updateHealth() {
 	    
 
-        for (int i = 0; i < healthpack.size(); i++) {
+        for (int i = 0; i < HealthPack.healthpack.size(); i++) {
 
-            HealthPack h = healthpack.get(i);
+            HealthPack h = HealthPack.healthpack.get(i);
             
-            if(healthpack.size() < 5 && lifeMyShip > 3){
-            	healthpack.add(i, new HealthPack(EvilHead.evilHead.x, EvilHead.evilHead.y));
+            if(HealthPack.healthpack.size() < 5 && lifeMyShip > 3){
+            	HealthPack.healthpack.add(i, new HealthPack(EvilHead.evilHead.x, EvilHead.evilHead.y));
             }
             
             if (h.isVisible()) {
                 h.move();
             } else {
-            	healthpack.remove(i);
+            	HealthPack.healthpack.remove(i);
             	if(lifeMyShip > 3){
             		lifeMyShip--;
             	}
@@ -338,7 +342,7 @@ public abstract class StateUpdate extends Board {
     
     	Rectangle myship = MyShip.myShip.getBounds();
     	
-    	for (Dragon dragon : dragons) {
+    	for (Dragon dragon : Dragon.dragons) {
             Rectangle dragonUnit = dragon.getBounds();
 
             if (myship.intersects(dragonUnit)) {
@@ -357,7 +361,7 @@ public abstract class StateUpdate extends Board {
 
             Rectangle rocketUnit = r.getBounds();
             
-            for (Dragon dragon : dragons) {
+            for (Dragon dragon : Dragon.dragons) {
 
                 Rectangle dragonUnit = dragon.getBounds();
 

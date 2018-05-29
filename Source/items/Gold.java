@@ -1,10 +1,13 @@
 package items;
 
-import frames.SpritePattern;
+import java.util.ArrayList;
+
+import game_engine.SpritePattern;
 
 public class Gold extends SpritePattern {
 
-    private final int INITIAL_Y = 1200;
+	public static ArrayList<Gold> goldstack;
+	private final int INITIAL_Y = 1200;
 
     public Gold(int x, int y) {
         super(x, y);

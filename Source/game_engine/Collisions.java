@@ -1,9 +1,10 @@
-package frames;
+package game_engine;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import entities.Alien;
 import entities.Bunker;
+import entities.Dragon;
 import entities.EvilHead;
 import entities.MyShip;
 import items.BunkerBullet;
@@ -14,10 +15,10 @@ import items.HealthPack;
 import items.ShipMissile;
 import items.ShipRocket;
 import sound_engine.PlayWave1st;
-import sound_engine.SoundResources;
+import sound_engine.LoadSounds;
 
 
-public abstract class Collisions extends StateUpdate {
+public abstract class Collisions extends UpdateObjects {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -34,11 +35,11 @@ public abstract class Collisions extends StateUpdate {
     			new PlayWave1st("sounds/scream.wav").start();
     			MyShip.myShip.setVisible(false);
     			EvilHead.evilHead.setVisible(false);
-    			Board.ingame = false;
+    			InitObjects.ingame = false;
 		        return;
         	}
         
-    if(aliens.isEmpty() && dragons.isEmpty() && lifeBunker < 50){
+    if(Alien.aliens.isEmpty() && Dragon.dragons.isEmpty() && lifeBunker < 50){
     	
     	if(myship.intersects(bunker)){
         	
@@ -52,7 +53,7 @@ public abstract class Collisions extends StateUpdate {
     }
         
         
-        for (Alien alien : aliens) {
+        for (Alien alien : Alien.aliens) {
         	
 	        	        	
             Rectangle alienUnit = alien.getBounds();
@@ -68,7 +69,7 @@ public abstract class Collisions extends StateUpdate {
 		     }
 	        		
 	        				        
-        for (Gold gold : goldstack) {
+        for (Gold gold : Gold.goldstack) {
         	Rectangle goldUnit = gold.getBounds();
 
             if (myship.intersects(goldUnit)) {
@@ -77,12 +78,12 @@ public abstract class Collisions extends StateUpdate {
             }
         }
         
-        for (HealthPack health : healthpack) {
+        for (HealthPack health : HealthPack.healthpack) {
         	Rectangle healthUnit = health.getBounds();
 
             if (myship.intersects(healthUnit)) {
                 health.setVisible(false);
-                SoundResources.gotHealthPack.play();
+                LoadSounds.gotHealthPack.play();
             }
         }
 
@@ -94,7 +95,7 @@ public abstract class Collisions extends StateUpdate {
             Rectangle missileUnit = m.getBounds();
             
 
-            for (Alien alien : aliens) {
+            for (Alien alien : Alien.aliens) {
 
                 Rectangle alienUnit = alien.getBounds();
 
@@ -104,13 +105,13 @@ public abstract class Collisions extends StateUpdate {
                 }
             }
 
-            if(aliens.isEmpty() && dragons.isEmpty() && lifeBunker < 50){
+            if(Alien.aliens.isEmpty() && Dragon.dragons.isEmpty() && lifeBunker < 50){
             	if(missileUnit.intersects(bunker)){
             		Bunker.bunkerObj.initBunkerHit();
             		Bunker.bunkerObj.loadBullet();
             		Bunker.bunkerObj.loadBullet2();
             		m.setVisible(false);
-            		SoundResources.fuse.play();
+            		LoadSounds.fuse.play();
             		lifeBunker++;
             	}
             	
@@ -121,8 +122,8 @@ public abstract class Collisions extends StateUpdate {
             }
             	
             
-            if(aliens.isEmpty() && 
-            		dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50){
+            if(Alien.aliens.isEmpty() && 
+            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50){
             	if(missileUnit.intersects(evilhead)){
             		m.setVisible(false);
             		if(timerHard.isRunning() == true){
@@ -227,7 +228,7 @@ public abstract class Collisions extends StateUpdate {
 
             Rectangle rocketUnit = r.getBounds();
 
-            for (Alien alien : aliens) {
+            for (Alien alien : Alien.aliens) {
 
                 Rectangle alienUnit = alien.getBounds();
 
@@ -239,8 +240,8 @@ public abstract class Collisions extends StateUpdate {
             }
             
             
-            if(aliens.isEmpty() && 
-            		dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50){
+            if(Alien.aliens.isEmpty() && 
+            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50){
             	if(rocketUnit.intersects(evilhead)){
             		r.setVisible(false);
             		if(timerHard.isRunning() == true){
@@ -254,13 +255,13 @@ public abstract class Collisions extends StateUpdate {
             	}
             }
             
-            if(aliens.isEmpty() && dragons.isEmpty() && lifeBunker < 50){
+            if(Alien.aliens.isEmpty() && Dragon.dragons.isEmpty() && lifeBunker < 50){
             		if(rocketUnit.intersects(bunker)){
             			Bunker.bunkerObj.initBunkerHit();
             			Bunker.bunkerObj.loadBullet();
             			Bunker.bunkerObj.loadBullet2();
 	    				r.setVisible(false);
-	    				SoundResources.fuse.play();
+	    				LoadSounds.fuse.play();
 	            		lifeBunker++;
 	            	}
             		

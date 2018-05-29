@@ -2,358 +2,42 @@ package frames;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.net.URISyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import entities.MyShip;
-import entities.Bunker;
-import entities.EvilHead;
-import items.VolBtn;
-import multiplayer_tbd.JoinGame;
-import sound_engine.SoundResources;
-
+import game_engine.DrawScene;
 
 @SuppressWarnings("serial")
-public class Main extends JFrame {
+public class Main extends GameMenu {
 	
-	static String buttonText = "Manual";
-    static JButton button = new JButton(buttonText);
-    
-    public static final int UPDATE_TIME = 2;
-    public static final int DURATION = 1000;
- 
-   
 
     public Main() {
         
         initUI();
+        
     }
     
     private void initUI() {
         
+    		//MainFrame outlook
     		add(new DrawScene());
-	        
 	        setResizable(false);
 	        setUndecorated(true);
 	        pack();
-	        
 	        setTitle("EvilGalaxy");
 	        setLocationRelativeTo(null);
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        
-	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-	        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-
-	        
-	        setIconImage(Toolkit.getDefaultToolkit().getImage("images/strikehead.gif"));
-	
-	        
 	        setShape(new RoundRectangle2D.Double(60, 80, 1200, 1200, 100, 100));
+	        setIconImage(Toolkit.getDefaultToolkit().getImage("images/strikehead.gif"));
 	        ImageIcon tileIcon = new ImageIcon("images/shadow1.png"); 
 	        getRootPane().setBorder(BorderFactory.createMatteBorder(150, 150, 150, 150, tileIcon ));
+	        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	        
-	        //Game Menu
-	        JMenuBar menubar = new JMenuBar();
-	        setJMenuBar(menubar);
-	        JMenu file = new JMenu("Main");
-	        file.setFont(new Font("Segoe UI", Font.BOLD, 15));
-	        menubar.add(file);
-	        JMenuItem join = new JMenuItem("Join game");
-	        join.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        JMenuItem newgame = new JMenuItem("Restart    R");
-	        newgame.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        JMenuItem console = new JMenuItem("Console    C");
-	        console.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        JMenuItem exit = new JMenuItem("Exit    ESC");
-	        exit.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        file.add(newgame);
-	        file.add(join);
-	        file.add(console);
-	        file.add(exit);
-	        JMenu difficulty = new JMenu("Difficulty");
-	        difficulty.setFont(new Font("Segoe UI", Font.BOLD, 15));
-	        menubar.add(difficulty);
-	        JMenuItem easy = new JMenuItem("Easy    E");
-	        easy.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        JMenuItem medium = new JMenuItem("Medium    M");
-	        medium.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        JMenuItem hard = new JMenuItem("Hard    H");
-	        hard.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        difficulty.add(easy);
-	        difficulty.add(medium);
-	        difficulty.add(hard);
-	        JMenu help = new JMenu("Help");
-	        help.setFont(new Font("Segoe UI", Font.BOLD, 15));
-	        menubar.add(help);
-	        JMenuItem manual = new JMenuItem("Manual    O");
-	        manual.setFont(new Font("Segoe UI", Font.BOLD, 14));
-	        help.add(manual);
-	        
-	        
-	        class ExitAction implements ActionListener {
-		        	@Override
-			        	public void actionPerformed(ActionEvent e){
-			        	System.exit(0);
-		        	}
-	        	}
-	        
-	        class NewGameAction implements ActionListener {
-	        	@Override
-		        	public void actionPerformed(ActionEvent e){
-	        		
-	        		Board.god = false;
-            	    setFocusable(true);
-	    	        Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-	    	        Board.ingame = true;
-	    	        Board.lifeEvilHead = 3;
-	    	        Board.lifeMyShip = 3;
-	    	        Board.lifeBunker = 3;
-	    	        
-	    	        setPreferredSize(new Dimension(1310, 1040));
-
-	    	        MyShip.myShip = new MyShip(40, 180);
-	    	        MyShip.myShip.isVisible();
-	    	        
-	    	        EvilHead.evilHead = new EvilHead(640, 180);
-	    	        EvilHead.evilHead.isVisible();
-	    	        EvilHead.evilHead.AIOnEasy();
-	    	        
-	    	        Bunker.bunkerObj = new Bunker(450, 650);
-	    	        Bunker.bunkerObj.isVisible();
-	    	        
-	    	        VolBtn.volButt = new VolBtn(940, 15);
-            		VolBtn.volButt.isVisible();
-
-            		Board.initAliens();
-            		Board.initGold();
-            		Board.initDragons();
-            		Board.initHealth();
-            		
-	    	        Board.timerHard.stop();
-	    	        Board.timerMedium.stop();
-	    	        Board.timerEasy.restart();
-	    	        SoundResources.gameWon.play();
-	    	        SoundResources.gameLost.stop();
-	    	        SoundResources.bgMusic.loop();
-	    	        SoundResources.roar.stop();
-            		return;
-
-	        	}
-        	}
-	        
-	        class Join implements ActionListener {
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					JoinGame joingame = new JoinGame();
-					joingame.setVisible(true);					
-				}
-	        	
-	        }
-	        
-	        class Consolee implements ActionListener {
-	        	@Override
-		        	public void actionPerformed(ActionEvent e){
-	        		
-	        							
-	        		Console csl = new Console();
-	        		if(!Board.consoleON){
-	        			csl.setVisible(true);
-	        			if(!Board.consoleON == true){
-	                    	Board.consoleON = true;
-	                    }
-	        		}
-	        		
-	        	}
-        	}
-	        
-
-        	class Manuaal implements ActionListener {
-	        	@Override
-	        	public void actionPerformed(ActionEvent e){
-	        		Manual manual = new Manual(); 
-	    				
-	        		if(!Board.manualON){
-	        			manual.setVisible(true);
-	        			if(!Board.manualON == true){
-	                    	Board.manualON = true;
-	                    }
-	        		}
-	    			
-	        	}
-        	}
-	        
-	        class Easy implements ActionListener {
-	        	@Override
-		        	public void actionPerformed(ActionEvent e){
-	        		
-	        		Board.timerMedium.stop();
-	        		Board.timerHard.stop();
-	        		Board.timerEasy.start();
-	        		SoundResources.bgMusic.loop();
-	            	if(Board.aliens.isEmpty()){
-	            		SoundResources.roar.loop();
-	            	}
-	            	if(!Board.ingame){
-	            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-	            		Board.ingame = true;
-	            		Board.lifeEvilHead = 3;
-	            		Board.lifeMyShip = 3;
-	            		Board.lifeBunker = 3;
-		    	        
-	            		setPreferredSize(new Dimension(1310, 1040));
-
-	            		MyShip.myShip = new MyShip(40, 180);
-	            		MyShip.myShip.isVisible();
-		    	        
-	            		EvilHead.evilHead = new EvilHead(640, 180);
-	            		EvilHead.evilHead.isVisible();
-	            		EvilHead.evilHead.AIOnMedium();
-	            		
-	            		Bunker.bunkerObj = new Bunker(450, 650);
-		    	        Bunker.bunkerObj.isVisible();
-		    	        
-	            		VolBtn.volButt = new VolBtn(940, 15);
-	            		VolBtn.volButt.isVisible();
-
-	            		Board.initAliens();
-	            		Board.initGold();
-	            		Board.initDragons();
-	            		Board.initHealth();
-	            		
-	            		Board.timerMedium.stop();
-	            		Board.timerHard.stop();;
-	            		Board.timerEasy.restart();
-	            		SoundResources.gameWon.play();
-	            		SoundResources.gameLost.stop();
-	            		SoundResources.bgMusic.loop();
-	            		SoundResources.roar.stop();
-	            		return;
-	            	}
-
-	        	}
-        	}
-
-	        class Medium implements ActionListener {
-	        	@Override
-		        	public void actionPerformed(ActionEvent e){
-
-	        		Board.timerEasy.stop();
-	        		Board.timerHard.stop();
-	        		Board.timerMedium.start();
-	        		SoundResources.bgMusic.loop();
-	            	if(Board.aliens.isEmpty()){
-	            		SoundResources.roar.loop();
-	            	}
-	            	if(!Board.ingame){
-	            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-	            		Board.ingame = true;
-	            		Board.lifeEvilHead = 3;
-	            		Board.lifeMyShip = 3;
-	            		Board.lifeBunker = 3;
-		    	        
-	            		setPreferredSize(new Dimension(1310, 1040));
-
-	            		MyShip.myShip = new MyShip(40, 180);
-	            		MyShip.myShip.isVisible();
-		    	        
-	            		EvilHead.evilHead = new EvilHead(640, 180);
-	            		EvilHead.evilHead.isVisible();
-	            		EvilHead.evilHead.AIOnMedium();
-	            		
-	            		Bunker.bunkerObj = new Bunker(450, 650);
-		    	        Bunker.bunkerObj.isVisible();
-		    	        
-	            		VolBtn.volButt = new VolBtn(940, 15);
-	            		VolBtn.volButt.isVisible();
-
-	            		Board.initAliens();
-	            		Board.initGold();
-	            		Board.initDragons();
-	            		Board.initHealth();
-	            		
-	            		Board.timerEasy.stop();
-	            		Board.timerHard.stop();;
-	            		Board.timerMedium.restart();
-	            		SoundResources.gameWon.play();
-	            		SoundResources.gameLost.stop();
-	            		SoundResources.bgMusic.loop();
-	            		SoundResources.roar.stop();
-	            		return;
-	            	}
-	        	}
-        	}
-
-	        class Hard implements ActionListener {
-	        	@Override
-		        	public void actionPerformed(ActionEvent e){
-	        		
-	        		Board.timerEasy.stop();
-	        		Board.timerMedium.stop();
-	        		Board.timerHard.start();
-	        		SoundResources.bgMusic.loop();
-	            	if(Board.aliens.isEmpty()){
-	            		SoundResources.roar.loop();
-	            	}
-	            	if(!Board.ingame){
-	            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-	            		Board.ingame = true;
-	            		Board.lifeEvilHead = 3;
-	            		Board.lifeMyShip = 3;
-	            		Board.lifeBunker = 3;
-	            		
-	            		setPreferredSize(new Dimension(1310, 1040));
-
-	            		MyShip.myShip = new MyShip(40, 180);
-	            		MyShip.myShip.isVisible();
-		    	        
-	            		EvilHead.evilHead = new EvilHead(640, 180);
-	            		EvilHead.evilHead.isVisible();
-	            		EvilHead.evilHead.AIOnMedium();
-	            		
-	            		Bunker.bunkerObj = new Bunker(450, 650);
-		    	        Bunker.bunkerObj.isVisible();
-		    	        
-	            		VolBtn.volButt = new VolBtn(940, 15);
-	            		VolBtn.volButt.isVisible();
-
-	            		Board.initAliens();
-	            		Board.initGold();
-	            		Board.initDragons();
-	            		Board.initHealth();
-		    	        
-	            		Board.timerEasy.stop();
-	            		Board.timerMedium.stop();;
-	            		Board.timerHard.restart();
-	            		SoundResources.gameWon.play();
-	            		SoundResources.gameLost.stop();
-	            		SoundResources.bgMusic.loop();
-	            		SoundResources.roar.stop();
-	            		return;
-	            	}
-	        	}
-        	}
-
-	        
-	        	exit.addActionListener (new ExitAction());
-	        	manual.addActionListener(new Manuaal());
-	        	newgame.addActionListener(new NewGameAction());
-	        	join.addActionListener(new Join());
-	        	console.addActionListener(new Consolee());
-	        	easy.addActionListener(new Easy());
-	        	medium.addActionListener(new Medium());
-	        	hard.addActionListener(new Hard());
-        	}
+	    }
           
     public static void main(String[] args) throws URISyntaxException {
     	
@@ -362,7 +46,7 @@ public class Main extends JFrame {
             @Override
             public void run() {
                 Main ex = new Main();
-            		    ex.setVisible(true);
+                ex.setVisible(true);
             }
         });    
     }

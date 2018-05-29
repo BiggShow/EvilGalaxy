@@ -1,9 +1,10 @@
-package frames;
+package game_engine;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import entities.Alien;
@@ -19,47 +20,50 @@ import items.HealthPack;
 import items.ShipMissile;
 import items.ShipRocket;
 import items.VolBtn;
-import sound_engine.SoundResources;
+import sound_engine.LoadSounds;
 
-public class DrawScene extends StateUpdate {
+public class DrawScene extends UpdateObjects {
 
 	private String unicode;
 	private String checkMark;
-    
 	private static final long serialVersionUID = 1L;
-
+	static Image bg1;
+    static Image bg2;
+	static Image bg3;
+	
+	
+	public DrawScene() {
+        bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
+        bg2 = Toolkit.getDefaultToolkit().createImage("images/galaxy2.jpg");
+        bg3 = Toolkit.getDefaultToolkit().createImage("images/galaxy3.jpg");		
+	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
 
-        if (ingame && aliens.size() > 0) {
-
-        	drawObjects(g);
-        	
-            
+        if (ingame && Alien.aliens.size() > 0) {
+        	drawObjects(g);  
         }
         
-        if(aliens.isEmpty() && !timerMedium.isRunning() && 
+        if(Alien.aliens.isEmpty() && !timerMedium.isRunning() && 
         		timerHard.isRunning() == true){
         	
         	drawObjects2(g);
         	
-        	if(dragons.size() > 0){
-        		g.drawString("Dragonzz: " + dragons.size(), 5, 15);
+        	if(Dragon.dragons.size() > 0){
+        		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
         		g.drawString("Level: " + 2, 230, 15);
         		g.drawString("Missiles: Locked", 320, 15);
         		g.drawString("Rockets: Unlocked", 480, 15);
         		g.drawString("Difficulty: Hard", 650, 15);
         		drawOuttaControl(g);
-        		MyShip.myShip.dragonShake();
-        		
-        		
+        		MyShip.myShip.dragonShake();		
         	}
-        	StateUpdate.updateDragons();
-        	SoundResources.roar.loop();
-        	if(dragons.isEmpty() && lifeBunker < 50){
+        	
+        	UpdateObjects.updateDragons();
+        	LoadSounds.roar.loop();
+        	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
         		g.drawString("Dragonzz: " + checkMark, 5, 15);
         		g.drawString("Level: " + 3, 230, 15);
         		g.drawString("Missiles: Unlocked", 320, 15);
@@ -79,20 +83,20 @@ public class DrawScene extends StateUpdate {
 
         
         
-        if(aliens.isEmpty() && !timerMedium.isRunning() && !timerHard.isRunning()){
+        if(Alien.aliens.isEmpty() && !timerMedium.isRunning() && !timerHard.isRunning()){
         	
         	drawObjects2(g);
         	
-        	if(dragons.size() > 0){
-        		g.drawString("Dragonzz: " + dragons.size(), 5, 15);
+        	if(Dragon.dragons.size() > 0){
+        		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
         		g.drawString("Level: " + 2, 230, 15);
         		g.drawString("Missiles: Locked", 320, 15);
         		g.drawString("Rockets: Unlocked", 480, 15);
         		g.drawString("Difficulty: Easy", 650, 15);
         	}
-        	StateUpdate.updateDragons();
-        	SoundResources.roar.loop();
-        	if(dragons.isEmpty() && lifeBunker < 50){
+        	UpdateObjects.updateDragons();
+        	LoadSounds.roar.loop();
+        	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
         		g.drawString("Dragonzz: " + checkMark, 5, 15);
         		g.drawString("Level: " + 3, 230, 15);
         		g.drawString("Missiles: Unlocked", 320, 15);
@@ -110,20 +114,20 @@ public class DrawScene extends StateUpdate {
         	
         }
         
-        if(aliens.isEmpty() && timerMedium.isRunning() == true && !timerHard.isRunning()){
+        if(Alien.aliens.isEmpty() && timerMedium.isRunning() == true && !timerHard.isRunning()){
         	
         	drawObjects2(g);
         	
-        	if(dragons.size() > 0){
-        		g.drawString("Dragonzz: " + dragons.size(), 5, 15);
+        	if(Dragon.dragons.size() > 0){
+        		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
         		g.drawString("Level: " + 2, 230, 15);
         		g.drawString("Missiles: Locked", 320, 15);
         		g.drawString("Rockets: Unlocked", 480, 15);
         		g.drawString("Difficulty: Medium", 650, 15);
         	}
-        	StateUpdate.updateDragons();
-        	SoundResources.roar.loop();
-        	if(dragons.isEmpty() && lifeBunker < 50){
+        	UpdateObjects.updateDragons();
+        	LoadSounds.roar.loop();
+        	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
         		g.drawString("Dragonzz: " + checkMark, 5, 15);
         		g.drawString("Level: " + 3, 230, 15);
         		g.drawString("Missiles: Unlocked", 320, 15);
@@ -180,13 +184,13 @@ public class DrawScene extends StateUpdate {
         
        	
         
-        if(dragons.isEmpty()){
+        if(Dragon.dragons.isEmpty()){
         	
         	drawObjects3(g);
-        	SoundResources.roar.stop();
+        	LoadSounds.roar.stop();
         }
         
-        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && timerHard.isRunning() == true){
+        if(Dragon.dragons.isEmpty() && lifeBunker == 50 && Gold.goldstack.size() > 0 && timerHard.isRunning() == true){
         	
         	drawCollect(g);
         	g.drawString("Missiles: Locked", 320, 15);
@@ -195,7 +199,7 @@ public class DrawScene extends StateUpdate {
         	
         }
         
-        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
+        if(Dragon.dragons.isEmpty() && lifeBunker == 50 && Gold.goldstack.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
         	
         	drawCollect(g);
         	g.drawString("Missiles: Locked", 320, 15);
@@ -205,7 +209,7 @@ public class DrawScene extends StateUpdate {
         }
 
         
-        if(dragons.isEmpty() && lifeBunker == 50 && goldstack.size() > 0 && 
+        if(Dragon.dragons.isEmpty() && lifeBunker == 50 && Gold.goldstack.size() > 0 && 
         		!timerHard.isRunning() && !timerMedium.isRunning()){
         	
         	drawCollect(g);
@@ -216,7 +220,7 @@ public class DrawScene extends StateUpdate {
         }
         
         
-        if(dragons.isEmpty() && lifeBunker < 50 &&
+        if(Dragon.dragons.isEmpty() && lifeBunker < 50 &&
         		timerHard.isRunning() == true){
         	
         	drawKillTheBunker(g);
@@ -225,7 +229,7 @@ public class DrawScene extends StateUpdate {
         	g.drawString("Difficulty: Hard", 670, 15);
         }
         
-        if(dragons.isEmpty() && lifeBunker < 50 &&
+        if(Dragon.dragons.isEmpty() && lifeBunker < 50 &&
         		!timerHard.isRunning() && timerMedium.isRunning() == true){
         	
         	drawKillTheBunker(g);
@@ -236,7 +240,7 @@ public class DrawScene extends StateUpdate {
         
         
         
-        if(dragons.isEmpty() && lifeBunker < 50 &&
+        if(Dragon.dragons.isEmpty() && lifeBunker < 50 &&
         		!timerHard.isRunning() && !timerMedium.isRunning()){
         	
         	drawKillTheBunker(g);
@@ -245,7 +249,7 @@ public class DrawScene extends StateUpdate {
         	g.drawString("Difficulty: Easy", 670, 15);
         }
         
-        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 && 
         		timerHard.isRunning() == true){
         	
         	drawKillTheHead(g);
@@ -254,7 +258,7 @@ public class DrawScene extends StateUpdate {
         	g.drawString("Difficulty: Hard", 670, 15);
         }
         
-        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 && 
         		!timerHard.isRunning() && timerMedium.isRunning() == true){
         	
         	drawKillTheHead(g);
@@ -265,7 +269,7 @@ public class DrawScene extends StateUpdate {
         
         
         
-        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 && 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 && 
         		!timerHard.isRunning() && !timerMedium.isRunning()){
         	
         	drawKillTheHead(g);
@@ -275,85 +279,85 @@ public class DrawScene extends StateUpdate {
         }
         
         
-        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 
         		&& EvilHead.evilHead.x - MyShip.myShip.x == 400 && timerEasy.isRunning() == true){
         	EvilHead.evilHead.throwCanons();
         	EvilHead.evilHead.strikeHead();
         }
         
         	        	        
-        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 
         		&& EvilHead.evilHead.x - MyShip.myShip.x == 400 && timerMedium.isRunning() == true){
         	EvilHead.evilHead.throwFireballs();
         	EvilHead.evilHead.strikeHead();
         }
         
-        if(dragons.isEmpty() && goldstack.size() >= 0 && lifeBunker == 50 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.size() >= 0 && lifeBunker == 50 
         		&& EvilHead.evilHead.x - MyShip.myShip.x == 400 && timerHard.isRunning() == true){
         	EvilHead.evilHead.throwFireballs();
         	EvilHead.evilHead.strikeHead();
         }
         
-        if(EvilHead.evilHead.x - MyShip.myShip.x > 800 && dragons.isEmpty() && goldstack.isEmpty()
+        if(EvilHead.evilHead.x - MyShip.myShip.x > 800 && Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty()
         		&& lifeBunker == 50){
         	MyShip.myShip.dragonShake();
         	MyShip.myShip.y = EvilHead.evilHead.y + 70;
     	}
         
         
-        if(dragons.isEmpty() && lifeBunker < 10 && goldstack.size() > 0){
+        if(Dragon.dragons.isEmpty() && lifeBunker < 10 && Gold.goldstack.size() > 0){
         	g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	g.drawString("Health: 100%", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
         }
         
         
-        if(lifeBunker >= 10 && lifeBunker < 20 && goldstack.size() > 0){
+        if(lifeBunker >= 10 && lifeBunker < 20 && Gold.goldstack.size() > 0){
         	g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	g.drawString("Health: 80%", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
         	
         }
         
         
-        if(lifeBunker >= 20 && lifeBunker < 30 && goldstack.size() > 0){
+        if(lifeBunker >= 20 && lifeBunker < 30 && Gold.goldstack.size() > 0){
         	g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	g.drawString("Health: 60%", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
         }
         
         if(lifeBunker >= 30 && lifeBunker < 35){
-        	SoundResources.roar.loop();
+        	LoadSounds.roar.loop();
         }
         
         if(lifeBunker >= 35){
-        	SoundResources.roar.stop();
+        	LoadSounds.roar.stop();
         }
         
-        if(lifeBunker >= 30 && lifeBunker < 40 && goldstack.size() > 0){
+        if(lifeBunker >= 30 && lifeBunker < 40 && Gold.goldstack.size() > 0){
         	g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	g.drawString("Health: 40%", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
         }
         
         if(lifeBunker >= 40 && lifeBunker < 45){
-        	SoundResources.roar.loop();
+        	LoadSounds.roar.loop();
         }
         
         if(lifeBunker >= 45){
-        	SoundResources.roar.stop();
+        	LoadSounds.roar.stop();
         }
         
-        if(lifeBunker >= 40 && lifeBunker < 50 && goldstack.size() > 0){
+        if(lifeBunker >= 40 && lifeBunker < 50 && Gold.goldstack.size() > 0){
         	g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	g.drawString("Health: 20%", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
         }
        	
         if(lifeBunker == 50){
-        	if(goldstack.size() > 0){
+        	if(Gold.goldstack.size() > 0){
         		g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	}
         	g.drawString("Bunker destroyed!", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
         	Bunker.bunkerObj.initBunkerHit();
         }
         
-        if(dragons.isEmpty() && goldstack.isEmpty() && lifeBunker == 50
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50
         		&& lifeEvilHead < 10){
         	g.drawString("Health: 100%", EvilHead.evilHead.x, EvilHead.evilHead.y);
         }
@@ -370,11 +374,11 @@ public class DrawScene extends StateUpdate {
         }
         
         if(lifeEvilHead >= 30 && lifeEvilHead < 35){
-        	SoundResources.roar.loop();
+        	LoadSounds.roar.loop();
         }
         
         if(lifeEvilHead >= 35){
-        	SoundResources.roar.stop();
+        	LoadSounds.roar.stop();
         }
         
         if(lifeEvilHead >= 30 && lifeEvilHead < 40){
@@ -382,11 +386,11 @@ public class DrawScene extends StateUpdate {
         }
         
         if(lifeEvilHead >= 40 && lifeEvilHead < 45){
-        	SoundResources.roar.loop();
+        	LoadSounds.roar.loop();
         }
         
         if(lifeEvilHead >= 45){
-        	SoundResources.roar.stop();
+        	LoadSounds.roar.stop();
         }
         
         if(lifeEvilHead >= 40 && lifeEvilHead < 50){
@@ -395,24 +399,24 @@ public class DrawScene extends StateUpdate {
        	        
         if(lifeEvilHead == 50){
         	
-        	SoundResources.gameWon.play();
+        	LoadSounds.gameWon.play();
         	ingame = false;
 	        g.drawImage(bg1, 0, 0, null);
             drawYouWon(g);
         	g.drawString("Monsters: Killed!", 5, 15);
 	        g.drawString("Gold: Collected!", 165, 15);
-	        SoundResources.bgMusic.stop();
+	        LoadSounds.bgMusic.stop();
 	        return;
         }
         
         
         if (!ingame) {
 
-        	SoundResources.gameLost.play();
+        	LoadSounds.gameLost.play();
 	    	g.drawImage(bg1, 0, 0, null);
             drawGameOver(g);
-            SoundResources.bgMusic.stop();
-            SoundResources.roar.stop();
+            LoadSounds.bgMusic.stop();
+            LoadSounds.roar.stop();
             god = false;
             g.drawString("Monsters left: " + 0, 5, 15);
 	        g.drawString("Gold: " + 0, 150, 15);
@@ -420,7 +424,7 @@ public class DrawScene extends StateUpdate {
 	        timerEasy.stop();
 	        timerMedium.stop();
 	        timerHard.stop();
-	        SoundResources.fuse.stop();
+	        LoadSounds.fuse.stop();
 	        return;
         }
 
@@ -509,26 +513,26 @@ public class DrawScene extends StateUpdate {
 		}
 
 
-        for (Alien alien : aliens) {
+        for (Alien alien : Alien.aliens) {
             if (alien.isVisible()) {
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
             }
         }
         
-       for (Dragon dragon : dragons) {
+       for (Dragon dragon : Dragon.dragons) {
             if (dragon.isVisible()) {
                 g.drawImage(dragon.getImage(), dragon.getX(), dragon.getY(), this);
             }
         } 
         
         
-        for (Gold gold : goldstack) {
+        for (Gold gold : Gold.goldstack) {
             if (gold.isVisible()) {
                 g.drawImage(gold.getImage(), gold.getX(), gold.getY(), this);
             }
         }
         
-        for (HealthPack health : healthpack) {
+        for (HealthPack health : HealthPack.healthpack) {
             if (health.isVisible()) {
                 g.drawImage(health.getImage(), health.getX(), health.getY(), this);
             }
@@ -542,9 +546,9 @@ public class DrawScene extends StateUpdate {
         unicode = "2713";
         checkMark = String.valueOf(Character.toChars(Integer.parseInt(unicode, 16)));
      
-        if(aliens.size() > 0 && timerHard.isRunning() == true){
+        if(Alien.aliens.size() > 0 && timerHard.isRunning() == true){
         	
-        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        	g.drawString("Aliens left: " + Alien.aliens.size(), 5, 15);
         	g.drawString("Level: " + 1, 230, 15);
         	g.drawString("Missiles: Unlocked", 320, 15);
         	g.drawString("Rockets: Locked", 490, 15);
@@ -552,9 +556,9 @@ public class DrawScene extends StateUpdate {
         	
         }
         
-        if(aliens.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
+        if(Alien.aliens.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
         	
-        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        	g.drawString("Aliens left: " + Alien.aliens.size(), 5, 15);
         	g.drawString("Level: " + 1, 230, 15);
         	g.drawString("Missiles: Unlocked", 320, 15);
         	g.drawString("Rockets: Locked", 490, 15);
@@ -562,20 +566,20 @@ public class DrawScene extends StateUpdate {
         	
         }
 
-        if(aliens.size() > 0 && !timerHard.isRunning() && !timerMedium.isRunning()){
+        if(Alien.aliens.size() > 0 && !timerHard.isRunning() && !timerMedium.isRunning()){
         	
-        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        	g.drawString("Aliens left: " + Alien.aliens.size(), 5, 15);
         	g.drawString("Level: " + 1, 230, 15);
         	g.drawString("Missiles: Unlocked", 320, 15);
         	g.drawString("Rockets: Locked", 490, 15);
         	g.drawString("Difficulty: Easy", 650, 15);
         }
        
-        if(goldstack.size() > 0){
-        	g.drawString("Gold: " + (-(goldstack.size() - 12)), 140, 15);
+        if(Gold.goldstack.size() > 0){
+        	g.drawString("Gold: " + (-(Gold.goldstack.size() - 12)), 140, 15);
         }
         
-        if(goldstack.isEmpty()){
+        if(Gold.goldstack.isEmpty()){
     		g.drawString("Gold: " + checkMark, 140, 15);
     	}
         
@@ -658,26 +662,26 @@ public class DrawScene extends StateUpdate {
 			}
 		}
 
-        for (Alien a : aliens) {
+        for (Alien a : Alien.aliens) {
             if (a.isVisible()) {
                 g.drawImage(a.getImage(), a.getX(), a.getY(), this);
             }
         }
         
-       for (Dragon d : dragons) {
+       for (Dragon d : Dragon.dragons) {
             if (d.isVisible()) {
                 g.drawImage(d.getImage(), d.getX(), d.getY(), this);
             }
         } 
         
         
-        for (Gold b : goldstack) {
+        for (Gold b : Gold.goldstack) {
             if (b.isVisible()) {
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this);
             }
         }
         
-        for (HealthPack b : healthpack) {
+        for (HealthPack b : HealthPack.healthpack) {
             if (b.isVisible()) {
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this);
             }
@@ -691,14 +695,14 @@ public class DrawScene extends StateUpdate {
         unicode = "2713";
         checkMark = String.valueOf(Character.toChars(Integer.parseInt(unicode, 16)));
 
-        if(aliens.size() > 0){
+        if(Alien.aliens.size() > 0){
         	
-        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        	g.drawString("Aliens left: " + Alien.aliens.size(), 5, 15);
         	g.drawString("Level: " + 1, 230, 15);
 	        
         }
         
-        if(dragons.isEmpty() && lifeBunker < 50){
+        if(Dragon.dragons.isEmpty() && lifeBunker < 50){
     		g.drawString("Dragonzz: " + checkMark, 5, 15);
     		g.drawString("Level: " + 3, 230, 15);
     	}
@@ -708,11 +712,11 @@ public class DrawScene extends StateUpdate {
     		g.drawString("Level: " + 4, 230, 15);
     	}
        
-        if(goldstack.size() > 0){
-        	g.drawString("Gold: " + (-(goldstack.size() - 12)), 140, 15);
+        if(Gold.goldstack.size() > 0){
+        	g.drawString("Gold: " + (-(Gold.goldstack.size() - 12)), 140, 15);
         }
         
-        if(goldstack.isEmpty()){
+        if(Gold.goldstack.isEmpty()){
     		g.drawString("Gold: " + checkMark, 140, 15);
     	}
         
@@ -832,26 +836,26 @@ public class DrawScene extends StateUpdate {
             }
         }
 
-        for (Alien a : aliens) {
+        for (Alien a : Alien.aliens) {
             if (a.isVisible()) {
                 g.drawImage(a.getImage(), a.getX(), a.getY(), this);
             }
         }
         
-       for (Dragon d : dragons) {
+       for (Dragon d : Dragon.dragons) {
             if (d.isVisible()) {
                 g.drawImage(d.getImage(), d.getX(), d.getY(), this);
             }
         } 
         
         
-        for (Gold b : goldstack) {
+        for (Gold b : Gold.goldstack) {
             if (b.isVisible()) {
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this);
             }
         }
         
-        for (HealthPack b : healthpack) {
+        for (HealthPack b : HealthPack.healthpack) {
             if (b.isVisible()) {
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this);
             }
@@ -865,18 +869,18 @@ public class DrawScene extends StateUpdate {
         unicode = "2713";
         checkMark = String.valueOf(Character.toChars(Integer.parseInt(unicode, 16)));
 
-        if(aliens.size() > 0){
+        if(Alien.aliens.size() > 0){
         	
-        	g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        	g.drawString("Aliens left: " + Alien.aliens.size(), 5, 15);
         	g.drawString("Level: " + 1, 230, 15);
 	        
         }
        
-        if(goldstack.size() > 0){
-        	g.drawString("Gold: " + (-(goldstack.size() - 12)), 140, 15);
+        if(Gold.goldstack.size() > 0){
+        	g.drawString("Gold: " + (-(Gold.goldstack.size() - 12)), 140, 15);
         }
         
-        if(goldstack.isEmpty()){
+        if(Gold.goldstack.isEmpty()){
     		g.drawString("Gold: " + checkMark, 140, 15);
     	}
         

@@ -1,6 +1,6 @@
 package sound_engine;
 
-public abstract class SoundResources {
+public abstract class LoadSounds {
 
 	public static PlayWave2nd bgMusic = new PlayWave2nd("sounds/backmusic2.wav");
 	public static PlayWave2nd roar = new PlayWave2nd("sounds/taunt.wav");

@@ -1,10 +1,13 @@
 package entities;
 
-import frames.SpritePattern;
+import java.util.ArrayList;
+
+import game_engine.SpritePattern;
 
 public class Dragon extends SpritePattern {
 
-    private final int INITIAL_X = 600;
+	public static ArrayList<Dragon> dragons;
+	private final int INITIAL_X = 600;
 
     public Dragon(int x, int y) {
         super(x, y);

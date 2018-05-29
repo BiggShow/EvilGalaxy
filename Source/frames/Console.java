@@ -2,9 +2,7 @@ package frames;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -21,12 +19,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-
-import entities.MyShip;
-import entities.EvilHead;
-import entities.Bunker;
-import items.VolBtn;
-import sound_engine.SoundResources;
+import entities.Alien;
+import entities.Dragon;
+import game_engine.Difficulty;
+import game_engine.InitObjects;
+import game_engine.UpdateObjects;
+import items.HealthPack;
+import sound_engine.LoadSounds;
 
 @SuppressWarnings("serial")
 public class Console extends JFrame {
@@ -36,9 +35,7 @@ public class Console extends JFrame {
 	private JTextArea textArea;
 	static String out = "";    
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,10 +50,6 @@ public class Console extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	
 		
 	public Console() {
 		setUndecorated(true);
@@ -64,7 +57,6 @@ public class Console extends JFrame {
         setTitle("Game Console");
 		setForeground(Color.WHITE);
 		setBackground(Color.DARK_GRAY);
-		//setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 381);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -130,7 +122,7 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[1].trim().equalsIgnoreCase(textArea.getText().trim())){
-						Board.consoleON = false;
+						InitObjects.consoleON = false;
 						dispose();
 						textArea.append("********Closing...*********" + "\n");
 						return;
@@ -211,15 +203,15 @@ public class Console extends JFrame {
 					
 					
 					if (commands[3].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true){
-							Board.timerEasy.stop();
-							Board.timerMedium.stop();
-							Board.timerHard.stop();
-							SoundResources.bgMusic.stop();
-							SoundResources.roar.stop();
+						if(InitObjects.ingame == true){
+							InitObjects.timerEasy.stop();
+							InitObjects.timerMedium.stop();
+							InitObjects.timerHard.stop();
+							LoadSounds.bgMusic.stop();
+							LoadSounds.roar.stop();
 							textArea.append("********Game was paused!*********" + "\n");
 						}
-						if(!Board.ingame){
+						if(!InitObjects.ingame){
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
 						return;
@@ -227,163 +219,64 @@ public class Console extends JFrame {
 					
 					
 					if (commands[4].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true && !Board.timerEasy.isRunning()){
+						if(InitObjects.ingame == true && !InitObjects.timerEasy.isRunning()){
 							textArea.append("********Game switched to easy!*********" + "\n");
-							Board.timerMedium.stop();
-			        		Board.timerHard.stop();
-			        		Board.timerEasy.start();
-			        		SoundResources.bgMusic.loop();
+							InitObjects.timerMedium.stop();
+			        		InitObjects.timerHard.stop();
+			        		InitObjects.timerEasy.start();
+			        		LoadSounds.bgMusic.loop();
 			        		return;
 						}
-						if(Board.ingame == true && Board.timerEasy.isRunning() == true){
+						if(InitObjects.ingame == true && InitObjects.timerEasy.isRunning() == true){
 							textArea.append("********Already on E A S Y!*********" + "\n");
 							return;
 						}
-		            	if(!Board.ingame){
+		            	if(!InitObjects.ingame){
 		            		textArea.append("********Game initialized!*********" + "\n");
-		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-		            		Board.ingame = true;
-		            		Board.lifeEvilHead = 3;
-		            		Board.lifeMyShip = 3;
-		            		Board.lifeBunker = 3;
-			    	        
-		            		setPreferredSize(new Dimension(1310, 1040));
-
-		            		MyShip.myShip = new MyShip(40, 180);
-		            		MyShip.myShip.isVisible();
-			    	        
-		            		EvilHead.evilHead = new EvilHead(640, 180);
-		            		EvilHead.evilHead.isVisible();
-		            		EvilHead.evilHead.AIOnMedium();
-		            		
-		            		Bunker.bunkerObj = new Bunker(450, 650);
-		            		Bunker.bunkerObj.isVisible();
-			    	        
-		            		VolBtn.volButt = new VolBtn(940, 15);
-		            		VolBtn.volButt.isVisible();
-
-		            		Board.initAliens();
-		            		Board.initGold();
-		            		Board.initDragons();
-		            		Board.initHealth();
-		            		
-		            		Board.timerMedium.stop();
-		            		Board.timerHard.stop();;
-		            		Board.timerEasy.restart();
-		            		SoundResources.gameWon.play();
-		            		SoundResources.gameLost.stop();
-		            		SoundResources.bgMusic.loop();
-		            		SoundResources.roar.stop();
+		            		Difficulty.easy();
 		            		return;
-					}
+		            	}
 		            	
 		            	return;
 				}
 					
 					if (commands[5].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true && !Board.timerMedium.isRunning()){
+						if(InitObjects.ingame == true && !InitObjects.timerMedium.isRunning()){
 							textArea.append("********Game switched to medium!*********" + "\n");
-							Board.timerEasy.stop();
-			        		Board.timerHard.stop();
-			        		Board.timerMedium.start();
-			        		SoundResources.bgMusic.loop();
+							InitObjects.timerEasy.stop();
+			        		InitObjects.timerHard.stop();
+			        		InitObjects.timerMedium.start();
+			        		LoadSounds.bgMusic.loop();
 			        		return;
 						}
-						if(Board.ingame == true && Board.timerMedium.isRunning() == true){
+						if(InitObjects.ingame == true && InitObjects.timerMedium.isRunning() == true){
 							textArea.append("********Already on M E D I U M!*********" + "\n");
 							return;
 						}
-		            	if(!Board.ingame){
-		            		textArea.append("********Game initialized!*********" + "\n");
-		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-		            		Board.ingame = true;
-		            		Board.lifeEvilHead = 3;
-		            		Board.lifeMyShip = 3;
-		            		Board.lifeBunker = 3;
-			    	        
-		            		setPreferredSize(new Dimension(1310, 1040));
-
-		            		MyShip.myShip = new MyShip(40, 180);
-		            		MyShip.myShip.isVisible();
-			    	        
-		            		EvilHead.evilHead = new EvilHead(640, 180);
-		            		EvilHead.evilHead.isVisible();
-		            		EvilHead.evilHead.AIOnMedium();
-		            		
-		            		Bunker.bunkerObj = new Bunker(450, 650);
-		            		Bunker.bunkerObj.isVisible();
-			    	        
-		            		VolBtn.volButt = new VolBtn(940, 15);
-		            		VolBtn.volButt.isVisible();
-
-		            		Board.initAliens();
-		            		Board.initGold();
-		            		Board.initDragons();
-		            		Board.initHealth();
-		            		
-		            		Board.timerEasy.stop();
-		            		Board.timerHard.stop();;
-		            		Board.timerMedium.restart();
-		            		
-		            		SoundResources.gameWon.play();
-		            		SoundResources.gameLost.stop();
-		            		SoundResources.bgMusic.loop();
-		            		SoundResources.roar.stop();
-		            		
+		            	if(!InitObjects.ingame){
+		            		textArea.append("********Game initialized!*********" + "\n");		
+		            		Difficulty.medium();
 		            		return;
-
 		            	}
 		            	return;
 					}
 					
 					if (commands[6].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.ingame == true && !Board.timerHard.isRunning()){
+						if(InitObjects.ingame == true && !InitObjects.timerHard.isRunning()){
 							textArea.append("********Game switched to hard!*********" + "\n");
-							Board.timerEasy.stop();
-			        		Board.timerMedium.stop();
-			        		Board.timerHard.start();
-			        		SoundResources.bgMusic.loop();
+							InitObjects.timerEasy.stop();
+			        		InitObjects.timerMedium.stop();
+			        		InitObjects.timerHard.start();
+			        		LoadSounds.bgMusic.loop();
 			        		return;
 						}
-						if(Board.ingame == true && Board.timerHard.isRunning() == true){
+						if(InitObjects.ingame == true && InitObjects.timerHard.isRunning() == true){
 							textArea.append("********Already on H A R D!*********" + "\n");
 							return;
 						}
-						if(!Board.ingame){
+						if(!InitObjects.ingame){
 							textArea.append("********Game initialized!*********" + "\n");
-		            		Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-		            		Board.ingame = true;
-		            		Board.lifeEvilHead = 3;
-		            		Board.lifeMyShip = 3;
-		            		Board.lifeBunker = 3;
-		            		
-		            		setPreferredSize(new Dimension(1310, 1040));
-
-		            		MyShip.myShip = new MyShip(40, 180);
-		            		MyShip.myShip.isVisible();
-			    	        
-		            		EvilHead.evilHead = new EvilHead(640, 180);
-		            		EvilHead.evilHead.isVisible();
-		            		EvilHead.evilHead.AIOnMedium();
-		            		
-		            		Bunker.bunkerObj = new Bunker(450, 650);
-		            		Bunker.bunkerObj.isVisible();
-			    	        
-		            		VolBtn.volButt = new VolBtn(940, 15);
-		            		VolBtn.volButt.isVisible();
-
-		            		Board.initAliens();
-		            		Board.initGold();
-		            		Board.initDragons();
-		            		Board.initHealth();
-			    	        
-		            		Board.timerEasy.stop();
-		            		Board.timerMedium.stop();;
-		            		Board.timerHard.restart();
-		            		SoundResources.gameWon.play();
-		            		SoundResources.gameLost.stop();
-		            		SoundResources.bgMusic.loop();
-		            		SoundResources.roar.stop();
+							Difficulty.hard();
 		            		return;
 		            	}
 		            	return;
@@ -397,16 +290,16 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[8].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.timerEasy.isRunning() == true || 
-								Board.timerMedium.isRunning() == true ||
-								Board.timerHard.isRunning() == true){
-							SoundResources.bgMusic.stop();
+						if(InitObjects.timerEasy.isRunning() == true || 
+								InitObjects.timerMedium.isRunning() == true ||
+								InitObjects.timerHard.isRunning() == true){
+							LoadSounds.bgMusic.stop();
 							textArea.append("********MUSIC IS OFF*********" + "\n");
 							return;
 						}
-						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
-								!Board.timerMedium.isRunning() &&
-								!Board.timerHard.isRunning())){
+						if(!InitObjects.ingame || (!InitObjects.timerEasy.isRunning() && 
+								!InitObjects.timerMedium.isRunning() &&
+								!InitObjects.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -415,16 +308,16 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[9].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if(Board.timerEasy.isRunning() == true || 
-								Board.timerMedium.isRunning() == true ||
-								Board.timerHard.isRunning() == true){
-							SoundResources.bgMusic.loop();
+						if(InitObjects.timerEasy.isRunning() == true || 
+								InitObjects.timerMedium.isRunning() == true ||
+								InitObjects.timerHard.isRunning() == true){
+							LoadSounds.bgMusic.loop();
 							textArea.append("********MUSIC IS ON*********" + "\n");
 							return;
 						}
-						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
-								!Board.timerMedium.isRunning() &&
-								!Board.timerHard.isRunning())){
+						if(!InitObjects.ingame || (!InitObjects.timerEasy.isRunning() && 
+								!InitObjects.timerMedium.isRunning() &&
+								!InitObjects.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -432,21 +325,21 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[10].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if((Board.timerEasy.isRunning() == true || 
-								Board.timerMedium.isRunning() == true ||
-								Board.timerHard.isRunning() == true) && Board.lifeMyShip >= 3){
-							Board.god = true;
-							Board.lifeMyShip = -999;
+						if((InitObjects.timerEasy.isRunning() == true || 
+								InitObjects.timerMedium.isRunning() == true ||
+								InitObjects.timerHard.isRunning() == true) && UpdateObjects.lifeMyShip >= 3){
+							InitObjects.god = true;
+							UpdateObjects.lifeMyShip = -999;
 							textArea.append("********GODMODE ON*********" + "\n");
 							return;
 						}
-						if(Board.ingame == true && Board.lifeMyShip < 3){
+						if(InitObjects.ingame == true && UpdateObjects.lifeMyShip < 3){
 							textArea.append("***********Already in GODMODE!*********" + "\n");
 							return;
 						}
-						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
-								!Board.timerMedium.isRunning() &&
-								!Board.timerHard.isRunning())){
+						if(!InitObjects.ingame || (!InitObjects.timerEasy.isRunning() && 
+								!InitObjects.timerMedium.isRunning() &&
+								!InitObjects.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -454,21 +347,21 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[11].trim().equalsIgnoreCase(textArea.getText().trim())){
-						if((Board.timerEasy.isRunning() == true || 
-								Board.timerMedium.isRunning() == true ||
-								Board.timerHard.isRunning() == true) && Board.lifeMyShip < 3){
-							Board.god = false;
-							Board.lifeMyShip = 3;
+						if((InitObjects.timerEasy.isRunning() == true || 
+								InitObjects.timerMedium.isRunning() == true ||
+								InitObjects.timerHard.isRunning() == true) && UpdateObjects.lifeMyShip < 3){
+							InitObjects.god = false;
+							UpdateObjects.lifeMyShip = 3;
 							textArea.append("********GODMODE OFF*********" + "\n");
 							return;
 						}
-						if(Board.ingame == true && Board.lifeMyShip >= 3){
+						if(InitObjects.ingame == true && UpdateObjects.lifeMyShip >= 3){
 							textArea.append("***********Not in a GODMODE!*********" + "\n");
 							return;
 						}
-						if(!Board.ingame || (!Board.timerEasy.isRunning() && 
-								!Board.timerMedium.isRunning() &&
-								!Board.timerHard.isRunning())){
+						if(!InitObjects.ingame || (!InitObjects.timerEasy.isRunning() && 
+								!InitObjects.timerMedium.isRunning() &&
+								!InitObjects.timerHard.isRunning())){
 							textArea.append("********WARNING: Not in a game!*********" + "\n");
 							return;
 						}
@@ -476,212 +369,212 @@ public class Console extends JFrame {
 					}
 					
 					if (commands[12].trim().equalsIgnoreCase(textArea.getText().trim())){
-					 if(Board.ingame == true){
-						if(Board.aliens.size() > 0){
-							if(Board.timerEasy.isRunning() == true){
+					 if(InitObjects.ingame == true){
+						if(Alien.aliens.size() > 0){
+							if(InitObjects.timerEasy.isRunning() == true){
 								textArea.append("Level: 1" + "\n");
 								textArea.append("Difficulty: Easy" + "\n");
-								textArea.append("Aliens killed: " + (-(Board.aliens.size() - 54)) + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Aliens killed: " + (-(Alien.aliens.size() - 54)) + "\n");
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 
 								return;
 							}
 							
-							if(Board.timerMedium.isRunning() == true){
+							if(InitObjects.timerMedium.isRunning() == true){
 								textArea.append("Level: 1" + "\n");
 								textArea.append("Difficulty: Medium" + "\n");
-								textArea.append("Aliens killed: " + (-(Board.aliens.size() - 54)) + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Aliens killed: " + (-(Alien.aliens.size() - 54)) + "\n");
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 							
-							if(Board.timerHard.isRunning() == true){
+							if(InitObjects.timerHard.isRunning() == true){
 								textArea.append("Level: 1" + "\n");
 								textArea.append("Difficulty: Hard" + "\n");
-								textArea.append("Aliens killed: " + (-(Board.aliens.size() - 54)) + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Aliens killed: " + (-(Alien.aliens.size() - 54)) + "\n");
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 						}
 						
-						if(Board.aliens.isEmpty() && Board.dragons.size() > 0){
-							if(Board.timerEasy.isRunning() == true){
+						if(Alien.aliens.isEmpty() && Dragon.dragons.size() > 0){
+							if(InitObjects.timerEasy.isRunning() == true){
 								textArea.append("Level: 2" + "\n");
 								textArea.append("Difficulty: Easy" + "\n");
-								textArea.append("Dragons killed: " + (-(Board.dragons.size() - 30)) + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Dragons killed: " + (-(Dragon.dragons.size() - 30)) + "\n");
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 							
-							if(Board.timerMedium.isRunning() == true){
+							if(InitObjects.timerMedium.isRunning() == true){
 								textArea.append("Level: 2" + "\n");
 								textArea.append("Difficulty: Medium" + "\n");
-								textArea.append("Dragons killed: " + (-(Board.dragons.size() - 30)) + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Dragons killed: " + (-(Dragon.dragons.size() - 30)) + "\n");
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 							
-							if(Board.timerHard.isRunning() == true){
+							if(InitObjects.timerHard.isRunning() == true){
 								textArea.append("Level: 2" + "\n");
 								textArea.append("Difficulty: Hard" + "\n");
-								textArea.append("Dragons killed: " + (-(Board.dragons.size() - 30)) + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Dragons killed: " + (-(Dragon.dragons.size() - 30)) + "\n");
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 						}
 						
-						if(Board.aliens.isEmpty() && Board.dragons.isEmpty()){
-							if(Board.timerEasy.isRunning() == true){
+						if(Alien.aliens.isEmpty() && Dragon.dragons.isEmpty()){
+							if(InitObjects.timerEasy.isRunning() == true){
 								textArea.append("Level: 3" + "\n");
 								textArea.append("Difficulty: Easy" + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 							
-							if(Board.timerMedium.isRunning() == true){
+							if(InitObjects.timerMedium.isRunning() == true){
 								textArea.append("Level: 3" + "\n");
 								textArea.append("Difficulty: Medium" + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
 							}
 							
-							if(Board.timerHard.isRunning() == true){
+							if(InitObjects.timerHard.isRunning() == true){
 								textArea.append("Level: 3" + "\n");
 								textArea.append("Difficulty: Hard" + "\n");
-								textArea.append("Healthpacks left: " + Board.healthpack.size() + "\n");
-								if(Board.lifeMyShip <= 4){
+								textArea.append("Healthpacks left: " + HealthPack.healthpack.size() + "\n");
+								if(UpdateObjects.lifeMyShip <= 4){
 									textArea.append("Lifestats: Healthy");
 								}
-								if(Board.lifeMyShip == 5){
+								if(UpdateObjects.lifeMyShip == 5){
 									textArea.append("Lifestats: Injured");
 								}
-								if(Board.lifeMyShip == 6){
+								if(UpdateObjects.lifeMyShip == 6){
 									textArea.append("Lifestats: Critical");
 								}
-								if(Board.lifeMyShip < 3){
+								if(UpdateObjects.lifeMyShip < 3){
 									textArea.append("\n" + "Godmode: " + "ON");
 								}
-								if(Board.lifeMyShip == 3){
+								if(UpdateObjects.lifeMyShip == 3){
 									textArea.append("\n" + "Godmode: " + "OFF");
 								}
 								return;
@@ -691,9 +584,9 @@ public class Console extends JFrame {
 								
 						}
 					 
-					 	if(!Board.ingame || (!Board.timerEasy.isRunning() && 
-					 			!Board.timerMedium.isRunning() && 
-					 			!Board.timerHard.isRunning())){
+					 	if(!InitObjects.ingame || (!InitObjects.timerEasy.isRunning() && 
+					 			!InitObjects.timerMedium.isRunning() && 
+					 			!InitObjects.timerHard.isRunning())){
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
 					 	return;
@@ -703,74 +596,40 @@ public class Console extends JFrame {
 					if (commands[13].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
 							textArea.append("********Game initialized!*********" + "\n");
-							Board.god = false;
-		            	    setFocusable(true);
-			    	        Board.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
-			    	        Board.ingame = true;
-			    	        Board.lifeEvilHead = 3;
-			    	        Board.lifeMyShip = 3;
-			    	        Board.lifeBunker = 3;
-			    	        
-			    	        setPreferredSize(new Dimension(1310, 1040));
-
-			    	        MyShip.myShip = new MyShip(40, 180);
-			    	        MyShip.myShip.isVisible();
-			    	        
-			    	        EvilHead.evilHead = new EvilHead(640, 180);
-			    	        EvilHead.evilHead.isVisible();
-			    	        EvilHead.evilHead.AIOnEasy();
-			    	        
-			    	        Bunker.bunkerObj = new Bunker(450, 650);
-			    	        Bunker.bunkerObj.isVisible();
-			    	        
-			    	        VolBtn.volButt = new VolBtn(940, 15);
-			    	        VolBtn.volButt.isVisible();
-
-		            		Board.initAliens();
-		            		Board.initGold();
-		            		Board.initDragons();
-		            		Board.initHealth();
-		            		
-			    	        Board.timerHard.stop();
-			    	        Board.timerMedium.stop();
-			    	        Board.timerEasy.restart();
-			    	        SoundResources.gameWon.play();
-			    	        SoundResources.gameLost.stop();
-			    	        SoundResources.bgMusic.loop();
-			    	        SoundResources.roar.stop();
-		            		return;		            	
+							Difficulty.restart();
+							return;		            	
 					}
 					
 								
 					
 					if (commands[14].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
-						if(Board.ingame == true && Board.aliens.size() > 0){
+						if(InitObjects.ingame == true && Alien.aliens.size() > 0){
 							
 							textArea.append("********Level 2 was loaded!*********" + "\n");
 							
 							
-							if (Board.aliens.size() > 0) {
-								Board.aliens.clear();
-								SoundResources.roar.loop();
+							if (Alien.aliens.size() > 0) {
+								Alien.aliens.clear();
+								LoadSounds.roar.loop();
 							}
 							
 							return;
 						}
 						
-						if (Board.aliens.size() == 0 && Board.dragons.size() > 0 && Board.ingame == true) {
+						if (Alien.aliens.size() == 0 && Dragon.dragons.size() > 0 && InitObjects.ingame == true) {
 							
 							textArea.append("***********Already in Level 2!*********" + "\n");
 							return;
 						}
 						
-						if (Board.dragons.size() == 0 && Board.ingame == true) {
+						if (Dragon.dragons.size() == 0 && InitObjects.ingame == true) {
 							
 							textArea.append("***********Level change not allowed!*********" + "\n");
 							return;
 						}
 						
-						if(!Board.ingame){
+						if(!InitObjects.ingame){
 							
 							textArea.append("***********WARNING: Not in a game!*********");
 							return;
@@ -782,28 +641,28 @@ public class Console extends JFrame {
 					if (commands[15].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
 						
-						if(Board.ingame == true && (Board.aliens.size() > 0 || Board.dragons.size() > 0)){
+						if(InitObjects.ingame == true && (Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)){
 						
-							Board.aliens.clear();
-							Board.dragons.clear();
-							SoundResources.roar.stop();
+							Alien.aliens.clear();
+							Dragon.dragons.clear();
+							LoadSounds.roar.stop();
 							textArea.append("********Level 3 was loaded!*********" + "\n");							
 							return;
 						}
 						
-						if (Board.dragons.size() == 0 && Board.lifeBunker < 50 && Board.ingame == true) {
+						if (Dragon.dragons.size() == 0 && UpdateObjects.lifeBunker < 50 && InitObjects.ingame == true) {
 							
 							textArea.append("***********Already in Level 3!*********" + "\n");
 							return;
 						}
 					
-						if (Board.lifeBunker == 50 && Board.ingame == true) {
+						if (UpdateObjects.lifeBunker == 50 && InitObjects.ingame == true) {
 							
 							textArea.append("***********Level change not allowed!*********" + "\n");
 							return;
 						}
 						
-						if(!Board.ingame){
+						if(!InitObjects.ingame){
 							
 							textArea.append("***********WARNING: Not in a game!*********");
 						}
@@ -816,24 +675,24 @@ public class Console extends JFrame {
 					if (commands[16].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
 						
-						if(Board.ingame == true && (Board.aliens.size() > 0 || Board.dragons.size() > 0 || Board.lifeBunker < 50)){
+						if(InitObjects.ingame == true && (Alien.aliens.size() > 0 || Dragon.dragons.size() > 0 || UpdateObjects.lifeBunker < 50)){
 						
-							Board.aliens.clear();
-							Board.dragons.clear();
-							SoundResources.roar.stop();
-							Board.lifeBunker = 50;
+							Alien.aliens.clear();
+							Dragon.dragons.clear();
+							LoadSounds.roar.stop();
+							UpdateObjects.lifeBunker = 50;
 							textArea.append("********Level 4 was loaded!*********" + "\n");							
 							return;
 						}
 						
-						if (Board.lifeBunker == 50 && Board.ingame == true) {
+						if (UpdateObjects.lifeBunker == 50 && InitObjects.ingame == true) {
 							
 							textArea.append("***********Already in Level 4!*********" + "\n");
 							return;
 						}
 					
 						
-						if(!Board.ingame){
+						if(!InitObjects.ingame){
 							
 							textArea.append("***********WARNING: Not in a game!*********");
 						}

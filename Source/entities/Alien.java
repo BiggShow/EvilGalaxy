@@ -1,9 +1,12 @@
 package entities;
 
-import frames.SpritePattern;
+import java.util.ArrayList;
+
+import game_engine.SpritePattern;
 
 public class Alien extends SpritePattern {
 
+	public static ArrayList<Alien> aliens;
     private final int INITIAL_X = 1024;
     private final int INITIAL_Y = 0;
     

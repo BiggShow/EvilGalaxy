@@ -1,6 +1,6 @@
 package items;
 
-import frames.SpritePattern;
+import game_engine.SpritePattern;
 
 public class ShipRocket extends SpritePattern {
 
