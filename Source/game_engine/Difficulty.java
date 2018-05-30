@@ -24,7 +24,7 @@ public class Difficulty {
         EvilHead.evilHead.isVisible();
         EvilHead.evilHead.AIOnEasy();
         
-        Bunker.bunkerObj = new Bunker(450, 650);
+        Bunker.bunkerObj = new Bunker(450, 680);
         Bunker.bunkerObj.isVisible();
         
         VolBtn.volButt = new VolBtn(940, 15);
@@ -59,7 +59,7 @@ public class Difficulty {
 		EvilHead.evilHead.isVisible();
 		EvilHead.evilHead.AIOnMedium();
 		
-		Bunker.bunkerObj = new Bunker(450, 650);
+		Bunker.bunkerObj = new Bunker(450, 680);
 		Bunker.bunkerObj.isVisible();
         
 		VolBtn.volButt = new VolBtn(940, 15);
@@ -94,7 +94,7 @@ public class Difficulty {
 		EvilHead.evilHead.isVisible();
 		EvilHead.evilHead.AIOnMedium();
 		
-		Bunker.bunkerObj = new Bunker(450, 650);
+		Bunker.bunkerObj = new Bunker(450, 680);
 		Bunker.bunkerObj.isVisible();
         
 		VolBtn.volButt = new VolBtn(940, 15);
@@ -130,7 +130,7 @@ public class Difficulty {
 		EvilHead.evilHead.isVisible();
 		EvilHead.evilHead.AIOnMedium();
 		
-		Bunker.bunkerObj = new Bunker(450, 650);
+		Bunker.bunkerObj = new Bunker(450, 680);
 		Bunker.bunkerObj.isVisible();
         
 		VolBtn.volButt = new VolBtn(940, 15);
