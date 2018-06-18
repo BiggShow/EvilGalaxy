@@ -11,6 +11,18 @@ public class Difficulty {
 
 	public static void restart(){
 		
+		if(InitObjects.god == true){
+			InitObjects.god = false;
+		}
+		
+//		if(DrawScene.voiceStopped == true){
+//			DrawScene.voiceStopped = false;
+//		}
+//		
+//		if(DrawScene.voiceInterruptor != 0){
+//			DrawScene.voiceInterruptor = 0;
+//		}
+		
 	    DrawScene.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
         InitObjects.ingame = true;
         UpdateObjects.lifeEvilHead = 3;

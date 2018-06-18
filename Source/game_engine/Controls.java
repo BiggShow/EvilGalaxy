@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import entities.Alien;
 import entities.Dragon;
 import entities.MyShip;
-import frames.Console;
 import frames.Manual;
+import game_engine.Difficulty;
+import game_engine.InitObjects;
+import game_engine.UpdateObjects;
 import items.Gold;
 import items.VolBtn;
 import sound_engine.LoadSounds;
@@ -58,20 +60,20 @@ public class Controls extends JFrame implements KeyListener {
 
 		if (InitObjects.ingame == true && (InitObjects.timerEasy.isRunning() == true || InitObjects.timerMedium.isRunning() == true || InitObjects.timerHard.isRunning() == true) 
 				&& key == KeyEvent.VK_CONTROL && 
-				(Alien.aliens.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker == 50 && Gold.goldstack.size() > 0))) {
+				(Alien.aliens.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker >= 50 && Gold.goldstack.size() > 0))) {
 			MyShip.myShip.gunempty();
 		}
 		
 		if (InitObjects.ingame == true && (InitObjects.timerEasy.isRunning() == true || InitObjects.timerMedium.isRunning() == true || InitObjects.timerHard.isRunning() == true) 
 				&& key == KeyEvent.VK_SPACE && 
 				(Alien.aliens.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker < 50) || 
-						(UpdateObjects.lifeBunker == 50 && Gold.goldstack.isEmpty()))) {
+						(UpdateObjects.lifeBunker >= 50 && Gold.goldstack.isEmpty()))) {
 			MyShip.myShip.loadMissiles();
         }
 		
 		if (InitObjects.ingame == true && (InitObjects.timerEasy.isRunning() == true || InitObjects.timerMedium.isRunning() == true || InitObjects.timerHard.isRunning() == true) 
 				&& key == KeyEvent.VK_SPACE && 
-				(Alien.aliens.isEmpty() && Dragon.dragons.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker == 50 && Gold.goldstack.size() > 0))){
+				(Alien.aliens.isEmpty() && Dragon.dragons.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker >= 50 && Gold.goldstack.size() > 0))){
 			MyShip.myShip.gunempty();
 		}
 		
@@ -80,9 +82,16 @@ public class Controls extends JFrame implements KeyListener {
 			
 			if (Alien.aliens.size() > 0) {
 				Alien.aliens.clear();
+//				if(DrawScene.voiceInterruptor != 0){
+//					DrawScene.voiceInterruptor = 0;
+//				}
+//				if(DrawScene.voiceInterruptor == 0){
+//					DrawScene.initVoice("Loading level 2!");
+//					DrawScene.voiceInterruptor++;
+//					return;
+//	        	}
 				return;
 			}
-			
 		}
 		
 		if (key == KeyEvent.VK_3){
@@ -90,6 +99,14 @@ public class Controls extends JFrame implements KeyListener {
 			if(InitObjects.ingame == true && (Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)){
 				Alien.aliens.clear();
 				Dragon.dragons.clear();
+//				if(DrawScene.voiceInterruptor != 0){
+//					DrawScene.voiceInterruptor = 0;
+//				}
+//				if(DrawScene.voiceInterruptor == 0){
+//					DrawScene.initVoice("Loading level 3!");
+//					DrawScene.voiceInterruptor++;
+//					return;
+//	        	}
 				return;
 			}
 		}
@@ -175,6 +192,10 @@ public class Controls extends JFrame implements KeyListener {
 				
 				InitObjects.god = true;
 				UpdateObjects.lifeMyShip = -999;
+//				if(DrawScene.voiceInterruptor != 0){
+//					DrawScene.voiceInterruptor = 0;
+//				}
+//				DrawScene.initVoice("GODLIKE!");
 				return;
 			}
 			
@@ -182,6 +203,10 @@ public class Controls extends JFrame implements KeyListener {
 				
 				InitObjects.god = false;
 				UpdateObjects.lifeMyShip = 3;
+//				if(DrawScene.voiceInterruptor != 0){
+//					DrawScene.voiceInterruptor = 0;
+//				}
+//				DrawScene.initVoice("Healthy!");
 				return;
 				
 			}
@@ -190,17 +215,17 @@ public class Controls extends JFrame implements KeyListener {
 		
 						
 		
-		InitObjects.console = new Console();
-		
-		if (key == KeyEvent.VK_C && !InitObjects.consoleON){	
-			
-			InitObjects.console.setVisible(true);
-            if(!InitObjects.consoleON == true){
-            	
-            	InitObjects.consoleON = true;
-            }
-            
-		}
+//		InitObjects.console = new BestConsole();
+//		
+//		if (key == KeyEvent.VK_C && !InitObjects.consoleON){	
+//			
+//			InitObjects.console.setVisible(true);
+//            if(!InitObjects.consoleON == true){
+//            	
+//            	InitObjects.consoleON = true;
+//            }
+//            
+//		}
 		
 		if (key == KeyEvent.VK_O && !InitObjects.manualON){	
 			

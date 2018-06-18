@@ -3,7 +3,6 @@ package game_engine;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
 import entities.Alien;
 import entities.Bunker;
 import entities.Dragon;
@@ -52,7 +51,7 @@ public abstract class UpdateObjects extends InitObjects {
     private void inGame() {
         
         if (!ingame) {
-            timerEasy.stop();
+        	timerEasy.stop();
             timerMedium.stop();
             timerHard.stop();
         }
@@ -332,7 +331,16 @@ public abstract class UpdateObjects extends InitObjects {
             	HealthPack.healthpack.remove(i);
             	if(lifeMyShip > 3){
             		lifeMyShip--;
+//            		if(lifeMyShip == 3){
+//            			if(DrawScene.voiceInterruptor != 0){
+//            				DrawScene.voiceInterruptor = 0;	
+//                    	}
+//                		DrawScene.initVoice("Healthy!");
+//                		DrawScene.voiceInterruptor++;
+//                		return;
+//                	}
             	}
+            	
             }
             
         }

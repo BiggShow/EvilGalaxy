@@ -7,15 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import frames.Console;
-import game_engine.InitObjects;
+import frames.BestConsole;
 
 
 @SuppressWarnings("serial")
 public class JoinGame extends JFrame {
 	
-	private Console csl;
 
 	public JoinGame() {
 		
@@ -68,7 +65,7 @@ public class JoinGame extends JFrame {
 		});
 		
 		
-		csl = new Console();
+		//csl = new BestConsole();
 		
 		refrbutt.addActionListener(new ActionListener() {
 
@@ -76,11 +73,11 @@ public class JoinGame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
-					csl.setVisible(true);		
-					if(!InitObjects.consoleON == true){
-                    	InitObjects.consoleON = true;
-                    }
-					csl.getTextField().setText("refresh");
+					//csl.setVisible(true);		
+//					if(!InitObjects.consoleON == true){
+//                    	InitObjects.consoleON = true;
+//                    }
+					BestConsole.getTextField().setText("refresh");
 				
 								
 			}});

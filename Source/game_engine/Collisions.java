@@ -61,7 +61,7 @@ public abstract class Collisions extends UpdateObjects {
             	if (myship.intersects(alienUnit)) {
 	        		lifeMyShip++;
 	        		alien.setVisible(false);
-	        		new PlayWave1st("sounds/burned.wav").start();
+	        		//new PlayWave1st("sounds/burned.wav").start();
 	        		MyShip.myShip.hitCraft();
 	        		MyShip.myShip.shakeCraft();
             	}		
@@ -123,7 +123,7 @@ public abstract class Collisions extends UpdateObjects {
             	
             
             if(Alien.aliens.isEmpty() && 
-            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50){
+            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50){
             	if(missileUnit.intersects(evilhead)){
             		m.setVisible(false);
             		if(timerHard.isRunning() == true){
@@ -241,7 +241,7 @@ public abstract class Collisions extends UpdateObjects {
             
             
             if(Alien.aliens.isEmpty() && 
-            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50){
+            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50){
             	if(rocketUnit.intersects(evilhead)){
             		r.setVisible(false);
             		if(timerHard.isRunning() == true){

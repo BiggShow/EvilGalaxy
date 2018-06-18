@@ -17,7 +17,7 @@ public class Main extends GameMenu {
     public Main() {
         
         initUI();
-        
+        	
     }
     
     private void initUI() {

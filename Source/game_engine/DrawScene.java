@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+//import com.sun.speech.freetts.Voice;
+//import com.sun.speech.freetts.VoiceManager;
 import entities.Alien;
 import entities.Bunker;
 import entities.Dragon;
@@ -24,13 +26,18 @@ import sound_engine.LoadSounds;
 
 public class DrawScene extends UpdateObjects {
 
+
 	private String unicode;
 	private String checkMark;
 	private static final long serialVersionUID = 1L;
 	static Image bg1;
     static Image bg2;
 	static Image bg3;
-	
+//	private static final String VOICENAME = "kevin16"; 
+//	static boolean voiceStopped;
+//	static Voice voice;
+//	public static int voiceInterruptor;
+
 	
 	public DrawScene() {
         bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
@@ -38,6 +45,21 @@ public class DrawScene extends UpdateObjects {
         bg3 = Toolkit.getDefaultToolkit().createImage("images/galaxy3.jpg");		
 	}
 	
+	
+//	public static void initVoice(String message){	
+//
+//    	VoiceManager vm = VoiceManager.getInstance();
+//    	voice = vm.getVoice(VOICENAME);
+//    	voice.allocate();
+//    	voice.speak(message);
+//		
+//    	if(voiceStopped == false){
+//    		voice.speak(message);
+//    		voiceStopped = true;
+//    	}
+//
+//	}
+		
 	@Override
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -46,111 +68,120 @@ public class DrawScene extends UpdateObjects {
         	drawObjects(g);  
         }
         
-        if(Alien.aliens.isEmpty() && !timerMedium.isRunning() && 
-        		timerHard.isRunning() == true){
+        
+        if(Alien.aliens.isEmpty()){
         	
-        	drawObjects2(g);
-        	
-        	if(Dragon.dragons.size() > 0){
-        		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
-        		g.drawString("Level: " + 2, 230, 15);
-        		g.drawString("Missiles: Locked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 480, 15);
-        		g.drawString("Difficulty: Hard", 650, 15);
-        		drawOuttaControl(g);
-        		MyShip.myShip.dragonShake();		
-        	}
-        	
-        	UpdateObjects.updateDragons();
-        	LoadSounds.roar.loop();
-        	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
-        		g.drawString("Dragonzz: " + checkMark, 5, 15);
-        		g.drawString("Level: " + 3, 230, 15);
-        		g.drawString("Missiles: Unlocked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 490, 15);
-        		g.drawString("Difficulty: Hard", 670, 15);
-        	}
-        	
-        	if(lifeBunker == 50){
-        		g.drawString("Dragonzz: " + checkMark, 5, 15);
-        		g.drawString("Level: " + 4, 230, 15);
-        		g.drawString("Missiles: Unlocked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 490, 15);
-        		g.drawString("Difficulty: Hard", 670, 15);
-        	}
-        	
+        	if(!timerMedium.isRunning() && timerHard.isRunning() == true){
+            	
+            	drawObjects2(g);
+            	
+            	if(Dragon.dragons.size() > 0){
+            		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
+            		g.drawString("Level: " + 2, 230, 15);
+            		g.drawString("Missiles: Locked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 480, 15);
+            		g.drawString("Difficulty: Hard", 650, 15);
+            		drawOuttaControl(g);
+            		MyShip.myShip.dragonShake();		
+            	}
+            	
+            	UpdateObjects.updateDragons();
+            	LoadSounds.roar.loop();
+            	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
+            		g.drawString("Dragonzz: " + checkMark, 5, 15);
+            		g.drawString("Level: " + 3, 230, 15);
+            		g.drawString("Missiles: Unlocked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 490, 15);
+            		g.drawString("Difficulty: Hard", 670, 15);
+            	}
+            	
+            	if(lifeBunker >= 50){
+            		g.drawString("Dragonzz: " + checkMark, 5, 15);
+            		g.drawString("Level: " + 4, 230, 15);
+            		g.drawString("Missiles: Unlocked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 490, 15);
+            		g.drawString("Difficulty: Hard", 670, 15);
+            	}
+            	
+            }
+            
+            
+            if(!timerMedium.isRunning() && !timerHard.isRunning()){
+            	
+            	drawObjects2(g);
+            	
+            	if(Dragon.dragons.size() > 0){
+            		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
+            		g.drawString("Level: " + 2, 230, 15);
+            		g.drawString("Missiles: Locked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 480, 15);
+            		g.drawString("Difficulty: Easy", 650, 15);
+            	}
+            	UpdateObjects.updateDragons();
+            	LoadSounds.roar.loop();
+            	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
+            		g.drawString("Dragonzz: " + checkMark, 5, 15);
+            		g.drawString("Level: " + 3, 230, 15);
+            		g.drawString("Missiles: Unlocked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 490, 15);
+            		g.drawString("Difficulty: Easy", 670, 15);
+            	}
+            	
+            	if(lifeBunker >= 50){
+            		g.drawString("Dragonzz: " + checkMark, 5, 15);
+            		g.drawString("Level: " + 4, 230, 15);
+            		g.drawString("Missiles: Unlocked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 490, 15);
+            		g.drawString("Difficulty: Hard", 670, 15);
+            	}
+            	
+            }
+            
+
+            
+            if(timerMedium.isRunning() == true && !timerHard.isRunning()){
+            	
+            	drawObjects2(g);
+            	
+            	if(Dragon.dragons.size() > 0){
+            		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
+            		g.drawString("Level: " + 2, 230, 15);
+            		g.drawString("Missiles: Locked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 480, 15);
+            		g.drawString("Difficulty: Medium", 650, 15);
+            	}
+            	UpdateObjects.updateDragons();
+            	LoadSounds.roar.loop();
+            	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
+            		g.drawString("Dragonzz: " + checkMark, 5, 15);
+            		g.drawString("Level: " + 3, 230, 15);
+            		g.drawString("Missiles: Unlocked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 490, 15);
+            		g.drawString("Difficulty: Medium", 670, 15);
+            	}
+            	
+            	if(lifeBunker >= 50){
+            		g.drawString("Dragonzz: " + checkMark, 5, 15);
+            		g.drawString("Level: " + 4, 230, 15);
+            		g.drawString("Missiles: Unlocked", 320, 15);
+            		g.drawString("Rockets: Unlocked", 490, 15);
+            		g.drawString("Difficulty: Hard", 670, 15);
+            	}
+            	
+            }
         }
 
-        
-        
-        if(Alien.aliens.isEmpty() && !timerMedium.isRunning() && !timerHard.isRunning()){
-        	
-        	drawObjects2(g);
-        	
-        	if(Dragon.dragons.size() > 0){
-        		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
-        		g.drawString("Level: " + 2, 230, 15);
-        		g.drawString("Missiles: Locked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 480, 15);
-        		g.drawString("Difficulty: Easy", 650, 15);
-        	}
-        	UpdateObjects.updateDragons();
-        	LoadSounds.roar.loop();
-        	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
-        		g.drawString("Dragonzz: " + checkMark, 5, 15);
-        		g.drawString("Level: " + 3, 230, 15);
-        		g.drawString("Missiles: Unlocked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 490, 15);
-        		g.drawString("Difficulty: Easy", 670, 15);
-        	}
-        	
-        	if(lifeBunker == 50){
-        		g.drawString("Dragonzz: " + checkMark, 5, 15);
-        		g.drawString("Level: " + 4, 230, 15);
-        		g.drawString("Missiles: Unlocked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 490, 15);
-        		g.drawString("Difficulty: Hard", 670, 15);
-        	}
-        	
-        }
-        
-        if(Alien.aliens.isEmpty() && timerMedium.isRunning() == true && !timerHard.isRunning()){
-        	
-        	drawObjects2(g);
-        	
-        	if(Dragon.dragons.size() > 0){
-        		g.drawString("Dragonzz: " + Dragon.dragons.size(), 5, 15);
-        		g.drawString("Level: " + 2, 230, 15);
-        		g.drawString("Missiles: Locked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 480, 15);
-        		g.drawString("Difficulty: Medium", 650, 15);
-        	}
-        	UpdateObjects.updateDragons();
-        	LoadSounds.roar.loop();
-        	if(Dragon.dragons.isEmpty() && lifeBunker < 50){
-        		g.drawString("Dragonzz: " + checkMark, 5, 15);
-        		g.drawString("Level: " + 3, 230, 15);
-        		g.drawString("Missiles: Unlocked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 490, 15);
-        		g.drawString("Difficulty: Medium", 670, 15);
-        	}
-        	
-        	if(lifeBunker == 50){
-        		g.drawString("Dragonzz: " + checkMark, 5, 15);
-        		g.drawString("Level: " + 4, 230, 15);
-        		g.drawString("Missiles: Unlocked", 320, 15);
-        		g.drawString("Rockets: Unlocked", 490, 15);
-        		g.drawString("Difficulty: Hard", 670, 15);
-        	}
-        	
-        }
+
 
         if(lifeMyShip < 3){
-        	
+//        	voiceInterruptor++;
+//        	if(voiceInterruptor != 0){
+//        		g.drawString("GODMODE!", MyShip.myShip.x, MyShip.myShip.y);
+//        	}
         	g.drawString("GODMODE!", MyShip.myShip.x, MyShip.myShip.y);
         	MyShip.myShip.godMode();
-        	
-        }        
+        }
+        
 
         if(lifeMyShip == 3){
         	
@@ -169,28 +200,34 @@ public class DrawScene extends UpdateObjects {
         	g.drawString("Health: 50%", MyShip.myShip.x, MyShip.myShip.y);
         	
         }
-       
+        
         if(lifeMyShip == 6){
-        	
         	g.drawString("Health: 25%", MyShip.myShip.x, MyShip.myShip.y);
-        	
         }
+       
+//        if(lifeMyShip == 6 && voiceInterruptor == 0){
+//        	initVoice("Critical!");
+//        	voiceInterruptor++;
+//        	return;
+//        }
         
-		if(lifeMyShip > 6){
-			        	
-			ingame = false;
-        	
-        }
+//        if(lifeMyShip != 6){
+//    		voiceInterruptor = 0;
+//    	}
         
-       	
+//		if(lifeMyShip > 6){
+//			initVoice("Game Over!");        	
+//			ingame = false;
+//        }
         
+       	        
         if(Dragon.dragons.isEmpty()){
         	
         	drawObjects3(g);
         	LoadSounds.roar.stop();
         }
         
-        if(Dragon.dragons.isEmpty() && lifeBunker == 50 && Gold.goldstack.size() > 0 && timerHard.isRunning() == true){
+        if(Dragon.dragons.isEmpty() && lifeBunker >= 50 && Gold.goldstack.size() > 0 && timerHard.isRunning() == true){
         	
         	drawCollect(g);
         	g.drawString("Missiles: Locked", 320, 15);
@@ -199,7 +236,7 @@ public class DrawScene extends UpdateObjects {
         	
         }
         
-        if(Dragon.dragons.isEmpty() && lifeBunker == 50 && Gold.goldstack.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
+        if(Dragon.dragons.isEmpty() && lifeBunker >= 50 && Gold.goldstack.size() > 0 && !timerHard.isRunning() && timerMedium.isRunning() == true){
         	
         	drawCollect(g);
         	g.drawString("Missiles: Locked", 320, 15);
@@ -209,7 +246,7 @@ public class DrawScene extends UpdateObjects {
         }
 
         
-        if(Dragon.dragons.isEmpty() && lifeBunker == 50 && Gold.goldstack.size() > 0 && 
+        if(Dragon.dragons.isEmpty() && lifeBunker >= 50 && Gold.goldstack.size() > 0 && 
         		!timerHard.isRunning() && !timerMedium.isRunning()){
         	
         	drawCollect(g);
@@ -249,16 +286,16 @@ public class DrawScene extends UpdateObjects {
         	g.drawString("Difficulty: Easy", 670, 15);
         }
         
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 && 
-        		timerHard.isRunning() == true){
-        	
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50 && 
+        		timerHard.isRunning() == true /*&& voiceInterruptor == 0*/){
+
         	drawKillTheHead(g);
         	g.drawString("Missiles: Unlocked", 320, 15);
         	g.drawString("Rockets: Unlocked", 490, 15);	
         	g.drawString("Difficulty: Hard", 670, 15);
         }
         
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 && 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50 && 
         		!timerHard.isRunning() && timerMedium.isRunning() == true){
         	
         	drawKillTheHead(g);
@@ -269,7 +306,7 @@ public class DrawScene extends UpdateObjects {
         
         
         
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 && 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50 && 
         		!timerHard.isRunning() && !timerMedium.isRunning()){
         	
         	drawKillTheHead(g);
@@ -279,27 +316,27 @@ public class DrawScene extends UpdateObjects {
         }
         
         
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50 
         		&& EvilHead.evilHead.x - MyShip.myShip.x == 400 && timerEasy.isRunning() == true){
         	EvilHead.evilHead.throwCanons();
         	EvilHead.evilHead.strikeHead();
         }
         
         	        	        
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50 
         		&& EvilHead.evilHead.x - MyShip.myShip.x == 400 && timerMedium.isRunning() == true){
         	EvilHead.evilHead.throwFireballs();
         	EvilHead.evilHead.strikeHead();
         }
         
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.size() >= 0 && lifeBunker == 50 
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.size() >= 0 && lifeBunker >= 50 
         		&& EvilHead.evilHead.x - MyShip.myShip.x == 400 && timerHard.isRunning() == true){
         	EvilHead.evilHead.throwFireballs();
         	EvilHead.evilHead.strikeHead();
         }
         
         if(EvilHead.evilHead.x - MyShip.myShip.x > 800 && Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty()
-        		&& lifeBunker == 50){
+        		&& lifeBunker >= 50){
         	MyShip.myShip.dragonShake();
         	MyShip.myShip.y = EvilHead.evilHead.y + 70;
     	}
@@ -350,14 +387,24 @@ public class DrawScene extends UpdateObjects {
         }
        	
         if(lifeBunker == 50){
+        	
+//        	initVoice("Bunker destroyed!");
+//        	initVoice("Level 4!");
+//        	lifeBunker++;
+        	
         	if(Gold.goldstack.size() > 0){
         		g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
         	}
-        	g.drawString("Bunker destroyed!", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
+        	
         	Bunker.bunkerObj.initBunkerHit();
         }
         
-        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50
+
+    	if(lifeBunker > 50){
+    		g.drawString("Bunker destroyed!", Bunker.bunkerObj.x, Bunker.bunkerObj.y);
+    	}
+        
+        if(Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50
         		&& lifeEvilHead < 10){
         	g.drawString("Health: 100%", EvilHead.evilHead.x, EvilHead.evilHead.y);
         }
@@ -702,12 +749,20 @@ public class DrawScene extends UpdateObjects {
 	        
         }
         
-        if(Dragon.dragons.isEmpty() && lifeBunker < 50){
+//        if(Dragon.dragons.isEmpty() && voiceInterruptor == 0){
+//        	if(lifeBunker < 50){
+//        		initVoice("Loading level 3!");
+//        		voiceInterruptor++;
+//        		return;
+//        	}
+//    	}
+        
+        if(lifeBunker < 50){
     		g.drawString("Dragonzz: " + checkMark, 5, 15);
-    		g.drawString("Level: " + 3, 230, 15);
+    		g.drawString("Level: " + 3, 230, 15);	
     	}
         
-        if(lifeBunker == 50){
+        if(lifeBunker >= 50){
     		g.drawString("Dragonzz: " + checkMark, 5, 15);
     		g.drawString("Level: " + 4, 230, 15);
     	}
@@ -724,6 +779,7 @@ public class DrawScene extends UpdateObjects {
         if(lifeMyShip < 3){
         	
         	g.drawString("GODMODE!", MyShip.myShip.x, MyShip.myShip.y);
+        	MyShip.myShip.godMode();
         	
         }
         
@@ -888,7 +944,7 @@ public class DrawScene extends UpdateObjects {
     
     private void drawGameOver(Graphics g) {
 
-        String msg = "Game Over!";
+    	String msg = "Game Over!";
         Font small = new Font("Helvetica", Font.BOLD, 17);
         FontMetrics fm = getFontMetrics(small);
         
