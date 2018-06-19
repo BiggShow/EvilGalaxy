@@ -215,10 +215,10 @@ public class DrawScene extends UpdateObjects {
 //    		voiceInterruptor = 0;
 //    	}
         
-//		if(lifeMyShip > 6){
-//			initVoice("Game Over!");        	
-//			ingame = false;
-//        }
+		if(lifeMyShip > 6){
+			//initVoice("Game Over!");        	
+			ingame = false;
+        }
         
        	        
         if(Dragon.dragons.isEmpty()){
