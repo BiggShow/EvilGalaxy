@@ -1,4 +1,4 @@
-# README - InProgress - Az Sam Koko!!
+# README - InProgress...
 
 ## HOW TO LAUNCH:
 
