@@ -1,4 +1,4 @@
-# README - InProgress...HOHO!!
+# README - Coming soon...
 
 ## HOW TO LAUNCH:
 
