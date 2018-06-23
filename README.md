@@ -1,4 +1,5 @@
-# README - Coming soon...
+# README - Experimental
+Under this branch of *EvilGalaxy* will be added some *experimental implementations* of mine, which are still under test and there is *no* guarantee, that they will work as expected unless released under *master*.
 
 ## HOW TO LAUNCH:
 
