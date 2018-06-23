@@ -18,7 +18,6 @@ public class BunkerBullet extends SpritePattern {
 		loadImage("images/bomber.png");
 		getImageDimensions();
 	}
-
 	
 	public void moveLeft() {
 
@@ -36,7 +35,6 @@ public class BunkerBullet extends SpritePattern {
 		x -= BULLET_SPEED_X;
 	}
 
-
 	public void moveDiagRight() {
 
 		y -= BULLET_SPEED_Y;
@@ -49,6 +47,5 @@ public class BunkerBullet extends SpritePattern {
 		y += BULLET_SPEED_Y + 1;
 				
 	}
-	
-	
+		
 }

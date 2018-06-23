@@ -11,6 +11,10 @@ public class Difficulty {
 
 	public static void restart(){
 		
+		if(InitObjects.god == true){
+			InitObjects.god = false;
+		}
+				
 	    DrawScene.bg1 = Toolkit.getDefaultToolkit().createImage("images/tenor.gif");
         InitObjects.ingame = true;
         UpdateObjects.lifeEvilHead = 3;

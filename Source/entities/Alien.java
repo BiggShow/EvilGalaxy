@@ -16,14 +16,12 @@ public class Alien extends SpritePattern {
         initAlien();
     }
     
-
     private void initAlien() {
 
         loadImage("images/alien.png");
         getImageDimensions();
     }
-    
-    
+      
     public void move() {
 
         if (x < 0) {

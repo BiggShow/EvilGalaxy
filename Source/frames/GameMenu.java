@@ -13,7 +13,6 @@ import game_engine.InitObjects;
 import multiplayer_tbd.JoinGame;
 import sound_engine.LoadSounds;
 
-
 @SuppressWarnings("serial")
 public class GameMenu extends JFrame {
 	
@@ -22,7 +21,6 @@ public class GameMenu extends JFrame {
         createMenu();
     }
 	
-
     private void createMenu() {
 
         //Menu Bar
@@ -95,7 +93,7 @@ public class GameMenu extends JFrame {
             	public void actionPerformed(ActionEvent e){
         		
         							
-        		Console csl = new Console();
+        		ConsoleContent csl = new ConsoleContent();
         		if(!InitObjects.consoleON){
         			csl.setVisible(true);
         			if(!InitObjects.consoleON == true){
@@ -189,6 +187,5 @@ public class GameMenu extends JFrame {
         	hard.addActionListener(new Hard());
 	
     }
-
 	
 }

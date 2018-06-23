@@ -13,11 +13,10 @@ import game_engine.DrawScene;
 @SuppressWarnings("serial")
 public class Main extends GameMenu {
 	
-
     public Main() {
         
         initUI();
-        
+        	
     }
     
     private void initUI() {

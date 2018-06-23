@@ -1,8 +1,6 @@
 package frames;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -10,37 +8,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import entities.Alien;
 import entities.Dragon;
-import game_engine.Difficulty;
-import game_engine.InitObjects;
-import game_engine.UpdateObjects;
+import game_engine.*;
 import items.HealthPack;
 import sound_engine.LoadSounds;
 
 @SuppressWarnings("serial")
-public class Console extends JFrame {
+public class ConsoleContent extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField textField;
-	private JTextArea textArea;
+	protected JPanel contentPane;
+	protected static JTextField textField;
+	protected JTextArea textArea;
 	static String out = "";    
-
+	protected static String[] commands;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Console frame = new Console();
+					ConsoleContent frame = new ConsoleContent();
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -49,15 +40,14 @@ public class Console extends JFrame {
 			}
 		});
 	}
-
-		
-	public Console() {
+	
+	public ConsoleContent() {
 		setUndecorated(true);
         pack();
         setTitle("Game Console");
 		setForeground(Color.WHITE);
 		setBackground(Color.DARK_GRAY);
-		setBounds(100, 100, 450, 381);
+		setBounds(50, 100, 400, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,7 +58,7 @@ public class Console extends JFrame {
 		getTextField().setFont(getTextField().getFont().deriveFont(14f));
 		
 		
-		String[] commands = new String[17];
+		commands = new String[17];
 		commands[0] = "help";
 		commands[1] = "cls";
 		commands[2] = "refresh";
@@ -89,7 +79,6 @@ public class Console extends JFrame {
 
 
 		getTextField().addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyPressed(KeyEvent e) {
 				
 				int key = e.getKeyCode();
@@ -605,7 +594,6 @@ public class Console extends JFrame {
 					if (commands[14].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
 						if(InitObjects.ingame == true && Alien.aliens.size() > 0){
-							
 							textArea.append("********Level 2 was loaded!*********" + "\n");
 							
 							
@@ -642,7 +630,6 @@ public class Console extends JFrame {
 						
 						
 						if(InitObjects.ingame == true && (Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)){
-						
 							Alien.aliens.clear();
 							Dragon.dragons.clear();
 							LoadSounds.roar.stop();
@@ -676,7 +663,6 @@ public class Console extends JFrame {
 						
 						
 						if(InitObjects.ingame == true && (Alien.aliens.size() > 0 || Dragon.dragons.size() > 0 || UpdateObjects.lifeBunker < 50)){
-						
 							Alien.aliens.clear();
 							Dragon.dragons.clear();
 							LoadSounds.roar.stop();
@@ -735,11 +721,11 @@ public class Console extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	public JTextField getTextField() {
+	public static JTextField getTextField() {
 		return textField;
 	}
 
 	public void setTextField(JTextField textField) {
-		this.textField = textField;
+		ConsoleContent.textField = textField;
 	}
 }

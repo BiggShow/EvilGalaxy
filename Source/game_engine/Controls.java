@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import entities.Alien;
 import entities.Dragon;
 import entities.MyShip;
-import frames.Console;
 import frames.Manual;
+import game_engine.Difficulty;
+import game_engine.InitObjects;
+import game_engine.UpdateObjects;
 import items.Gold;
 import items.VolBtn;
 import sound_engine.LoadSounds;
@@ -20,7 +22,6 @@ public class Controls extends JFrame implements KeyListener {
         MyShip.myShip.keyReleased(e);
     }
     
-
     public void keyPressed(KeyEvent e) {
         MyShip.myShip.keyPressed(e);
         VolBtn.volButt.keyPressed(e);
@@ -58,20 +59,20 @@ public class Controls extends JFrame implements KeyListener {
 
 		if (InitObjects.ingame == true && (InitObjects.timerEasy.isRunning() == true || InitObjects.timerMedium.isRunning() == true || InitObjects.timerHard.isRunning() == true) 
 				&& key == KeyEvent.VK_CONTROL && 
-				(Alien.aliens.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker == 50 && Gold.goldstack.size() > 0))) {
+				(Alien.aliens.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker >= 50 && Gold.goldstack.size() > 0))) {
 			MyShip.myShip.gunempty();
 		}
 		
 		if (InitObjects.ingame == true && (InitObjects.timerEasy.isRunning() == true || InitObjects.timerMedium.isRunning() == true || InitObjects.timerHard.isRunning() == true) 
 				&& key == KeyEvent.VK_SPACE && 
 				(Alien.aliens.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker < 50) || 
-						(UpdateObjects.lifeBunker == 50 && Gold.goldstack.isEmpty()))) {
+						(UpdateObjects.lifeBunker >= 50 && Gold.goldstack.isEmpty()))) {
 			MyShip.myShip.loadMissiles();
         }
 		
 		if (InitObjects.ingame == true && (InitObjects.timerEasy.isRunning() == true || InitObjects.timerMedium.isRunning() == true || InitObjects.timerHard.isRunning() == true) 
 				&& key == KeyEvent.VK_SPACE && 
-				(Alien.aliens.isEmpty() && Dragon.dragons.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker == 50 && Gold.goldstack.size() > 0))){
+				(Alien.aliens.isEmpty() && Dragon.dragons.size() > 0 || (Dragon.dragons.isEmpty() && UpdateObjects.lifeBunker >= 50 && Gold.goldstack.size() > 0))){
 			MyShip.myShip.gunempty();
 		}
 		
@@ -82,7 +83,6 @@ public class Controls extends JFrame implements KeyListener {
 				Alien.aliens.clear();
 				return;
 			}
-			
 		}
 		
 		if (key == KeyEvent.VK_3){
@@ -188,19 +188,6 @@ public class Controls extends JFrame implements KeyListener {
 								
 		}
 		
-						
-		
-		InitObjects.console = new Console();
-		
-		if (key == KeyEvent.VK_C && !InitObjects.consoleON){	
-			
-			InitObjects.console.setVisible(true);
-            if(!InitObjects.consoleON == true){
-            	
-            	InitObjects.consoleON = true;
-            }
-            
-		}
 		
 		if (key == KeyEvent.VK_O && !InitObjects.manualON){	
 			
@@ -223,12 +210,10 @@ public class Controls extends JFrame implements KeyListener {
 
     }
 
-
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
     
-
 }

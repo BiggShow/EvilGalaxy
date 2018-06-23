@@ -3,7 +3,6 @@ package game_engine;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
 import entities.Alien;
 import entities.Bunker;
 import entities.Dragon;
@@ -52,7 +51,7 @@ public abstract class UpdateObjects extends InitObjects {
     private void inGame() {
         
         if (!ingame) {
-            timerEasy.stop();
+        	timerEasy.stop();
             timerMedium.stop();
             timerHard.stop();
         }
@@ -83,7 +82,6 @@ public abstract class UpdateObjects extends InitObjects {
         }
         
     }
-    
     
     private void updateBullets() {
 
@@ -220,7 +218,6 @@ public abstract class UpdateObjects extends InitObjects {
         }
     }
     
-  
     private void updateAliens() {
 
     		
@@ -242,7 +239,6 @@ public abstract class UpdateObjects extends InitObjects {
 	            }
 	        }
     }
-    
     
     private void updateEvilHead() {
 
@@ -280,7 +276,6 @@ public abstract class UpdateObjects extends InitObjects {
     	    
     }
     
-    
     protected static void updateDragons() {
     	
     		
@@ -299,7 +294,6 @@ public abstract class UpdateObjects extends InitObjects {
 
     }
     
-    
     private void updateGold() {
     
 
@@ -313,7 +307,6 @@ public abstract class UpdateObjects extends InitObjects {
             }
         }
     }
-    
     
     private void updateHealth() {
 	    
@@ -333,6 +326,7 @@ public abstract class UpdateObjects extends InitObjects {
             	if(lifeMyShip > 3){
             		lifeMyShip--;
             	}
+            	
             }
             
         }
@@ -350,7 +344,7 @@ public abstract class UpdateObjects extends InitObjects {
         		dragon.setVisible(false);
         		new PlayWave1st("sounds/scream.wav").start();
         		MyShip.myShip.hitCraft();
-        		MyShip.myShip.shakeCraft();	        		
+        		MyShip.myShip.shipShake();	        		
         	}		
         }
     	
@@ -376,8 +370,5 @@ public abstract class UpdateObjects extends InitObjects {
         
 
     }
-    
-
-
 
 }

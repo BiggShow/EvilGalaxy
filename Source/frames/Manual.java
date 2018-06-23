@@ -19,14 +19,9 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-
 @SuppressWarnings("serial")
 public class Manual extends JFrame {
-	
-	/**
-	 * 
-	 */
-	
+		
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
@@ -44,8 +39,7 @@ public class Manual extends JFrame {
 		});
 
 	}
-	
-	
+		
 	public Manual() {
 		setTitle("GAME CONTROLS");
 		setSize(545, 530);
@@ -131,7 +125,5 @@ public class Manual extends JFrame {
         tp.setCharacterAttributes(aset, false);
         tp.replaceSelection(msg);
     }
-
-	
 
 }

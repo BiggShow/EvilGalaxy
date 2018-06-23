@@ -6,54 +6,54 @@ import javax.swing.ImageIcon;
 
 public abstract class SpritePattern {
 	
-	 	protected int x;
-	    protected int y;
-	    protected int width;
-	    protected int height;
-	    protected boolean vis;
-	    protected Image image;
+ 	protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
+    protected boolean vis;
+    protected Image image;
 
-	    public SpritePattern(int x, int y) {
+    public SpritePattern(int x, int y) {
 
-	        this.x = x;
-	        this.y = y;
-	        vis = true;
-	    }
+        this.x = x;
+        this.y = y;
+        vis = true;
+    }
 
-	    protected void getImageDimensions() {
+    protected void getImageDimensions() {
 
-	        width = image.getWidth(null);
-	        height = image.getHeight(null);
-	    }
+        width = image.getWidth(null);
+        height = image.getHeight(null);
+    }
 
-	    protected void loadImage(String imageName) {
+    protected void loadImage(String imageName) {
 
-	        ImageIcon ii = new ImageIcon(imageName);
-	        image = ii.getImage();
-	    }
+        ImageIcon ii = new ImageIcon(imageName);
+        image = ii.getImage();
+    }
 
-	    public Image getImage() {
-	        return image;
-	    }
+    public Image getImage() {
+        return image;
+    }
 
-	    public int getX() {
-	        return x;
-	    }
+    public int getX() {
+        return x;
+    }
 
-	    public int getY() {
-	        return y;
-	    }
+    public int getY() {
+        return y;
+    }
 
-	    public boolean isVisible() {
-	        return vis;
-	    }
+    public boolean isVisible() {
+        return vis;
+    }
 
-	    public void setVisible(Boolean visible) {
-	        vis = visible;
-	    }
+    public void setVisible(Boolean visible) {
+        vis = visible;
+    }
 
-	    public Rectangle getBounds() {
-	        return new Rectangle(x, y, width, height);
-	    }
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
 
 }

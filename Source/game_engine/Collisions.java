@@ -17,7 +17,6 @@ import items.ShipRocket;
 import sound_engine.PlayWave1st;
 import sound_engine.LoadSounds;
 
-
 public abstract class Collisions extends UpdateObjects {
 	
 	private static final long serialVersionUID = 1L;
@@ -35,7 +34,7 @@ public abstract class Collisions extends UpdateObjects {
     			new PlayWave1st("sounds/scream.wav").start();
     			MyShip.myShip.setVisible(false);
     			EvilHead.evilHead.setVisible(false);
-    			InitObjects.ingame = false;
+    			lifeMyShip = 7;
 		        return;
         	}
         
@@ -47,7 +46,7 @@ public abstract class Collisions extends UpdateObjects {
 			new PlayWave1st("sounds/explosion.wav").start();
 			MyShip.myShip.setVisible(false);
 			Bunker.bunkerObj.setVisible(false);
-			ingame = false;
+			lifeMyShip = 7;
 	        return;
     	}
     }
@@ -61,9 +60,9 @@ public abstract class Collisions extends UpdateObjects {
             	if (myship.intersects(alienUnit)) {
 	        		lifeMyShip++;
 	        		alien.setVisible(false);
-	        		new PlayWave1st("sounds/burned.wav").start();
+	        		new PlayWave1st("sounds/scream.wav").start();
 	        		MyShip.myShip.hitCraft();
-	        		MyShip.myShip.shakeCraft();
+	        		MyShip.myShip.shipShake();
             	}		
 	        			
 		     }
@@ -111,6 +110,7 @@ public abstract class Collisions extends UpdateObjects {
             		Bunker.bunkerObj.loadBullet();
             		Bunker.bunkerObj.loadBullet2();
             		m.setVisible(false);
+            		new PlayWave1st("sounds/bloop.wav").start();
             		LoadSounds.fuse.play();
             		lifeBunker++;
             	}
@@ -123,7 +123,7 @@ public abstract class Collisions extends UpdateObjects {
             	
             
             if(Alien.aliens.isEmpty() && 
-            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50){
+            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50){
             	if(missileUnit.intersects(evilhead)){
             		m.setVisible(false);
             		if(timerHard.isRunning() == true){
@@ -156,7 +156,7 @@ public abstract class Collisions extends UpdateObjects {
 	        		n.setVisible(false);
 	        		new PlayWave1st("sounds/scream.wav").start();
 	        		MyShip.myShip.hitCraft();
-	        		MyShip.myShip.shakeCraft();
+	        		MyShip.myShip.shipShake();
             	}	
         }
         
@@ -176,7 +176,7 @@ public abstract class Collisions extends UpdateObjects {
 	        		new PlayWave1st("sounds/scream.wav").start();
 	        		new PlayWave1st("sounds/explosion.wav").start();
 	        		MyShip.myShip.hitCraft();
-	        		MyShip.myShip.shakeCraft();
+	        		MyShip.myShip.shipShake();
             	}
                 
         }
@@ -197,7 +197,7 @@ public abstract class Collisions extends UpdateObjects {
 	        		new PlayWave1st("sounds/scream.wav").start();
 	        		new PlayWave1st("sounds/explosion.wav").start();
 	        		MyShip.myShip.hitCraft();
-	        		MyShip.myShip.shakeCraft();
+	        		MyShip.myShip.shipShake();
             	}
                 	
         }
@@ -215,7 +215,7 @@ public abstract class Collisions extends UpdateObjects {
 	        		n.setVisible(false);
 	        		new PlayWave1st("sounds/burned.wav").start();
 	        		MyShip.myShip.hitCraft();
-	        		MyShip.myShip.shakeCraft();
+	        		MyShip.myShip.shipShake();
             	}	
         }
         
@@ -241,7 +241,7 @@ public abstract class Collisions extends UpdateObjects {
             
             
             if(Alien.aliens.isEmpty() && 
-            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker == 50){
+            		Dragon.dragons.isEmpty() && Gold.goldstack.isEmpty() && lifeBunker >= 50){
             	if(rocketUnit.intersects(evilhead)){
             		r.setVisible(false);
             		if(timerHard.isRunning() == true){
@@ -261,6 +261,7 @@ public abstract class Collisions extends UpdateObjects {
             			Bunker.bunkerObj.loadBullet();
             			Bunker.bunkerObj.loadBullet2();
 	    				r.setVisible(false);
+	    				new PlayWave1st("sounds/scream.wav").start();
 	    				LoadSounds.fuse.play();
 	            		lifeBunker++;
 	            	}
@@ -278,6 +279,4 @@ public abstract class Collisions extends UpdateObjects {
         
       
     }
-
-
 }
