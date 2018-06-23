@@ -331,14 +331,14 @@ public abstract class UpdateObjects extends InitObjects {
             	HealthPack.healthpack.remove(i);
             	if(lifeMyShip > 3){
             		lifeMyShip--;
-//            		if(lifeMyShip == 3){
-//            			if(DrawScene.voiceInterruptor != 0){
-//            				DrawScene.voiceInterruptor = 0;	
-//                    	}
-//                		DrawScene.initVoice("Healthy!");
-//                		DrawScene.voiceInterruptor++;
-//                		return;
-//                	}
+            		if(lifeMyShip == 3){
+            			if(DrawScene.voiceInterruptor != 0){
+            				DrawScene.voiceInterruptor = 0;	
+                    	}
+                		DrawScene.initVoice("Healthy!");
+                		DrawScene.voiceInterruptor++;
+                		return;
+                	}
             	}
             	
             }

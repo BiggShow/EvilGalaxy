@@ -7,8 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-//import com.sun.speech.freetts.Voice;
-//import com.sun.speech.freetts.VoiceManager;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import entities.Alien;
 import entities.Bunker;
 import entities.Dragon;
@@ -33,10 +33,10 @@ public class DrawScene extends UpdateObjects {
 	static Image bg1;
     static Image bg2;
 	static Image bg3;
-//	private static final String VOICENAME = "kevin16"; 
-//	static boolean voiceStopped;
-//	static Voice voice;
-//	public static int voiceInterruptor;
+	private static final String VOICENAME = "kevin16"; 
+	static boolean voiceStopped;
+	static Voice voice;
+	public static int voiceInterruptor;
 
 	
 	public DrawScene() {
@@ -46,19 +46,19 @@ public class DrawScene extends UpdateObjects {
 	}
 	
 	
-//	public static void initVoice(String message){	
-//
-//    	VoiceManager vm = VoiceManager.getInstance();
-//    	voice = vm.getVoice(VOICENAME);
-//    	voice.allocate();
-//    	voice.speak(message);
-//		
-//    	if(voiceStopped == false){
-//    		voice.speak(message);
-//    		voiceStopped = true;
-//    	}
-//
-//	}
+	public static void initVoice(String message){	
+
+    	VoiceManager vm = VoiceManager.getInstance();
+    	voice = vm.getVoice(VOICENAME);
+    	voice.allocate();
+    	voice.speak(message);
+		
+    	if(voiceStopped == false){
+    		voice.speak(message);
+    		voiceStopped = true;
+    	}
+
+	}
 		
 	@Override
 	public void paintComponent(Graphics g) {
@@ -174,10 +174,10 @@ public class DrawScene extends UpdateObjects {
 
 
         if(lifeMyShip < 3){
-//        	voiceInterruptor++;
-//        	if(voiceInterruptor != 0){
-//        		g.drawString("GODMODE!", MyShip.myShip.x, MyShip.myShip.y);
-//        	}
+        	voiceInterruptor++;
+        	if(voiceInterruptor != 0){
+        		g.drawString("GODMODE!", MyShip.myShip.x, MyShip.myShip.y);
+        	}
         	g.drawString("GODMODE!", MyShip.myShip.x, MyShip.myShip.y);
         	MyShip.myShip.godMode();
         }
@@ -205,18 +205,18 @@ public class DrawScene extends UpdateObjects {
         	g.drawString("Health: 25%", MyShip.myShip.x, MyShip.myShip.y);
         }
        
-//        if(lifeMyShip == 6 && voiceInterruptor == 0){
-//        	initVoice("Critical!");
-//        	voiceInterruptor++;
-//        	return;
-//        }
+        if(lifeMyShip == 6 && voiceInterruptor == 0){
+        	initVoice("Critical!");
+        	voiceInterruptor++;
+        	return;
+        }
         
-//        if(lifeMyShip != 6){
-//    		voiceInterruptor = 0;
-//    	}
+        if(lifeMyShip != 6){
+    		voiceInterruptor = 0;
+    	}
         
 		if(lifeMyShip > 6){
-			//initVoice("Game Over!");        	
+			initVoice("Game Over!");        	
 			ingame = false;
         }
         
@@ -388,9 +388,9 @@ public class DrawScene extends UpdateObjects {
        	
         if(lifeBunker == 50){
         	
-//        	initVoice("Bunker destroyed!");
-//        	initVoice("Level 4!");
-//        	lifeBunker++;
+        	initVoice("Bunker destroyed!");
+        	initVoice("Level 4!");
+        	lifeBunker++;
         	
         	if(Gold.goldstack.size() > 0){
         		g.drawString("EvilHead is waiting...", EvilHead.evilHead.x, EvilHead.evilHead.y);
@@ -749,13 +749,13 @@ public class DrawScene extends UpdateObjects {
 	        
         }
         
-//        if(Dragon.dragons.isEmpty() && voiceInterruptor == 0){
-//        	if(lifeBunker < 50){
-//        		initVoice("Loading level 3!");
-//        		voiceInterruptor++;
-//        		return;
-//        	}
-//    	}
+        if(Dragon.dragons.isEmpty() && voiceInterruptor == 0){
+        	if(lifeBunker < 50){
+        		initVoice("Loading level 3!");
+        		voiceInterruptor++;
+        		return;
+        	}
+    	}
         
         if(lifeBunker < 50){
     		g.drawString("Dragonzz: " + checkMark, 5, 15);

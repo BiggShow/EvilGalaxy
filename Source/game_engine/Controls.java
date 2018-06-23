@@ -82,14 +82,14 @@ public class Controls extends JFrame implements KeyListener {
 			
 			if (Alien.aliens.size() > 0) {
 				Alien.aliens.clear();
-//				if(DrawScene.voiceInterruptor != 0){
-//					DrawScene.voiceInterruptor = 0;
-//				}
-//				if(DrawScene.voiceInterruptor == 0){
-//					DrawScene.initVoice("Loading level 2!");
-//					DrawScene.voiceInterruptor++;
-//					return;
-//	        	}
+				if(DrawScene.voiceInterruptor != 0){
+					DrawScene.voiceInterruptor = 0;
+				}
+				if(DrawScene.voiceInterruptor == 0){
+					DrawScene.initVoice("Loading level 2!");
+					DrawScene.voiceInterruptor++;
+					return;
+	        	}
 				return;
 			}
 		}
@@ -99,14 +99,14 @@ public class Controls extends JFrame implements KeyListener {
 			if(InitObjects.ingame == true && (Alien.aliens.size() > 0 || Dragon.dragons.size() > 0)){
 				Alien.aliens.clear();
 				Dragon.dragons.clear();
-//				if(DrawScene.voiceInterruptor != 0){
-//					DrawScene.voiceInterruptor = 0;
-//				}
-//				if(DrawScene.voiceInterruptor == 0){
-//					DrawScene.initVoice("Loading level 3!");
-//					DrawScene.voiceInterruptor++;
-//					return;
-//	        	}
+				if(DrawScene.voiceInterruptor != 0){
+					DrawScene.voiceInterruptor = 0;
+				}
+				if(DrawScene.voiceInterruptor == 0){
+					DrawScene.initVoice("Loading level 3!");
+					DrawScene.voiceInterruptor++;
+					return;
+	        	}
 				return;
 			}
 		}
@@ -192,10 +192,10 @@ public class Controls extends JFrame implements KeyListener {
 				
 				InitObjects.god = true;
 				UpdateObjects.lifeMyShip = -999;
-//				if(DrawScene.voiceInterruptor != 0){
-//					DrawScene.voiceInterruptor = 0;
-//				}
-//				DrawScene.initVoice("GODLIKE!");
+				if(DrawScene.voiceInterruptor != 0){
+					DrawScene.voiceInterruptor = 0;
+				}
+				DrawScene.initVoice("GODLIKE!");
 				return;
 			}
 			
@@ -203,10 +203,10 @@ public class Controls extends JFrame implements KeyListener {
 				
 				InitObjects.god = false;
 				UpdateObjects.lifeMyShip = 3;
-//				if(DrawScene.voiceInterruptor != 0){
-//					DrawScene.voiceInterruptor = 0;
-//				}
-//				DrawScene.initVoice("Healthy!");
+				if(DrawScene.voiceInterruptor != 0){
+					DrawScene.voiceInterruptor = 0;
+				}
+				DrawScene.initVoice("Healthy!");
 				return;
 				
 			}
@@ -215,17 +215,17 @@ public class Controls extends JFrame implements KeyListener {
 		
 						
 		
-//		InitObjects.console = new BestConsole();
-//		
-//		if (key == KeyEvent.VK_C && !InitObjects.consoleON){	
-//			
-//			InitObjects.console.setVisible(true);
-//            if(!InitObjects.consoleON == true){
-//            	
-//            	InitObjects.consoleON = true;
-//            }
-//            
-//		}
+		InitObjects.console = new BestConsole();
+	
+		if (key == KeyEvent.VK_C && !InitObjects.consoleON){	
+			
+		InitObjects.console.setVisible(true);
+           if(!InitObjects.consoleON == true){
+           	
+            	InitObjects.consoleON = true;
+            }
+           
+		}
 		
 		if (key == KeyEvent.VK_O && !InitObjects.manualON){	
 			

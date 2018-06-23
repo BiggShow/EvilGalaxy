@@ -320,10 +320,10 @@ public class Console extends JFrame {
 								InitObjects.timerHard.isRunning() == true) && UpdateObjects.lifeMyShip >= 3){
 							InitObjects.god = true;
 							UpdateObjects.lifeMyShip = -999;
-//							if(DrawScene.voiceInterruptor != 0){
-//								DrawScene.voiceInterruptor = 0;
-//							}
-//							DrawScene.initVoice("GODLIKE!");
+							if(DrawScene.voiceInterruptor != 0){
+								DrawScene.voiceInterruptor = 0;
+							}
+							DrawScene.initVoice("GODLIKE!");
 							textArea.append("********GODMODE ON*********" + "\n");
 							return;
 						}
@@ -346,10 +346,10 @@ public class Console extends JFrame {
 								InitObjects.timerHard.isRunning() == true) && UpdateObjects.lifeMyShip < 3){
 							InitObjects.god = false;
 							UpdateObjects.lifeMyShip = 3;
-//							if(DrawScene.voiceInterruptor != 0){
-//								DrawScene.voiceInterruptor = 0;
-//							}
-//							DrawScene.initVoice("Healthy!");
+							if(DrawScene.voiceInterruptor != 0){
+								DrawScene.voiceInterruptor = 0;
+							}
+							DrawScene.initVoice("Healthy!");
 							textArea.append("********GODMODE OFF*********" + "\n");
 							return;
 						}
@@ -603,10 +603,10 @@ public class Console extends JFrame {
 					if (commands[14].trim().equalsIgnoreCase(textArea.getText().trim())){
 						
 						if(InitObjects.ingame == true && Alien.aliens.size() > 0){
-//							if(DrawScene.voiceInterruptor != 0){
-//								DrawScene.voiceInterruptor = 0;
-//							}
-//							DrawScene.initVoice("Loading level 2!");
+							if(DrawScene.voiceInterruptor != 0){
+								DrawScene.voiceInterruptor = 0;
+							}
+							DrawScene.initVoice("Loading level 2!");
 							textArea.append("********Level 2 was loaded!*********" + "\n");
 							
 							
@@ -646,10 +646,10 @@ public class Console extends JFrame {
 							Alien.aliens.clear();
 							Dragon.dragons.clear();
 							LoadSounds.roar.stop();
-//							if(DrawScene.voiceInterruptor != 0){
-//								DrawScene.voiceInterruptor = 0;
-//							}
-//							DrawScene.initVoice("Loading level 3!");
+							if(DrawScene.voiceInterruptor != 0){
+								DrawScene.voiceInterruptor = 0;
+							}
+							DrawScene.initVoice("Loading level 3!");
 							textArea.append("********Level 3 was loaded!*********" + "\n");							
 							return;
 						}
