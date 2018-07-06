@@ -5,55 +5,55 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public abstract class SpritePattern {
-	
- 	protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
-    protected boolean vis;
-    protected Image image;
 
-    public SpritePattern(int x, int y) {
+ protected int x;
+ protected int y;
+ protected int width;
+ protected int height;
+ protected boolean vis;
+ protected Image image;
 
-        this.x = x;
-        this.y = y;
-        vis = true;
-    }
+ public SpritePattern(int x, int y) {
 
-    protected void getImageDimensions() {
+  this.x = x;
+  this.y = y;
+  vis = true;
+ }
 
-        width = image.getWidth(null);
-        height = image.getHeight(null);
-    }
+ protected void getImageDimensions() {
 
-    protected void loadImage(String imageName) {
+  width = image.getWidth(null);
+  height = image.getHeight(null);
+ }
 
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
-    }
+ protected void loadImage(String imageName) {
 
-    public Image getImage() {
-        return image;
-    }
+  ImageIcon ii = new ImageIcon(imageName);
+  image = ii.getImage();
+ }
 
-    public int getX() {
-        return x;
-    }
+ public Image getImage() {
+  return image;
+ }
 
-    public int getY() {
-        return y;
-    }
+ public int getX() {
+  return x;
+ }
 
-    public boolean isVisible() {
-        return vis;
-    }
+ public int getY() {
+  return y;
+ }
 
-    public void setVisible(Boolean visible) {
-        vis = visible;
-    }
+ public boolean isVisible() {
+  return vis;
+ }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
+ public void setVisible(Boolean visible) {
+  vis = visible;
+ }
+
+ public Rectangle getBounds() {
+  return new Rectangle(x, y, width, height);
+ }
 
 }
