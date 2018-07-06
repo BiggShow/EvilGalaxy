@@ -6,28 +6,28 @@ import game_engine.SpritePattern;
 
 public class Dragon extends SpritePattern {
 
-	public static ArrayList<Dragon> dragons;
-	private final int INITIAL_X = 600;
+ public static ArrayList < Dragon > dragons;
+ private final int INITIAL_X = 600;
 
-    public Dragon(int x, int y) {
-        super(x, y);
+ public Dragon(int x, int y) {
+  super(x, y);
 
-        initBoss();
-    }
+  initBoss();
+ }
 
-    private void initBoss() {
+ private void initBoss() {
 
-        loadImage("images/boss.png");
-        getImageDimensions();
-    }
+  loadImage("images/boss.png");
+  getImageDimensions();
+ }
 
-    public void move() {
+ public void move() {
 
-        if (x < 0) {
-            x = INITIAL_X;
-        }
-        
-        x -= 3;
-       
-    }
+  if (x < 0) {
+   x = INITIAL_X;
+  }
+
+  x -= 3;
+
+ }
 }
